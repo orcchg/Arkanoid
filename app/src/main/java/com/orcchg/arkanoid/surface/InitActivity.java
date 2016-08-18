@@ -13,6 +13,8 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.orcchg.arkanoid.R;
+
 public class InitActivity extends FragmentActivity {
   private static final String TAG = "Arkanoid_InitActivity";
   static final String bundleKey_dropStat = "bundleKey_dropStat";

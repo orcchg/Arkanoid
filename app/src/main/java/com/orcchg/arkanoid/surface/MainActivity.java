@@ -5,7 +5,7 @@ import java.lang.ref.WeakReference;
 
 import com.orcchg.arkanoid.surface.Database.DatabaseException;
 import com.orcchg.arkanoid.surface.Database.GameStat;
-import com.orcchg.arkanoid.surface.R;
+import com.orcchg.arkanoid.R;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
