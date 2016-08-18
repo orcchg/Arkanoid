@@ -43,7 +43,7 @@ SoundProcessor::SoundProcessor(JavaVM* jvm)
   DBG("exit SoundProcessor ctor");
 }
 
-SoundProcessor::~SoundProcessor() {
+SoundProcessor::~SoundProcessor() noexcept {
   DBG("enter SoundProcessor ~dtor");
   m_jvm = nullptr;  m_jenv = nullptr;  master_object = nullptr;
   destroy();

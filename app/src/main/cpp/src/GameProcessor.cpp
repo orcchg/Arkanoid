@@ -58,7 +58,7 @@ GameProcessor::GameProcessor(JavaVM* jvm)
   DBG("exit GameProcessor ctor");
 }
 
-GameProcessor::~GameProcessor() {
+GameProcessor::~GameProcessor() noexcept {
   DBG("enter GameProcessor ~dtor");
   m_jvm = nullptr;  m_jenv = nullptr;  master_object = nullptr;
   DBG("exit GameProcessor ~dtor");
@@ -464,7 +464,7 @@ void GameProcessor::moveBall() {
     new_y = old_y + m_ball.getVelocity() * sin(m_ball.getAngle());
     shiftBall(new_x, new_y);
   }
-  std::this_thread::sleep_for (std::chrono::milliseconds(ProcessorParams::milliDelay));
+  std::this_thread::sleep_for (std::chrono::milliseconds(1/*ProcessorParams::milliDelay*/));
 }
 
 void GameProcessor::shiftBall(GLfloat new_x, GLfloat new_y) {

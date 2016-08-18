@@ -163,6 +163,9 @@ void Level::changeVulnerableBlock(Mode mode, int row, int col) {
             break;
         }
         break;
+      case Mode::NONE:
+      default:
+        break;
   }
 }
 
@@ -795,7 +798,7 @@ Level::Level(int rows, int cols)
   }
 }
 
-Level::~Level() {
+Level::~Level() noexcept {
   for (int r = 0; r < rows; ++r) {
     delete [] blocks[r];
     blocks[r] = nullptr;

@@ -26,7 +26,7 @@ PrizeProcessor::PrizeProcessor(JavaVM* jvm)
   DBG("exit PrizeProcessor ctor");
 }
 
-PrizeProcessor::~PrizeProcessor() {
+PrizeProcessor::~PrizeProcessor() noexcept {
   DBG("enter PrizeProcessor ~dtor");
   m_jvm = nullptr;  m_jenv = nullptr;
   DBG("exit PrizeProcessor ~dtor");

@@ -41,7 +41,7 @@ Resources::Resources(JNIEnv* jenv, jobject assets, jstring internalFileStorage_J
   jenv->ReleaseStringUTFChars(internalFileStorage_Java, internal_file_storage);
 }
 
-Resources::~Resources() {
+Resources::~Resources() noexcept {
   delete m_assets;
   m_assets = nullptr;
   for (auto& item : m_textures) {

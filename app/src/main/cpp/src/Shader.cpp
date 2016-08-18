@@ -57,7 +57,7 @@ ShaderHelper::ShaderHelper(const Shader& shader)
   DBG("exit ShaderHelper::ctor");
 }
 
-ShaderHelper::~ShaderHelper() {
+ShaderHelper::~ShaderHelper() noexcept {
   glDeleteProgram(m_program);
   m_program = 0;
 }

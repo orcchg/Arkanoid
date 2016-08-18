@@ -1,45 +1,78 @@
-# Sets the minimum version of CMake required to build the native
-# library. You should either keep the default value or only pass a
-# value of 3.4.0 or lower.
-
 cmake_minimum_required(VERSION 3.4.1)
 
-# Creates and names a library, sets it as either STATIC
-# or SHARED, and provides the relative paths to its source code.
-# You can define multiple libraries, and CMake builds it for you.
-# Gradle automatically packages shared libraries with your APK.
+# zlib
+#set( TARGET_ZLIB zlib )
+#set( SOURCE_ZLIB
+#    src/main/cpp/zlib/adler32.c
+#    src/main/cpp/zlib/compress.c
+#    src/main/cpp/zlib/crc32.c
+#    src/main/cpp/zlib/deflate.c
+#    src/main/cpp/zlib/gzclose.c
+#    src/main/cpp/zlib/gzlib.c
+#    src/main/cpp/zlib/gzread.c
+#    src/main/cpp/zlib/gzwrite.c
+#    src/main/cpp/zlib/infback.c
+#    src/main/cpp/zlib/inffast.c
+#    src/main/cpp/zlib/inflate.c
+#    src/main/cpp/zlib/inftrees.c
+#    src/main/cpp/zlib/trees.c
+#    src/main/cpp/zlib/uncompr.c
+#    src/main/cpp/zlib/zutil.c
+#)
+#add_library( ${TARGET_ZLIB} STATIC ${SOURCE_ZLIB} )
 
-add_library( # Sets the name of the library.
-             native-lib
+# png
+set( TARGET_PNG png )
+set( SOURCE_PNG
+#    src/main/cpp/png/android-ndk.c
+#    src/main/cpp/png/linux.c
+#    src/main/cpp/png/linux-auxv.c
+    src/main/cpp/png/png.c
+    src/main/cpp/png/pngerror.c
+    src/main/cpp/png/pngget.c
+    src/main/cpp/png/pngmem.c
+    src/main/cpp/png/pngpread.c
+    src/main/cpp/png/pngread.c
+    src/main/cpp/png/pngrio.c
+    src/main/cpp/png/pngrtran.c
+    src/main/cpp/png/pngrutil.c
+    src/main/cpp/png/pngset.c
+    src/main/cpp/png/pngtest.c
+    src/main/cpp/png/pngtrans.c
+    src/main/cpp/png/pngwio.c
+    src/main/cpp/png/pngwrite.c
+    src/main/cpp/png/pngwtran.c
+    src/main/cpp/png/pngwutil.c
+)
+add_library( ${TARGET_PNG} STATIC ${SOURCE_PNG} )
 
-             # Sets the library as a shared library.
-             SHARED
+# Arkanoid library
+include_directories(
+    src/main/cpp/include
+    src/main/cpp/png
+)
+set( TARGET_ARKANOID Arkanoid )
+set( SOURCE_ARKANOID
+    src/main/cpp/src/AssetStorage.cpp
+    src/main/cpp/src/AsyncContext.cpp
+    src/main/cpp/src/AsyncContextHelper.cpp
+    src/main/cpp/src/Block.cpp
+    src/main/cpp/src/EGLConfigChooser.cpp
+    src/main/cpp/src/ExplosionPackage.cpp
+    src/main/cpp/src/GameProcessor.cpp
+    src/main/cpp/src/Level.cpp
+    src/main/cpp/src/LevelDimens.cpp
+    src/main/cpp/src/Prize.cpp
+    src/main/cpp/src/PrizePackage.cpp
+    src/main/cpp/src/PrizeProcessor.cpp
+    src/main/cpp/src/Resources.cpp
+    src/main/cpp/src/Shader.cpp
+    src/main/cpp/src/SoundBuffer.cpp
+    src/main/cpp/src/SoundPlayer.cpp
+    src/main/cpp/src/SoundProcessor.cpp
+    src/main/cpp/src/Texture.cpp
+    src/main/cpp/src/utils.cpp
+)
+add_library( ${TARGET_ARKANOID} SHARED ${SOURCE_ARKANOID} )
+target_link_libraries( ${TARGET_ARKANOID} log dl z png android EGL GLESv2 OpenSLES )
 
-             # Provides a relative path to your source file(s).
-             # Associated headers in the same location as their source
-             # file are automatically included.
-             src/main/cpp/native-lib.cpp )
-
-# Searches for a specified prebuilt library and stores the path as a
-# variable. Because system libraries are included in the search path by
-# default, you only need to specify the name of the public NDK library
-# you want to add. CMake verifies that the library exists before
-# completing its build.
-
-find_library( # Sets the name of the path variable.
-              log-lib
-
-              # Specifies the name of the NDK library that
-              # you want CMake to locate.
-              log )
-
-# Specifies libraries CMake should link to your target library. You
-# can link multiple libraries, such as libraries you define in the
-# build script, prebuilt third-party libraries, or system libraries.
-
-target_link_libraries( # Specifies the target library.
-                       native-lib
-
-                       # Links the target library to the log library
-                       # included in the NDK.
-                       $\{log-lib} )

@@ -104,7 +104,7 @@ bool Texture::load() {
 
   GLenum glerror = glGetError();
   if (glerror != GL_NO_ERROR) {
-    ERR("Error loading texture %s into OpenGL, gl error %zu, Details: fmt=%i, w=%zu h=%zu, type=%i",
+    ERR("Error loading texture %s into OpenGL, gl error %u, Details: fmt=%i, w=%u h=%u, type=%i",
         m_filename, glerror, m_format, m_width, m_height, m_type);
     unload();
     return false;

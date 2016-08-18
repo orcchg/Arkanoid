@@ -100,7 +100,7 @@ AsyncContext::AsyncContext(JavaVM* jvm)
   DBG("exit AsyncContext ctor");
 }
 
-AsyncContext::~AsyncContext() {
+AsyncContext::~AsyncContext() noexcept {
   DBG("enter AsyncContext ~dtor");
   m_jvm = nullptr;  m_jenv = nullptr;  master_object = nullptr;
   m_window = nullptr;
@@ -955,7 +955,7 @@ void AsyncContext::render() {
 void AsyncContext::delay(int ms) {
   for (int i = 0; i < ms; ++i) {
     render();
-    std::this_thread::sleep_for (std::chrono::milliseconds(ProcessorParams::milliDelay));
+    std::this_thread::sleep_for (std::chrono::milliseconds(1/*ProcessorParams::milliDelay*/));
   }
 }
 
@@ -996,7 +996,7 @@ void AsyncContext::initParticleSystem() {
     GLfloat offset = 0;//-halfStep * (i - 1);
     for (; i < particleSpiralSystemBranchSize; ++i) {
       int index = i * particleSpiralSize;
-      int j = i - particleSpiralSystemBranchSize >> 1;
+      int j = i - (particleSpiralSystemBranchSize >> 1);
       // Start position of particle
       m_particle_spiral_buffer[index + 2 + bi] = offset + halfStep * j;
       m_particle_spiral_buffer[index + 3 + bi] = step * j;
@@ -1021,7 +1021,7 @@ void AsyncContext::initParticleSystem() {
     GLfloat offset = 0;//halfStep * (i - 1);
     for (; i < particleSpiralSystemBranchSize; ++i) {
       int index = i * particleSpiralSize;
-      int j = i - particleSpiralSystemBranchSize >> 1;
+      int j = i - (particleSpiralSystemBranchSize >> 1);
       // Start position of particle
       m_particle_spiral_buffer[index + 2 + bi] = step * j;
       m_particle_spiral_buffer[index + 3 + bi] = offset - halfStep * j;
@@ -1046,7 +1046,7 @@ void AsyncContext::initParticleSystem() {
     GLfloat offset = 0;//halfStep * (i - 1);
     for (; i < particleSpiralSystemBranchSize; ++i) {
       int index = i * particleSpiralSize;
-      int j = i - particleSpiralSystemBranchSize >> 1;
+      int j = i - (particleSpiralSystemBranchSize >> 1);
       // Start position of particle
       m_particle_spiral_buffer[index + 2 + bi] = offset - halfStep * j;
       m_particle_spiral_buffer[index + 3 + bi] = -step * j;
@@ -1071,7 +1071,7 @@ void AsyncContext::initParticleSystem() {
     GLfloat offset = 0;//-halfStep * (i - 1);
     for (; i < particleSpiralSystemBranchSize; ++i) {
       int index = i * particleSpiralSize;
-      int j = i - particleSpiralSystemBranchSize >> 1;
+      int j = i - (particleSpiralSystemBranchSize >> 1);
       // Start position of particle
       m_particle_spiral_buffer[index + 2 + bi] = -step * j;
       m_particle_spiral_buffer[index + 3 + bi] = offset + halfStep * j;
