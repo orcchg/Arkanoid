@@ -1,0 +1,79 @@
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@android:color/background_light"
+	tools:context="${relativePackage}.${activityClass}" >
+	
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/title_margin_top"
+        android:textStyle="bold"
+        android:textSize="@dimen/text_title_size"
+        android:text="@string/app_name"
+        android:textColor="#3F51B5"
+        android:editable="false"
+        android:selectAllOnFocus="false" />
+	
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_centerInParent="true"
+        android:orientation="vertical" >
+        
+        <Button
+            android:id="@+id/continue_game_button"
+            android:layout_width="@dimen/button_width"
+            android:layout_height="@dimen/button_height"
+            android:background="@drawable/button_selector"
+            android:text="@string/continue_game_button"
+            android:textStyle="bold"
+            android:textSize="@dimen/text_size"
+            android:onClick="onClickContinueGame" />
+        
+        <Button
+            android:id="@+id/new_game_button"
+            android:layout_width="@dimen/button_width"
+            android:layout_height="@dimen/button_height"
+            android:background="@drawable/button_selector"
+            android:text="@string/new_game_button"
+            android:textStyle="bold"
+            android:textSize="@dimen/text_size"
+            android:onClick="onClickNewGame" />
+        
+        <Button
+            android:id="@+id/about_game_button"
+            android:layout_width="@dimen/button_width"
+            android:layout_height="@dimen/button_height"
+            android:background="@drawable/button_selector"
+            android:text="@string/about_game_button"
+            android:textStyle="bold"
+            android:textSize="@dimen/text_size"
+            android:onClick="onClickAboutGame" />
+        
+        <Button
+            android:id="@+id/quit_game_button"
+            android:layout_width="@dimen/button_width"
+            android:layout_height="@dimen/button_height"
+            android:background="@drawable/button_selector"
+            android:text="@string/quit_game_button"
+            android:textStyle="bold"
+            android:textSize="@dimen/text_size"
+            android:onClick="onClickQuitGame" />
+    </LinearLayout>
+    
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:text="@string/author_text"
+        android:textColor="#64DD17"
+        android:textStyle="bold"
+        android:textSize="@dimen/text_size" />
+</RelativeLayout>

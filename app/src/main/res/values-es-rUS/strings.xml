@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Arkanoid</string>
+    
+    <string name="continue_game_button">Continuar</string>
+    <string name="new_game_button">Nuevo juego</string>
+    <string name="about_game_button">Información</string>
+    <string name="quit_game_button">Salir del juego</string>
+    <string name="author_text">El juego de Maxim Alov</string>
+    
+    <string name="ok_button">OK</string>
+    <string name="cancel_button">Salir</string>
+    <string name="warning_title">Nuevo juego</string>
+    <string name="warning_message">Usted perderá estado del juego. ¿Seguro que quiere empezar nuevo partido ?</string>
+    
+    <string name="action_throw">Lanzar</string>
+    <string name="action_nextLevel">Próximo</string>
+    <string name="action_dropStat">Borrar</string>
+    
+    <string name="about_title">Información del aplicación</string>
+    <string name="about_message">Autor: Maxim Alov alovmax@yandex.ru\nVersión: 1.0.0, 31.05.2015\nVer: orcchg.blogspot.ru\nSonidos de diforb.com, freesound.org</string>
+
+    <string name="internal_error">Error !</string>
+    <string name="internal_error_message">Se recomienda reiniciar la aplicación.</string>
+    <string name="close_button">Salir</string>
+    
+</resources>

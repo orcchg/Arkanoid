@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Arkanoid</string>
+
+    <string name="continue_game_button">Continue</string>
+    <string name="new_game_button">New game</string>
+    <string name="about_game_button">About</string>
+    <string name="quit_game_button">Quit game</string>
+    <string name="author_text">by Maxim Alov</string>
+
+    <string name="ok_button">OK</string>
+    <string name="cancel_button">Cancel</string>
+    <string name="warning_title">New game</string>
+    <string name="warning_message">You will lose stored game state, are you sure want to start new game ?</string>
+
+    <string name="action_throw">Throw</string>
+    <string name="action_nextLevel">Next level</string>
+    <string name="action_dropStat">Drop stat</string>
+
+    <string name="about_title">About application</string>
+    <string name="about_message">Author: Maxim Alov alovmax@yandex.ru\nVersion: 1.0.0, 31.05.2015\nSee: orcchg.blogspot.ru\nSounds from diforb.com, freesound.org</string>
+
+    <string name="internal_error">Internal error !</string>
+    <string name="internal_error_message">It is recommended to restart application.</string>
+    <string name="close_button">Close</string>
+</resources>

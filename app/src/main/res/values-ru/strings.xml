@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Арканоид</string>
+    
+    <string name="continue_game_button">Продолжить</string>
+    <string name="new_game_button">Новая игра</string>
+    <string name="about_game_button">О программе</string>
+    <string name="quit_game_button">Выйти</string>
+    <string name="author_text">автор Maxim Alov</string>
+    
+    <string name="ok_button">ОК</string>
+    <string name="cancel_button">Отмена</string>
+    <string name="warning_title">Новая игра</string>
+    <string name="warning_message">Текущее состояние игры будет потеряно. Начать новую игру ?</string>
+    
+    <string name="action_throw">Бросок</string>
+    <string name="action_nextLevel">Дальше</string>
+    <string name="action_dropStat">Сброс</string>
+    
+    <string name="about_title">О программе</string>
+    <string name="about_message">Автор: Maxim Alov alovmax@yandex.ru\nВерсия: 1.0.0, 31.05.2015\nСайт: orcchg.blogspot.ru\nЗвуки от diforb.com, freesound.org</string>
+
+    <string name="internal_error">Произошла ошибка !</string>
+    <string name="internal_error_message">Рекомендуется перезапустить приложение.</string>
+    <string name="close_button">Завершить</string>
+    
+</resources>

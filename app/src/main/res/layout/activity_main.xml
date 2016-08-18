@@ -1,0 +1,114 @@
+<FrameLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	tools:context="${relativePackage}.${activityClass}" >
+ 
+	<com.orcchg.arkanoid.surface.GameSurface
+	    xmlns:android="http://schemas.android.com/apk/res/android"
+	    android:id="@+id/surface_view"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent" />
+	 
+	<RelativeLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent" >
+	    
+	    <LinearLayout
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:orientation="horizontal"
+	        android:layout_alignParentLeft="true"
+		    android:layout_alignParentStart="true"
+		    android:layout_alignParentBottom="true" >
+		    
+			<TextView
+			    android:id="@+id/info_textview"
+			    android:layout_width="@dimen/info_textview_width"
+			    android:layout_height="wrap_content"
+			    android:textColor="@android:color/white"
+			    android:textStyle="bold"
+			    android:textSize="@dimen/text_size" />
+			
+			<Space
+			    android:layout_width="@dimen/space_textview_width"
+			    android:layout_height="wrap_content" />
+			
+			<TextView
+			    android:id="@+id/add_info_textview"
+			    android:layout_width="@dimen/info_textview_width"
+			    android:layout_height="wrap_content"
+			    android:textStyle="bold"
+			    android:textSize="@dimen/text_size" />
+			
+		    <Space
+			    android:layout_width="@dimen/space_textimage_width"
+			    android:layout_height="wrap_content" />
+		    
+		    <LinearLayout
+		        android:layout_width="wrap_content"
+		        android:layout_height="match_parent"
+		        android:orientation="horizontal" >
+		        
+		        <ImageView
+		            android:id="@+id/life1_imageview"
+		            android:layout_width="@dimen/life_image_size"
+		            android:layout_height="@dimen/life_image_size"
+		            android:src="@drawable/gm_ball"
+		            android:visibility="invisible" />
+		        
+		        <ImageView
+		            android:id="@+id/life2_imageview"
+		            android:layout_width="@dimen/life_image_size"
+		            android:layout_height="@dimen/life_image_size"
+		            android:src="@drawable/gm_ball"
+		            android:visibility="invisible" />
+		        		        
+		        <ImageView
+		            android:id="@+id/life3_imageview"
+		            android:layout_width="@dimen/life_image_size"
+		            android:layout_height="@dimen/life_image_size"
+		            android:src="@drawable/gm_ball"
+		            android:visibility="invisible" />
+		        		        		        
+		        <ImageView
+		            android:id="@+id/life4_imageview"
+		            android:layout_width="@dimen/life_image_size"
+		            android:layout_height="@dimen/life_image_size"
+		            android:src="@drawable/gm_ball"
+		            android:visibility="invisible" />
+		        
+		        <ImageView
+		            android:id="@+id/life5_imageview"
+		            android:layout_width="@dimen/life_image_size"
+		            android:layout_height="@dimen/life_image_size"
+		            android:src="@drawable/gm_ball"
+		            android:visibility="invisible" />
+		        
+		        <Space
+		            android:layout_width="@dimen/space_imagetext_width"
+		            android:layout_height="match_parent" />
+		        
+		        <TextView
+		            android:id="@+id/life_multiplier_textview"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:textColor="@android:color/holo_orange_dark"
+		            android:textStyle="bold"
+		            android:textSize="@dimen/text_size" />
+		    </LinearLayout>
+		</LinearLayout>
+	    
+		<TextView
+		    android:id="@+id/cardinality_textview"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_alignParentRight="true"
+		    android:layout_alignParentEnd="true"
+		    android:layout_alignParentBottom="true"
+		    android:textColor="@android:color/white"
+		    android:textStyle="bold"
+		    android:textSize="@dimen/text_size" />
+	</RelativeLayout>
+</FrameLayout>
