@@ -1,14 +1,15 @@
 package com.orcchg.arkanoid.surface;
 
-import java.lang.ref.WeakReference;
-
 import android.content.Context;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+
+import java.lang.ref.WeakReference;
+
+import timber.log.Timber;
 
 public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
   private static final String TAG = "Arkanoid_GameSurface";
@@ -34,25 +35,19 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
   }
   
   public GameSurface(Context context, AttributeSet attrs, int defStyleAttr) {
-//    this(context, attrs, defStyleAttr, 0);
     super(context, attrs, defStyleAttr);
     VERTICAL_SWIPE_THRESHOLD = Utility.dipToPixel(context, VERTICAL_SWIPE_THRESHOLD_DP);
     getHolder().addCallback(this);
   }
-  
-//  public GameSurface(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-//    super(context, attrs, defStyleAttr, defStyleRes);
-//    getHolder().addCallback(this);
-//  }
 
   @Override
   public void surfaceCreated(SurfaceHolder holder) {
-    Log.d(TAG, "Game surface created");
+    Timber.d(TAG, "Game surface created");
   }
 
   @Override
   public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-    Log.d(TAG, "Game surface changed");
+    Timber.d(TAG, "Game surface changed");
     if (mAsyncContextRef != null) {
       AsyncContext acontext = mAsyncContextRef.get();
       if (acontext != null) {
@@ -63,7 +58,7 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
 
   @Override
   public void surfaceDestroyed(SurfaceHolder holder) {
-    Log.d(TAG, "Game surface destroyed");
+    Timber.d(TAG, "Game surface destroyed");
     if (mAsyncContextRef != null) {
       AsyncContext acontext = mAsyncContextRef.get();
       if (acontext != null) {

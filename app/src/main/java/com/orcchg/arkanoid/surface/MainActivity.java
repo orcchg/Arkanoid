@@ -1,23 +1,24 @@
 package com.orcchg.arkanoid.surface;
 
-import java.io.IOException;
-import java.lang.ref.WeakReference;
-
-import com.orcchg.arkanoid.surface.Database.DatabaseException;
-import com.orcchg.arkanoid.surface.Database.GameStat;
-import com.orcchg.arkanoid.R;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.orcchg.arkanoid.R;
+import com.orcchg.arkanoid.surface.Database.DatabaseException;
+import com.orcchg.arkanoid.surface.Database.GameStat;
+
+import java.io.IOException;
+import java.lang.ref.WeakReference;
+
+import timber.log.Timber;
 
 public class MainActivity extends FragmentActivity {
   private static final String TAG = "Arkanoid_MainActivity";
@@ -48,7 +49,7 @@ public class MainActivity extends FragmentActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    Log.d(TAG, "onCreate");
+    Timber.d(TAG, "onCreate");
     setContentView(R.layout.activity_main);
     
 //    Resources res = getResources();
@@ -78,12 +79,12 @@ public class MainActivity extends FragmentActivity {
     try {
       String[] texture_resources = getAssets().list("texture");
       for (String texture : texture_resources) {
-//        Log.d(TAG, "Texture asset: " + texture);
+//        Timber.d(TAG, "Texture asset: " + texture);
         mNativeResources.readTexture(texture);
       }
       String[] sound_resources = getAssets().list("sound");
       for (String sound : sound_resources) {
-//        Log.d(TAG, "Sound asset: " + sound);
+//        Timber.d(TAG, "Sound asset: " + sound);
         mNativeResources.readSound(sound);
       }
     } catch (IOException e) {
@@ -104,7 +105,7 @@ public class MainActivity extends FragmentActivity {
   
   @Override
   protected void onResume() {
-    Log.d(TAG, "onResume");
+    Timber.d(TAG, "onResume");
     mAsyncContext.start();
     mSurface.setAsyncContext(mAsyncContext);
     mAsyncContext.loadResources();
@@ -132,7 +133,7 @@ public class MainActivity extends FragmentActivity {
   
   @Override
   protected void onPause() {
-    Log.d(TAG, "onPause");
+    Timber.d(TAG, "onPause");
     setStat(PLAYER_ID, currentLives, currentLevel, currentScore);
     mAsyncContext.stop();
     finish();
@@ -141,7 +142,7 @@ public class MainActivity extends FragmentActivity {
   
   @Override
   protected void onDestroy() {
-    Log.d(TAG, "onDestroy");
+    Timber.d(TAG, "onDestroy");
     mAsyncContext.destroy();
     mNativeResources.release();
     releaseAllViews();
@@ -153,7 +154,7 @@ public class MainActivity extends FragmentActivity {
   public boolean onKeyDown(int keyCode, KeyEvent event) {
     switch (keyCode) {
       case KeyEvent.KEYCODE_BACK:
-        Log.d(TAG, "onKeyDown( back )");
+        Timber.d(TAG, "onKeyDown( back )");
         finish();
         break;
     }
@@ -195,7 +196,7 @@ public class MainActivity extends FragmentActivity {
   /* Gameplay methods */
   // --------------------------------------------------------------------------
   void lostGame() {
-    Log.i(TAG, "Game is lost!");
+    Timber.i(TAG, "Game is lost!");
     setLives(INITIAL_LIVES);
     mAsyncContext.fireJavaEvent_refreshLives();
     mAsyncContext.loadLevel(Levels.get(currentLevel, ""));
@@ -213,9 +214,9 @@ public class MainActivity extends FragmentActivity {
   
   void setStat(long player_id, int lives, int level, int score) {
     ArkanoidApplication app = (ArkanoidApplication) getApplication();
-    Log.i(TAG, "Stat to be stored: [" + lives + ", " + level + ", " + score + "]");
+    Timber.i(TAG, "Stat to be stored: [" + lives + ", " + level + ", " + score + "]");
     String levelState = mAsyncContext.saveLevel();
-    Log.i(TAG, "Level: " + levelState);
+    Timber.i(TAG, "Level: " + levelState);
     if (!app.DATABASE.updateStat(player_id, lives, level, score, levelState)) {
       try {
         app.DATABASE.insertStat(player_id, lives, level, score, levelState);
@@ -364,20 +365,20 @@ public class MainActivity extends FragmentActivity {
     
     @Override
     public void onThrowBall() {
-      Log.i(TAG, "Ball has been thrown!");
+      Timber.i(TAG, "Ball has been thrown!");
     }
     
     @Override
     public void onLostBall() {
       --currentLives;
-      Log.i(TAG, "Ball has been lost! Lives rest: " + currentLives);
+      Timber.i(TAG, "Ball has been lost! Lives rest: " + currentLives);
       updateLives();
       onScoreUpdated(-2 * (int) Math.pow(currentLevel + 1, 2));  // lost ball decreases score
     }
 
     @Override
     public void onLevelFinished() {
-      Log.i(TAG, "Level finished!");
+      Timber.i(TAG, "Level finished!");
       final MainActivity activity = activityRef.get();
       if (activity != null) {
         ++currentLevel;

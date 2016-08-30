@@ -1,19 +1,20 @@
 package com.orcchg.arkanoid.surface;
 
-import java.lang.ref.WeakReference;
-
 import android.app.Dialog;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.Toast;
 
 import com.orcchg.arkanoid.R;
+
+import java.lang.ref.WeakReference;
+
+import timber.log.Timber;
 
 public class InitActivity extends FragmentActivity {
   private static final String TAG = "Arkanoid_InitActivity";
@@ -34,7 +35,7 @@ public class InitActivity extends FragmentActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    Log.d(TAG, "onCreate");
+    Timber.d(TAG, "onCreate");
     setContentView(R.layout.activity_init);
     
 //    Resources res = getResources();
@@ -118,11 +119,11 @@ public class InitActivity extends FragmentActivity {
 //    SQLiteDatabase checkDB = null;
 //    try {
 //      String path = getDatabasePath(Database.databaseName).getAbsolutePath();
-//      Log.i(TAG, "Checking database existence: " + path);
+//      Timber.i(TAG, "Checking database existence: " + path);
 //      checkDB = SQLiteDatabase.openDatabase(path, null, SQLiteDatabase.OPEN_READONLY);
 //    } catch (SQLiteException e) {
 //      // database doesn't exist yet
-//      Log.w(TAG, "Database doesn't exist yet");
+//      Timber.w(TAG, "Database doesn't exist yet");
 //    }
 //    return checkDB != null;
     ArkanoidApplication app = (ArkanoidApplication) getApplication();

@@ -5,7 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
+
+import timber.log.Timber;
 
 class Database {
   private static final String TAG = "Arkanoid_Database";
@@ -75,7 +76,7 @@ class Database {
     if (cursor.moveToFirst()) {
       return cursor.getString(playerName_columnIndex);
     } else {
-      Log.w(TAG, "Table " + PlayersTable + " has no Player with requested ID: " + id);
+      Timber.w(TAG, "Table " + PlayersTable + " has no Player with requested ID: " + id);
       return "";
     }
   }
@@ -124,7 +125,7 @@ class Database {
     if (cursor.moveToFirst()) {
       id = cursor.getLong(statID_columnIndex);
     } else {
-      Log.w(TAG, "Table " + StatTable + " has no GameStat with requested PlayerID: " + player_id);
+      Timber.w(TAG, "Table " + StatTable + " has no GameStat with requested PlayerID: " + player_id);
       return false;
     }
     
@@ -147,7 +148,7 @@ class Database {
       String state = cursor.getString(statLevelState_columnIndex);
       return new GameStat(player_id, lives, level, score, state);
     } else {
-      Log.w(TAG, "Table " + StatTable + " has no GameStat with requested PlayerID: " + player_id);
+      Timber.w(TAG, "Table " + StatTable + " has no GameStat with requested PlayerID: " + player_id);
       return null;
     }
   }
@@ -161,7 +162,7 @@ class Database {
   void deletePlayer(long id) {
     int affected_number = mDbHandler.delete(StatTable, "PlayerID = '" + id + "'", null);
     if (affected_number == 0) {
-      Log.d(TAG, "No rows were deleted.");
+      Timber.d(TAG, "No rows were deleted.");
     }
     delete(PlayersTable, id);
   }
@@ -169,7 +170,7 @@ class Database {
   void clearStat(long player_id) {
     int affected_number = mDbHandler.delete(StatTable, "PlayerID = '" + player_id + "'", null);
     if (affected_number == 0) {
-      Log.d(TAG, "No rows were deleted.");
+      Timber.d(TAG, "No rows were deleted.");
     }
   }
   
@@ -204,72 +205,72 @@ class Database {
     if (cursor.moveToLast()) {
       int id_column_index = cursor.getColumnIndexOrThrow("ID");
       int last_id = cursor.getInt(id_column_index);
-      Log.d(TAG, "Read last ID: " + last_id + ", from Table: " + table_name);
+      Timber.d(TAG, "Read last ID: " + last_id + ", from Table: " + table_name);
       return last_id;
     } else {
-      Log.d(TAG, "Table " + table_name + " in database " + databaseName + " is empty! Assigning 0 to last ID");
+      Timber.d(TAG, "Table " + table_name + " in database " + databaseName + " is empty! Assigning 0 to last ID");
       return 0;
     }
   }
   
   private long insert(final String table_name, ContentValues values) throws DatabaseException {
-    Log.d(TAG, "Insert: table name[" + table_name + "], values[" + values + "]");
+    Timber.d(TAG, "Insert: table name[" + table_name + "], values[" + values + "]");
     long rowid = -1;
     try {
       rowid = mDbHandler.insertOrThrow(table_name, null, values);
     } catch (SQLException e) {
       String message = "Failed to insert into table " + table_name + ", error: " + e.getMessage();
-      Log.e(TAG, message);
+      Timber.e(TAG, message);
       throw new DatabaseException(message);
     }
     return rowid;
   }
   
   private boolean update(final String table_name, final long id, ContentValues values) {
-    Log.d(TAG, "Update: table name[" + table_name + "], row id[" + id + "], values[" + values + "]");
+    Timber.d(TAG, "Update: table name[" + table_name + "], row id[" + id + "], values[" + values + "]");
     int affected_number = mDbHandler.update(table_name, values, "ID = '" + id + "'", null);
     if (affected_number == 0) {
-      Log.d(TAG, "Nothing to be updated.");
+      Timber.d(TAG, "Nothing to be updated.");
       return false;
     } else if (affected_number > 1) {
       String message = "More than one rows have been affected with update. This is invalid behavior.";
-      Log.e(TAG, message);
+      Timber.e(TAG, message);
       throw new RuntimeException(message);
     }
     return true;
   }
   
   private boolean delete(final String table_name, final long id) {
-    Log.d(TAG, "Delete: table name[" + table_name + "], row id[" + id + "]");
+    Timber.d(TAG, "Delete: table name[" + table_name + "], row id[" + id + "]");
     int affected_number = mDbHandler.delete(table_name, "ID = '" + id + "'", null);
     if (affected_number == 0) {
-      Log.d(TAG, "No rows were deleted.");
+      Timber.d(TAG, "No rows were deleted.");
       return false;
     }
     return true;
   }
   
   private boolean clearTable(final String table_name) {
-    Log.d(TAG, "Clear: table name[" + table_name + "]");
+    Timber.d(TAG, "Clear: table name[" + table_name + "]");
     int affected_number = mDbHandler.delete(table_name, "1", null);
     if (affected_number == 0) {
-      Log.d(TAG, "No rows were deleted.");
+      Timber.d(TAG, "No rows were deleted.");
       return false;
     }
     return true;
   }
   
   private long totalRows(final String table_name) {
-    Log.d(TAG, "Total rows: table name[" + table_name + "]");
+    Timber.d(TAG, "Total rows: table name[" + table_name + "]");
     String statement = "SELECT COUNT(*) FROM '" + table_name + "'";
     Cursor cursor = mDbHandler.rawQuery(statement, null);
     if (cursor.moveToFirst()) {
       long rows_total = cursor.getLong(0);
-      Log.d(TAG, "Number of rows in table " + table_name + " is " + rows_total);
+      Timber.d(TAG, "Number of rows in table " + table_name + " is " + rows_total);
       return rows_total;
     } else {
       String message = "Table " + table_name + " in database " + databaseName + " is empty!";
-      Log.e(TAG, message);
+      Timber.e(TAG, message);
       return 0L;
     }
   }
