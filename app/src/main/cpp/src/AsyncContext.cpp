@@ -955,7 +955,8 @@ void AsyncContext::render() {
 void AsyncContext::delay(int ms) {
   for (int i = 0; i < ms; ++i) {
     render();
-    std::this_thread::sleep_for (std::chrono::milliseconds(1/*ProcessorParams::milliDelay*/));
+    int delay = ProcessorParams::milliDelay;
+    std::this_thread::sleep_for (std::chrono::milliseconds(delay));
   }
 }
 

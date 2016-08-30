@@ -24,9 +24,6 @@ cmake_minimum_required(VERSION 3.4.1)
 # png
 set( TARGET_PNG png )
 set( SOURCE_PNG
-#    src/main/cpp/png/android-ndk.c
-#    src/main/cpp/png/linux.c
-#    src/main/cpp/png/linux-auxv.c
     src/main/cpp/png/png.c
     src/main/cpp/png/pngerror.c
     src/main/cpp/png/pngget.c

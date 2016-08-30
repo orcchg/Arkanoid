@@ -200,6 +200,7 @@ JNIEXPORT void JNICALL Java_com_orcchg_arkanoid_surface_AsyncContext_drop
 JNIEXPORT jint JNICALL Java_com_orcchg_arkanoid_surface_AsyncContext_getScore
   (JNIEnv *jenv, jobject, jlong descriptor) {
   AsyncContextHelper* ptr = (AsyncContextHelper*) descriptor;
+  return 0;  // not used
 }
 
 /* Core */

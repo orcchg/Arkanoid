@@ -464,7 +464,8 @@ void GameProcessor::moveBall() {
     new_y = old_y + m_ball.getVelocity() * sin(m_ball.getAngle());
     shiftBall(new_x, new_y);
   }
-  std::this_thread::sleep_for (std::chrono::milliseconds(1/*ProcessorParams::milliDelay*/));
+  int delay = ProcessorParams::milliDelay;
+  std::this_thread::sleep_for (std::chrono::milliseconds(delay));
 }
 
 void GameProcessor::shiftBall(GLfloat new_x, GLfloat new_y) {
