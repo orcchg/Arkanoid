@@ -1,7 +1,7 @@
 #ifndef __ARKANOID_EXPLOSION_PACKAGE__H__
 #define __ARKANOID_EXPLOSION_PACKAGE__H__
 
-#include <GLES/gl.h>
+#include <GLES2/gl2.h>
 #include "rgbstruct.h"
 
 namespace game {

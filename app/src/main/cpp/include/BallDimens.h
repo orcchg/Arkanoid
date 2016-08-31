@@ -1,7 +1,7 @@
 #ifndef __ARKANOID_BALL_DIMENS__H__
 #define __ARKANOID_BALL_DIMENS__H__
 
-#include <GLES/gl.h>
+#include <GLES2/gl2.h>
 
 #include "Params.h"
 

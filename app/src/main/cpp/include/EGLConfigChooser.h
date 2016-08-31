@@ -2,7 +2,7 @@
 #define __ARKANOID_EGL_CONFIG_CHOOSER__H__
 
 #include <EGL/egl.h>
-#include <GLES/gl.h>
+#include <GLES2/gl2.h>
 
 namespace game {
 

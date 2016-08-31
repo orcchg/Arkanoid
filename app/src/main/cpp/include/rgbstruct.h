@@ -1,7 +1,7 @@
 #ifndef __ARKANOID_RGBSTRUCT__H__
 #define __ARKANOID_RGBSTRUCT__H__
 
-#include <GLES/gl.h>
+#include <GLES2/gl2.h>
 
 namespace util {
 

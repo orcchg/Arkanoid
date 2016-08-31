@@ -1,7 +1,7 @@
 #ifndef __ARKANOID_BALLPOSITION__H__
 #define __ARKANOID_BALLPOSITION__H__
 
-#include <GLES/gl.h>
+#include <GLES2/gl2.h>
 
 namespace game {
 

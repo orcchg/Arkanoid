@@ -17,7 +17,7 @@
 #include <android/native_window_jni.h>
 
 #include <EGL/egl.h>
-#include <GLES/gl.h>
+#include <GLES2/gl2.h>
 
 #include "ActiveObject.h"
 #include "Ball.h"

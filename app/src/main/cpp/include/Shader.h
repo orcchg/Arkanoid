@@ -3,7 +3,6 @@
 
 #include <memory>
 
-#include <GLES/gl.h>
 #include <GLES2/gl2.h>
 
 namespace shader {

@@ -30,7 +30,7 @@
 #define TEXTURE_H_
 
 #include <libgen.h>
-#include <GLES/gl.h>
+#include <GLES2/gl2.h>
 #include <png.h>
 
 #include "AssetStorage.h"

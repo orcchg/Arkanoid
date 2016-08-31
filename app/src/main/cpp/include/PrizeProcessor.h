@@ -7,7 +7,7 @@
 #include <unordered_map>
 #include <unordered_set>
 
-#include <GLES/gl.h>
+#include <GLES2/gl2.h>
 #include <jni.h>
 
 #include "ActiveObject.h"
