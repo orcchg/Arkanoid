@@ -12,12 +12,16 @@ namespace game {
 
 /* Public API */
 // ----------------------------------------------
-GameProcessor::GameProcessor(JavaVM* jvm)
+GameProcessor::GameProcessor(JavaVM* jvm, jint fdn)
   : m_jvm(jvm), m_jenv(nullptr)
   , master_object(nullptr)
   , fireJavaEvent_lostBall_id(nullptr)
   , fireJavaEvent_levelFinished_id(nullptr)
+  , fireJavaEvent_scoreUpdated_id(nullptr)
+  , fireJavaEvent_angleChanged_id(nullptr)
   , fireJavaEvent_cardinalityChanged_id(nullptr)
+  , fireJavaEvent_debugMessage_id(nullptr)
+  , m_fdn(fdn)
   , m_level(nullptr)
   , m_throw_angle(60.0f)
   , m_aspect(1.0f)
@@ -46,6 +50,7 @@ GameProcessor::GameProcessor(JavaVM* jvm)
   , m_viscosity_distribution(0, 100) {
 
   DBG("enter GameProcessor ctor");
+  INF("Frame delay is %i (nanos)", m_fdn);
   m_aspect_ratio_received.store(false);
   m_load_level_received.store(false);
   m_throw_ball_received.store(false);
@@ -464,8 +469,8 @@ void GameProcessor::moveBall() {
     new_y = old_y + m_ball.getVelocity() * sin(m_ball.getAngle());
     shiftBall(new_x, new_y);
   }
-  int delay = ProcessorParams::milliDelay;
-  std::this_thread::sleep_for (std::chrono::milliseconds(delay));
+  uint64_t delay = ProcessorParams::nanoDelay;
+  std::this_thread::sleep_for (std::chrono::nanoseconds(delay));
 }
 
 void GameProcessor::shiftBall(GLfloat new_x, GLfloat new_y) {

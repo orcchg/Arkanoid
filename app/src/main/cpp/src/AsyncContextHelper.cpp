@@ -16,8 +16,8 @@ void JNI_OnUnload(JavaVM* vm, void* reserved) {}
 /* init */
 // ----------------------------------------------------------------------------
 JNIEXPORT jlong JNICALL Java_com_orcchg_arkanoid_surface_AsyncContext_init
-  (JNIEnv *jenv, jobject object) {
-  auto ptr = new AsyncContextHelper(jenv, object);
+  (JNIEnv *jenv, jobject object, jint fdn) {
+  auto ptr = new AsyncContextHelper(jenv, object, fdn);
   jlong descriptor = (jlong)(intptr_t) ptr;
 
   /* Subscribe on events incoming from outside */
@@ -205,13 +205,13 @@ JNIEXPORT jint JNICALL Java_com_orcchg_arkanoid_surface_AsyncContext_getScore
 
 /* Core */
 // ----------------------------------------------------------------------------
-AsyncContextHelper::AsyncContextHelper(JNIEnv* jenv, jobject object)
+AsyncContextHelper::AsyncContextHelper(JNIEnv* jenv, jobject object, jint fdn)
   : jenv(jenv)
   , window(nullptr) {
 
   DBG("enter AsyncContextHelper ctor");
-  acontext = new game::AsyncContext(jvm);
-  processor = new game::GameProcessor(jvm);
+  acontext = new game::AsyncContext(jvm, fdn);
+  processor = new game::GameProcessor(jvm, fdn);
   prize_processor = new game::PrizeProcessor(jvm);
   sound_processor = new native::sound::SoundProcessor(jvm);
 

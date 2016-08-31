@@ -32,7 +32,7 @@ class GameProcessor : public ActiveObject {
 public:
   typedef GameProcessor* Ptr;
 
-  GameProcessor(JavaVM* jvm);
+  GameProcessor(JavaVM* jvm, jint fdn);
   virtual ~GameProcessor() noexcept;
 
   /** @defgroup Callbacks These methods are responses of incoming events
@@ -163,6 +163,8 @@ private:
   jmethodID fireJavaEvent_cardinalityChanged_id;
   jmethodID fireJavaEvent_debugMessage_id;
   /** @} */  // end of JNIEnvironment group
+
+  jint m_fdn;  //!< delay between sequential frames (in nanos)
 
   /** @defgroup LogicData Game logic related data members.
    * @{

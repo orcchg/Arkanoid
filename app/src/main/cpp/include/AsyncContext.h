@@ -44,7 +44,7 @@ class AsyncContext : public ActiveObject {
 public:
   typedef AsyncContext* Ptr;
 
-  AsyncContext(JavaVM* jvm);
+  AsyncContext(JavaVM* jvm, jint fdn);
   virtual ~AsyncContext() noexcept;
 
   /** @defgroup Callbacks These methods are responses of incoming events
@@ -197,6 +197,8 @@ private:
   jobject master_object;
   jmethodID fireJavaEvent_errorTextureLoad_id;
   /** @} */  // end of JNIEnvironment group
+
+  jint m_fdn;  //!< delay between sequential frames (in nanos)
 
   /** @defgroup WindowSurface Rendering surface stuff.
    * @see https://www.khronos.org/registry/egl/sdk/docs/man/html/eglIntro.xhtml

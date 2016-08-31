@@ -14,9 +14,11 @@ namespace game {
 
 /* Public API */
 // ----------------------------------------------------------------------------
-AsyncContext::AsyncContext(JavaVM* jvm)
+AsyncContext::AsyncContext(JavaVM* jvm, jint fdn)
   : m_jvm(jvm), m_jenv(nullptr)
   , master_object(nullptr)
+  , fireJavaEvent_errorTextureLoad_id(nullptr)
+  , m_fdn(fdn)
   , m_window(nullptr)
   , m_egl_display(EGL_NO_DISPLAY)
   , m_egl_surface(EGL_NO_SURFACE)
@@ -72,6 +74,7 @@ AsyncContext::AsyncContext(JavaVM* jvm)
   , m_laser_shader(nullptr) {
 
   DBG("enter AsyncContext ctor");
+  INF("Frame delay is %i (nanos)", m_fdn);
   m_surface_received.store(false);
   m_load_resources_received.store(false);
   m_shift_gamepad_received.store(false);
@@ -955,8 +958,8 @@ void AsyncContext::render() {
 void AsyncContext::delay(int ms) {
   for (int i = 0; i < ms; ++i) {
     render();
-    int delay = ProcessorParams::milliDelay;
-    std::this_thread::sleep_for (std::chrono::milliseconds(delay));
+    uint64_t delay = ProcessorParams::nanoDelay;
+    std::this_thread::sleep_for (std::chrono::nanoseconds(delay));
   }
 }
 

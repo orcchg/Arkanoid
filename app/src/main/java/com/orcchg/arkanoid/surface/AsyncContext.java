@@ -25,8 +25,8 @@ class AsyncContext {
   
   private CoreEventListener mListener;
   
-  AsyncContext() {
-    descriptor = init();
+  AsyncContext(int fdn) {
+    descriptor = init(fdn);
   }
   
   /* Package API */
@@ -143,7 +143,7 @@ class AsyncContext {
   
   /* Private methods */
   // --------------------------------------------------------------------------
-  private native long init();
+  private native long init(int fdn);  //!< fdn - frame delay (in nanos)
   private native void start(long descriptor);
   private native void stop(long descriptor);
   private native void destroy(long descriptor);

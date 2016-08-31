@@ -2,6 +2,7 @@ package com.orcchg.arkanoid.surface;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -52,14 +53,16 @@ public class MainActivity extends FragmentActivity {
     Timber.d(TAG, "onCreate");
     setContentView(R.layout.activity_main);
     
-//    Resources res = getResources();
+    Resources res = getResources();
+    final int FRAME_DELAY_NANOS = res.getInteger(R.integer.frame_delay_nanos);
 //    mAlertDialogTitle = res.getString(R.string.internal_error);
 //    mCloseButtonLabel = res.getString(R.string.close_button);
 //    mWarningMessage = res.getString(R.string.internal_error_message);
+    Timber.i(TAG, "Frame delay is %s (nanos)", FRAME_DELAY_NANOS);
     
     dropStatFlag = getIntent().getBooleanExtra(InitActivity.bundleKey_dropStat, false);
     
-    mAsyncContext = new AsyncContext();
+    mAsyncContext = new AsyncContext(FRAME_DELAY_NANOS);
     mAsyncContext.setCoreEventListener(new CoreEventHandler(this));
 
     mSurface = (GameSurface) findViewById(R.id.surface_view);

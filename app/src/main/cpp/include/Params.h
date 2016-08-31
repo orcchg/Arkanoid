@@ -41,7 +41,7 @@ struct PrizeParams {
 };
 
 struct ProcessorParams {
-  constexpr static int milliDelay = 1;  //!< Delay between sequential frames.
+  constexpr static uint64_t nanoDelay = 1500000;  //!< Delay between sequential frames.
 };
 
 }
