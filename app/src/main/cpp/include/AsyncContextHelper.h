@@ -16,10 +16,10 @@ extern "C" {
 /*
  * Class:     com_orcchg_arkanoid_surface_AsyncContext
  * Method:    init
- * Signature: ()J
+ * Signature: ()JI
  */
 JNIEXPORT jlong JNICALL Java_com_orcchg_arkanoid_surface_AsyncContext_init
-  (JNIEnv *, jobject);
+  (JNIEnv *, jobject, jint);
 
 /*
  * Class:     com_orcchg_arkanoid_surface_AsyncContext

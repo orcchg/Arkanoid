@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <integer name="frame_delay_nanos">2400000</integer>
+    <integer name="frame_delay_nanos">3000000</integer>
 </resources>
