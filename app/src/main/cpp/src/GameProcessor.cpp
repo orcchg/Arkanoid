@@ -862,6 +862,9 @@ bool GameProcessor::collideBlock(GLfloat new_x, GLfloat new_y) {
         break;
       case Block::ULTRA_1:
         m_level->forceDropCardinality();
+      case Block::ULTRA_2:
+      case Block::ULTRA:
+        explodeBlock(row, col, BlockUtils::getBlockColor(Block::ULTRA), Kind::DIVERGE);
         break;
       // --------------------
       case Block::FOG:
