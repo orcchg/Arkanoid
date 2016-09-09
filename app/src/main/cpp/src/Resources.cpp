@@ -162,6 +162,8 @@ const native::SoundBuffer* const Resources::getSound(const std::string& name) co
 
 const native::SoundBuffer* const Resources::getRandomSound(const std::string& prefix) const {
   native::SoundBuffer* sound = nullptr;
+  if (prefix.empty()) return sound;
+
   bool success = false;
   do {
     size_t random_index = std::rand() % m_sounds.size();

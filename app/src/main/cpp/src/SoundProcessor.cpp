@@ -310,7 +310,7 @@ void SoundProcessor::process_blockImpact() {
       break;
     case game::Block::QUICK:
     case game::Block::QUICK_2:
-      sound_prefix = "block_";
+      sound_prefix = "prequick_";
       break;
     case game::Block::QUICK_1:
       sound_prefix = "quick_";
@@ -326,12 +326,14 @@ void SoundProcessor::process_blockImpact() {
       sound_prefix = "zygote_";
       break;
     case game::Block::DESTROY:
-    case game::Block::MIDAS:
       sound_prefix = "destroy_";
+      break;
+    case game::Block::MIDAS:
+      sound_prefix = "midas_";
       break;
     case game::Block::NONE:
     default:
-      return;
+      return;  // no sound to play
   }
 
   auto sound = m_resources->getRandomSound(sound_prefix);
@@ -411,20 +413,19 @@ void SoundProcessor::process_ballEffect() {
   std::unique_lock<std::mutex> lock(m_ball_effect_mutex);
   std::string sound_prefix = "";
 
-  // TODO: more accurate sounds
   switch (m_ball_effect) {
     case game::BallEffect::EASY:
     case game::BallEffect::EASY_T:
-    case game::BallEffect::EXPLODE:
-    case game::BallEffect::JUMP:
     case game::BallEffect::PIERCE:
       sound_prefix = "explode_";
       break;
-    case game::BallEffect::UPGRADE:
-      sound_prefix = "upgrade_";
+    case game::BallEffect::EXPLODE:
+    case game::BallEffect::JUMP:
+      sound_prefix = "spell_";
       break;
+    case game::BallEffect::UPGRADE:
     case game::BallEffect::DEGRADE:
-      sound_prefix = "degrade_";
+      sound_prefix = "change_";
       break;
     default:
       return;  // no sound to play
@@ -520,6 +521,8 @@ bool SoundProcessor::initPlayerQueue(int player_id) {
 }
 
 bool SoundProcessor::playSound(const SoundBuffer* sound) {
+  if (sound == nullptr) return false;
+
   if (m_selected_player >= SoundProcessor::playersCount) {
     m_selected_player = 0;
   }
