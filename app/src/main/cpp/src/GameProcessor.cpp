@@ -615,6 +615,9 @@ int GameProcessor::performBallEffectAtBlock(int row, int col) {
       break;
   }
 
+  // process ball effect further (like play sound) before it gets dropped
+  ball_effect_event.notifyListeners(m_ball.getEffect());
+
   // Timed effects will be dropped by timer, not by block collision
   if (m_ball.getEffect() != BallEffect::EASY_T &&
       m_ball.getEffect() != BallEffect::GOO &&
@@ -627,7 +630,6 @@ int GameProcessor::performBallEffectAtBlock(int row, int col) {
     m_ball.setEffect(BallEffect::NONE);
     drop_ball_appearance_event.notifyListeners(true);
   }
-  ball_effect_event.notifyListeners(m_ball.getEffect());
   return score;
 }
 
@@ -863,6 +865,8 @@ bool GameProcessor::collideBlock(GLfloat new_x, GLfloat new_y) {
       case Block::ULTRA_1:
         m_level->forceDropCardinality();
       case Block::ULTRA_2:
+      case Block::ULTRA_3:
+      case Block::ULTRA_4:
       case Block::ULTRA:
         external_collision = blockCollision(top_border, bottom_border, left_border, right_border, 100 /* elastic */);
         explodeBlock(row, col, BlockUtils::getBlockColor(Block::ULTRA), Kind::DIVERGE);

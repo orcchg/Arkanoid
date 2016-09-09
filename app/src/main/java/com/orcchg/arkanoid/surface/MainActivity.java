@@ -22,7 +22,6 @@ import java.lang.ref.WeakReference;
 import timber.log.Timber;
 
 public class MainActivity extends FragmentActivity {
-  private static final String TAG = "Arkanoid_MainActivity";
   private static final int PLAYER_ID = 1;
   private static final int INITIAL_LIVES = 3;
   private static final int INITIAL_LEVEL = 0;
@@ -50,7 +49,7 @@ public class MainActivity extends FragmentActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    Timber.d(TAG, "onCreate");
+    Timber.d("onCreate");
     setContentView(R.layout.activity_main);
     
     Resources res = getResources();
@@ -58,7 +57,7 @@ public class MainActivity extends FragmentActivity {
 //    mAlertDialogTitle = res.getString(R.string.internal_error);
 //    mCloseButtonLabel = res.getString(R.string.close_button);
 //    mWarningMessage = res.getString(R.string.internal_error_message);
-    Timber.i(TAG, "Frame delay is %s (nanos)", FRAME_DELAY_NANOS);
+    Timber.i("Frame delay is %s (nanos)", FRAME_DELAY_NANOS);
     
     dropStatFlag = getIntent().getBooleanExtra(InitActivity.bundleKey_dropStat, false);
     
@@ -108,7 +107,7 @@ public class MainActivity extends FragmentActivity {
   
   @Override
   protected void onResume() {
-    Timber.d(TAG, "onResume");
+    Timber.d("onResume");
     mAsyncContext.start();
     mSurface.setAsyncContext(mAsyncContext);
     mAsyncContext.loadResources();
@@ -136,7 +135,7 @@ public class MainActivity extends FragmentActivity {
   
   @Override
   protected void onPause() {
-    Timber.d(TAG, "onPause");
+    Timber.d("onPause");
     setStat(PLAYER_ID, currentLives, currentLevel, currentScore);
     mAsyncContext.stop();
     finish();
@@ -145,7 +144,7 @@ public class MainActivity extends FragmentActivity {
   
   @Override
   protected void onDestroy() {
-    Timber.d(TAG, "onDestroy");
+    Timber.d("onDestroy");
     mAsyncContext.destroy();
     mNativeResources.release();
     releaseAllViews();
@@ -157,7 +156,7 @@ public class MainActivity extends FragmentActivity {
   public boolean onKeyDown(int keyCode, KeyEvent event) {
     switch (keyCode) {
       case KeyEvent.KEYCODE_BACK:
-        Timber.d(TAG, "onKeyDown( back )");
+        Timber.d("onKeyDown( back )");
         finish();
         break;
     }
@@ -168,7 +167,7 @@ public class MainActivity extends FragmentActivity {
   public boolean onCreateOptionsMenu(android.view.Menu menu) {
     getMenuInflater().inflate(R.menu.arkanoid_menu, menu);
     return true;
-  };
+  }
   
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
@@ -199,7 +198,7 @@ public class MainActivity extends FragmentActivity {
   /* Gameplay methods */
   // --------------------------------------------------------------------------
   void lostGame() {
-    Timber.i(TAG, "Game is lost!");
+    Timber.i("Game is lost!");
     setLives(INITIAL_LIVES);
     mAsyncContext.fireJavaEvent_refreshLives();
     mAsyncContext.loadLevel(Levels.get(currentLevel, ""));
@@ -217,9 +216,9 @@ public class MainActivity extends FragmentActivity {
   
   void setStat(long player_id, int lives, int level, int score) {
     ArkanoidApplication app = (ArkanoidApplication) getApplication();
-    Timber.i(TAG, "Stat to be stored: [" + lives + ", " + level + ", " + score + "]");
+    Timber.i("Stat to be stored: [%s, %s, %s]", lives, level, score);
     String levelState = mAsyncContext.saveLevel();
-    Timber.i(TAG, "Level: " + levelState);
+    Timber.i("Level: %s", levelState);
     if (!app.DATABASE.updateStat(player_id, lives, level, score, levelState)) {
       try {
         app.DATABASE.insertStat(player_id, lives, level, score, levelState);
@@ -335,14 +334,13 @@ public class MainActivity extends FragmentActivity {
   /* Core event listeners */
   // --------------------------------------------------------------------------
   private static class CoreEventHandler implements AsyncContext.CoreEventListener {
-    private static final String TAG = "CoreEvent";
     private WeakReference<MainActivity> activityRef;
     private int currentLives = INITIAL_LIVES;
     private int currentLevel = INITIAL_LEVEL;
     private int currentScore = INITIAL_SCORE;
     
     CoreEventHandler(final MainActivity activity) {
-      activityRef = new WeakReference<MainActivity>(activity);
+      activityRef = new WeakReference<>(activity);
       GameStat game_stat = activity.getStat(PLAYER_ID);
       if (game_stat != null) {
         currentLives = game_stat.lives;
@@ -368,20 +366,20 @@ public class MainActivity extends FragmentActivity {
     
     @Override
     public void onThrowBall() {
-      Timber.i(TAG, "Ball has been thrown!");
+      Timber.i("Ball has been thrown!");
     }
     
     @Override
     public void onLostBall() {
       --currentLives;
-      Timber.i(TAG, "Ball has been lost! Lives rest: " + currentLives);
+      Timber.i("Ball has been lost! Lives rest: %s", currentLives);
       updateLives();
       onScoreUpdated(-2 * (int) Math.pow(currentLevel + 1, 2));  // lost ball decreases score
     }
 
     @Override
     public void onLevelFinished() {
-      Timber.i(TAG, "Level finished!");
+      Timber.i("Level finished!");
       final MainActivity activity = activityRef.get();
       if (activity != null) {
         ++currentLevel;

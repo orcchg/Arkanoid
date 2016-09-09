@@ -276,15 +276,17 @@ void SoundProcessor::process_blockImpact() {
       sound_prefix = "glass_";
       break;
     case game::Block::ELECTRO:
+      sound_prefix = "boom_";
+      break;
     case game::Block::KNOCK_VERTICAL:
     case game::Block::KNOCK_HORIZONTAL:
       sound_prefix = "explode_";
       break;
     case game::Block::ARTIFICAL:
-      sound_prefix = "artifical_";
+      sound_prefix = "magic_";
       break;
     case game::Block::MAGIC:
-      sound_prefix = "magic_";
+      sound_prefix = "change_";
       break;
     case game::Block::IRON:
     case game::Block::STEEL:
@@ -416,12 +418,12 @@ void SoundProcessor::process_ballEffect() {
   switch (m_ball_effect) {
     case game::BallEffect::EASY:
     case game::BallEffect::EASY_T:
-    case game::BallEffect::PIERCE:
-      sound_prefix = "explode_";
-      break;
     case game::BallEffect::EXPLODE:
     case game::BallEffect::JUMP:
-      sound_prefix = "spell_";
+      sound_prefix = "boom_";
+      break;
+    case game::BallEffect::PIERCE:
+      sound_prefix = "explode_";
       break;
     case game::BallEffect::UPGRADE:
     case game::BallEffect::DEGRADE:

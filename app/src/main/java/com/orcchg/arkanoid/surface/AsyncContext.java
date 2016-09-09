@@ -3,8 +3,6 @@ package com.orcchg.arkanoid.surface;
 import android.view.Surface;
 
 class AsyncContext {
-  private static final String TAG = "Arkanoid_AsyncContext";
-  
   private final long descriptor;
   
   interface CoreEventListener {

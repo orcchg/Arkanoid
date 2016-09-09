@@ -17,7 +17,6 @@ import java.lang.ref.WeakReference;
 import timber.log.Timber;
 
 public class InitActivity extends FragmentActivity {
-  private static final String TAG = "Arkanoid_InitActivity";
   static final String bundleKey_dropStat = "bundleKey_dropStat";
   
 //  private static String mAlertDialogTitle, mAboutDialogTitle;
@@ -35,7 +34,7 @@ public class InitActivity extends FragmentActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    Timber.d(TAG, "onCreate");
+    Timber.d("onCreate");
     setContentView(R.layout.activity_init);
     
 //    Resources res = getResources();
@@ -170,9 +169,9 @@ public class InitActivity extends FragmentActivity {
   private static class AboutDialog extends Dialog implements View.OnClickListener {
     private WeakReference<InitActivity> activityRef;
     
-    public AboutDialog(InitActivity activity) {
+    AboutDialog(InitActivity activity) {
       super(activity);
-      activityRef = new WeakReference<InitActivity>(activity);
+      activityRef = new WeakReference<>(activity);
     }
     
     @Override
@@ -197,9 +196,9 @@ public class InitActivity extends FragmentActivity {
   private static class WarningDialog extends Dialog implements View.OnClickListener {
     private WeakReference<InitActivity> activityRef;
     
-    public WarningDialog(InitActivity activity) {
+    WarningDialog(InitActivity activity) {
       super(activity);
-      activityRef = new WeakReference<InitActivity>(activity);
+      activityRef = new WeakReference<>(activity);
     }
     
     @Override

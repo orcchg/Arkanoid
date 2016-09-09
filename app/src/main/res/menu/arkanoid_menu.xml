@@ -1,16 +1,17 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/throwBall"
-        android:showAsAction="never"
+        app:showAsAction="never"
         android:title="@string/action_throw" />
     
     <item
         android:id="@+id/nextLevel"
-        android:showAsAction="never"
+        app:showAsAction="never"
         android:title="@string/action_nextLevel" />
     
     <item
         android:id="@+id/dropStat"
-        android:showAsAction="never"
+        app:showAsAction="never"
         android:title="@string/action_dropStat" />
 </menu>

@@ -12,7 +12,6 @@ import java.lang.ref.WeakReference;
 import timber.log.Timber;
 
 public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
-  private static final String TAG = "Arkanoid_GameSurface";
   private static final int VERTICAL_SWIPE_THRESHOLD_DP = 80;  // in dp
   
   private static int mDesiredWidth = 512;   // in dp
@@ -42,12 +41,12 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
 
   @Override
   public void surfaceCreated(SurfaceHolder holder) {
-    Timber.d(TAG, "Game surface created");
+    Timber.d("Game surface created");
   }
 
   @Override
   public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-    Timber.d(TAG, "Game surface changed");
+    Timber.d("Game surface changed");
     if (mAsyncContextRef != null) {
       AsyncContext acontext = mAsyncContextRef.get();
       if (acontext != null) {
@@ -58,7 +57,7 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
 
   @Override
   public void surfaceDestroyed(SurfaceHolder holder) {
-    Timber.d(TAG, "Game surface destroyed");
+    Timber.d("Game surface destroyed");
     if (mAsyncContextRef != null) {
       AsyncContext acontext = mAsyncContextRef.get();
       if (acontext != null) {
@@ -114,7 +113,7 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
   /* Internal methods */
   // --------------------------------------------------------------------------
   void setAsyncContext(final AsyncContext acontext) {
-    mAsyncContextRef = new WeakReference<AsyncContext>(acontext);
+    mAsyncContextRef = new WeakReference<>(acontext);
   }
   
   @Override

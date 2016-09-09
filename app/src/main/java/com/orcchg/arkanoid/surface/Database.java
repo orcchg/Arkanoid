@@ -11,7 +11,7 @@ import timber.log.Timber;
 class Database {
   private static final String TAG = "Arkanoid_Database";
   
-  static final String databaseName = "ArkanoidDatabase.db";
+  private static final String databaseName = "ArkanoidDatabase.db";
   private SQLiteDatabase mDbHandler;
   
   private static final String PlayersTable = "PlayersTable";
@@ -71,14 +71,16 @@ class Database {
   }
   
   String getPlayer(long id) {
+    String result = "";
     String statement = "SELECT * FROM '" + PlayersTable + "' WHERE ID = '" + id + "';";
     Cursor cursor = mDbHandler.rawQuery(statement, null);
     if (cursor.moveToFirst()) {
-      return cursor.getString(playerName_columnIndex);
+      result = cursor.getString(playerName_columnIndex);
     } else {
-      Timber.w(TAG, "Table " + PlayersTable + " has no Player with requested ID: " + id);
-      return "";
+      Timber.w("Table %s has no Player with requested ID: %s", PlayersTable, id);
     }
+    cursor.close();
+    return result;
   }
   
   long totalPlayers() {
@@ -125,9 +127,11 @@ class Database {
     if (cursor.moveToFirst()) {
       id = cursor.getLong(statID_columnIndex);
     } else {
-      Timber.w(TAG, "Table " + StatTable + " has no GameStat with requested PlayerID: " + player_id);
+      Timber.w("Table %s has no GameStat with requested PlayerID: %s", StatTable, player_id);
+      cursor.close();
       return false;
     }
+    cursor.close();
     
     ContentValues values = new ContentValues();
     values.put("PlayerID", player_id);
@@ -139,6 +143,7 @@ class Database {
   }
   
   GameStat getStat(long player_id) {
+    GameStat result = null;
     String statement = "SELECT * FROM '" + StatTable + "' WHERE PlayerID = '" + player_id + "';";
     Cursor cursor = mDbHandler.rawQuery(statement, null);
     if (cursor.moveToFirst()) {
@@ -146,11 +151,12 @@ class Database {
       int level = cursor.getInt(statLevel_columnIndex);
       int score = cursor.getInt(statScore_columnIndex);
       String state = cursor.getString(statLevelState_columnIndex);
-      return new GameStat(player_id, lives, level, score, state);
+      result = new GameStat(player_id, lives, level, score, state);
     } else {
-      Timber.w(TAG, "Table " + StatTable + " has no GameStat with requested PlayerID: " + player_id);
-      return null;
+      Timber.w("Table %s has no GameStat with requested PlayerID: %s", StatTable, player_id);
     }
+    cursor.close();
+    return result;
   }
   
   long totalStatRecords() {
@@ -162,7 +168,7 @@ class Database {
   void deletePlayer(long id) {
     int affected_number = mDbHandler.delete(StatTable, "PlayerID = '" + id + "'", null);
     if (affected_number == 0) {
-      Timber.d(TAG, "No rows were deleted.");
+      Timber.d("No rows were deleted.");
     }
     delete(PlayersTable, id);
   }
@@ -170,7 +176,7 @@ class Database {
   void clearStat(long player_id) {
     int affected_number = mDbHandler.delete(StatTable, "PlayerID = '" + player_id + "'", null);
     if (affected_number == 0) {
-      Timber.d(TAG, "No rows were deleted.");
+      Timber.d("No rows were deleted.");
     }
   }
   
@@ -184,15 +190,15 @@ class Database {
   /* Exceptions */
   // --------------------------------------------------------------------------
   @SuppressWarnings("serial")
-  public static class NoPlaceholdersException extends Exception {
-    public NoPlaceholdersException(String message) {
+  private static class NoPlaceholdersException extends Exception {
+    private NoPlaceholdersException(String message) {
       super(message);
     }
   }
   
   @SuppressWarnings("serial")
-  public static class DatabaseException extends Exception {
-    public DatabaseException(String message) {
+  static class DatabaseException extends Exception {
+    private DatabaseException(String message) {
       super(message);
     }
   }
@@ -200,79 +206,81 @@ class Database {
   /* Private methods */
   // --------------------------------------------------------------------------
   private long getLastID(final String table_name) {
+    long last_id = 0L;
     String statement = "SELECT * FROM '" + table_name + "'";
     Cursor cursor = mDbHandler.rawQuery(statement, null);
     if (cursor.moveToLast()) {
       int id_column_index = cursor.getColumnIndexOrThrow("ID");
-      int last_id = cursor.getInt(id_column_index);
-      Timber.d(TAG, "Read last ID: " + last_id + ", from Table: " + table_name);
-      return last_id;
+      last_id = cursor.getInt(id_column_index);
+      Timber.d("Read last ID: %s from Table: %s", last_id, table_name);
     } else {
-      Timber.d(TAG, "Table " + table_name + " in database " + databaseName + " is empty! Assigning 0 to last ID");
-      return 0;
+      Timber.d("Table %s in database %s is empty! Assigning 0 to last ID", table_name, databaseName);
     }
+    cursor.close();
+    return last_id;
   }
   
   private long insert(final String table_name, ContentValues values) throws DatabaseException {
-    Timber.d(TAG, "Insert: table name[" + table_name + "], values[" + values + "]");
-    long rowid = -1;
+    Timber.d("Insert: table name[%s], values[%s]", table_name, values);
+    long rowid = -1L;
     try {
       rowid = mDbHandler.insertOrThrow(table_name, null, values);
     } catch (SQLException e) {
       String message = "Failed to insert into table " + table_name + ", error: " + e.getMessage();
-      Timber.e(TAG, message);
+      Timber.e(message);
       throw new DatabaseException(message);
     }
     return rowid;
   }
   
   private boolean update(final String table_name, final long id, ContentValues values) {
-    Timber.d(TAG, "Update: table name[" + table_name + "], row id[" + id + "], values[" + values + "]");
+    Timber.d("Update: table name[%s], row id[%s], values[%s]", table_name, id, values);
     int affected_number = mDbHandler.update(table_name, values, "ID = '" + id + "'", null);
     if (affected_number == 0) {
-      Timber.d(TAG, "Nothing to be updated.");
+      Timber.d("Nothing to be updated.");
       return false;
     } else if (affected_number > 1) {
       String message = "More than one rows have been affected with update. This is invalid behavior.";
-      Timber.e(TAG, message);
+      Timber.e(message);
       throw new RuntimeException(message);
     }
     return true;
   }
   
   private boolean delete(final String table_name, final long id) {
-    Timber.d(TAG, "Delete: table name[" + table_name + "], row id[" + id + "]");
+    Timber.d("Delete: table name[%s], row id[%s]", table_name, id);
     int affected_number = mDbHandler.delete(table_name, "ID = '" + id + "'", null);
     if (affected_number == 0) {
-      Timber.d(TAG, "No rows were deleted.");
+      Timber.d("No rows were deleted.");
       return false;
     }
     return true;
   }
   
   private boolean clearTable(final String table_name) {
-    Timber.d(TAG, "Clear: table name[" + table_name + "]");
+    Timber.d("Clear: table name[%s]", table_name);
     int affected_number = mDbHandler.delete(table_name, "1", null);
     if (affected_number == 0) {
-      Timber.d(TAG, "No rows were deleted.");
+      Timber.d("No rows were deleted.");
       return false;
     }
     return true;
   }
   
   private long totalRows(final String table_name) {
-    Timber.d(TAG, "Total rows: table name[" + table_name + "]");
+    long rows_total = 0L;
+    Timber.d("Total rows: table name[%s]", table_name);
     String statement = "SELECT COUNT(*) FROM '" + table_name + "'";
     Cursor cursor = mDbHandler.rawQuery(statement, null);
     if (cursor.moveToFirst()) {
-      long rows_total = cursor.getLong(0);
-      Timber.d(TAG, "Number of rows in table " + table_name + " is " + rows_total);
-      return rows_total;
+      rows_total = cursor.getLong(0);
+      Timber.d("Number of rows in table %s is %s", table_name, rows_total);
     } else {
       String message = "Table " + table_name + " in database " + databaseName + " is empty!";
-      Timber.e(TAG, message);
-      return 0L;
+      Timber.e(message);
     }
+    cursor.close();
+    return rows_total;
   }
   
   private String makePlaceholders(int len) throws NoPlaceholdersException {
