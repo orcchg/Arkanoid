@@ -864,6 +864,7 @@ bool GameProcessor::collideBlock(GLfloat new_x, GLfloat new_y) {
         m_level->forceDropCardinality();
       case Block::ULTRA_2:
       case Block::ULTRA:
+        external_collision = blockCollision(top_border, bottom_border, left_border, right_border, 100 /* elastic */);
         explodeBlock(row, col, BlockUtils::getBlockColor(Block::ULTRA), Kind::DIVERGE);
         break;
       // --------------------
@@ -973,6 +974,11 @@ bool GameProcessor::collideBlock(GLfloat new_x, GLfloat new_y) {
         for (auto& item : affected_blocks) {
           block_impact_event.notifyListeners(item);
         }
+        break;
+      case Block::QUICK:
+      case Block::QUICK_2:
+        external_collision = blockCollision(top_border, bottom_border, left_border, right_border, 100 /* elastic */);
+        explodeBlock(row, col, BlockUtils::getBlockColor(Block::QUICK), Kind::DIVERGE);
         break;
       case Block::QUICK_1:
         external_collision = blockCollision(top_border, bottom_border, left_border, right_border, 100 /* elastic */);
