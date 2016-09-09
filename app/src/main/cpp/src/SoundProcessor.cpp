@@ -281,10 +281,10 @@ void SoundProcessor::process_blockImpact() {
       sound_prefix = "explode_";
       break;
     case game::Block::ARTIFICAL:
-      sound_prefix = "magic_";
+      sound_prefix = "artifical_";
       break;
     case game::Block::MAGIC:
-      // TODO: magic explosion
+      sound_prefix = "magic_";
       break;
     case game::Block::IRON:
     case game::Block::STEEL:
@@ -313,7 +313,7 @@ void SoundProcessor::process_blockImpact() {
       sound_prefix = "block_";
       break;
     case game::Block::QUICK_1:
-      // TODO: quick impact
+      sound_prefix = "quick_";
       break;
     case game::Block::WATER:
     case game::Block::YOGURT:
@@ -362,8 +362,20 @@ void SoundProcessor::process_prizeCaught() {
     case game::Prize::DESTROY:
       sound_prefix = "skull_";
       break;
+    case game::Prize::EXTEND:
+      sound_prefix = "long_";
+      break;
     case game::Prize::HYPER:
       sound_prefix = "hyper_";
+      break;
+    case game::Prize::INIT:
+      sound_prefix = "init_";
+      break;
+    case game::Prize::PROTECT:
+      sound_prefix = "protect_";
+      break;
+    case game::Prize::SHORT:
+      sound_prefix = "short_";
       break;
     case game::Prize::VITALITY:
       sound_prefix = "vitality_";
