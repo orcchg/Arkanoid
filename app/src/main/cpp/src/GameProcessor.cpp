@@ -1,12 +1,9 @@
 #include <sstream>
-#include <cassert>
 #include <chrono>
 #include <cmath>
 
 #include "Exceptions.h"
 #include "GameProcessor.h"
-#include "Params.h"
-#include "Prize.h"
 
 namespace game {
 
@@ -297,7 +294,7 @@ void GameProcessor::process_prizeCaught() {
         std::vector<RowCol> none_blocks;
         m_level->findBlocksBackwardAllowNone(Block::NONE, &none_blocks);
         if (!none_blocks.empty()) {
-          int random_index = util::getRandomElement(none_blocks);
+          size_t random_index = util::getRandomElement(none_blocks);
           RowCol rowcol(none_blocks[random_index].row, none_blocks[random_index].col, Block::ARTIFICAL);
           explodeBlock(rowcol.row, rowcol.col, BlockUtils::getBlockEdgeColor(Block::ARTIFICAL), Kind::CONVERGE);
           m_level->setVulnerableBlock(rowcol.row, rowcol.col, Block::ARTIFICAL);
@@ -433,8 +430,8 @@ void GameProcessor::moveBall() {
   // ball's position in the next frame
   GLfloat old_x = m_ball.getPose().getX();
   GLfloat old_y = m_ball.getPose().getY();
-  GLfloat new_x = m_ball.getPose().getX() + m_ball.getVelocity() * cos(m_ball.getAngle());
-  GLfloat new_y = m_ball.getPose().getY() + m_ball.getVelocity() * sin(m_ball.getAngle());
+  GLfloat new_x = m_ball.getPose().getX() + m_ball.getVelocity() * cosf(m_ball.getAngle());
+  GLfloat new_y = m_ball.getPose().getY() + m_ball.getVelocity() * sinf(m_ball.getAngle());
 
   if ((m_is_ball_lost && new_y <= -1.0f) || m_is_ball_death) {
     stopBall();  // stop flying before notify to avoid bugs
@@ -465,8 +462,8 @@ void GameProcessor::moveBall() {
   }
 
   if (!m_ball_pose_corrected) {
-    new_x = old_x + m_ball.getVelocity() * cos(m_ball.getAngle());
-    new_y = old_y + m_ball.getVelocity() * sin(m_ball.getAngle());
+    new_x = old_x + m_ball.getVelocity() * cosf(m_ball.getAngle());
+    new_y = old_y + m_ball.getVelocity() * sinf(m_ball.getAngle());
     shiftBall(new_x, new_y);
   }
   uint64_t delay = ProcessorParams::nanoDelay;
@@ -490,7 +487,7 @@ void GameProcessor::teleportBallIntoRandomBlock() {
   network_blocks.reserve(12);
   m_level->findBlocks(m_level->generatePresentBlock(), &network_blocks);
   if (!network_blocks.empty()) {
-    int random_index = util::getRandomElement(network_blocks);
+    size_t random_index = util::getRandomElement(network_blocks);
     shiftBallIntoBlock(network_blocks[random_index].row, network_blocks[random_index].col);
   }
 }

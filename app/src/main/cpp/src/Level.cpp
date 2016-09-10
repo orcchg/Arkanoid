@@ -10,7 +10,6 @@
 #include <sstream>
 
 #include "Level.h"
-#include "logger.h"
 #include "utils.h"
 
 namespace game {
@@ -24,7 +23,7 @@ Level::Ptr Level::fromStringArray(const std::vector<std::string>& array, size_t 
   // with blank characters
   size_t max_width = *std::max_element(widths, widths + length);
 
-  Level::Ptr level = std::shared_ptr<Level>(new Level(length, max_width));
+  Level::Ptr level = std::shared_ptr<Level>(new Level((int) length, (int) max_width));
   for (int r = 0; r < level->rows; ++r) {
     for (int c = 0; c < level->cols; ++c) {
       if (c < widths[r]) {
@@ -777,7 +776,7 @@ Block Level::generatePresentBlock() {
 
 void Level::print() const {
   std::vector<std::string> array;
-  array.reserve(rows);
+  array.reserve((size_t) rows);
   toStringArray(&array);
   std::ostringstream oss;
   oss.str("\n");

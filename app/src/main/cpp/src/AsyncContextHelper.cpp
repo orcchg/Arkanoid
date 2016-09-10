@@ -1,8 +1,6 @@
 #include <string>
 
 #include "AsyncContextHelper.h"
-#include "Level.h"
-#include "Resources.h"
 
 static JavaVM* jvm = nullptr;
 
@@ -149,7 +147,7 @@ JNIEXPORT void JNICALL Java_com_orcchg_arkanoid_surface_AsyncContext_loadLevel
 
   jsize length = jenv->GetArrayLength(in_level_Java);
   std::vector<std::string> array;
-  array.reserve(length);
+  array.reserve((size_t) length);
 
   for (jsize i = 0; i < length; ++i) {
     jstring java_str = (jstring) jenv->GetObjectArrayElement(in_level_Java, i);
@@ -158,7 +156,7 @@ JNIEXPORT void JNICALL Java_com_orcchg_arkanoid_surface_AsyncContext_loadLevel
     jenv->ReleaseStringUTFChars(java_str, raw_str);
   }
 
-  auto level = game::Level::fromStringArray(array, length);
+  auto level = game::Level::fromStringArray(array, (size_t) length);
   ptr->load_level_event.notifyListeners(level);
 }
 
@@ -176,7 +174,7 @@ JNIEXPORT jobjectArray JNICALL Java_com_orcchg_arkanoid_surface_AsyncContext_sav
           jenv->NewStringUTF(""));
 
   std::vector<std::string> array;
-  array.reserve(level_ptr->numRows());
+  array.reserve((size_t) level_ptr->numRows());
   level_ptr->toStringArray(&array);
 
   for (jsize i = 0; i < size; ++i) {

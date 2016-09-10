@@ -13,13 +13,13 @@ JNIEXPORT jlong JNICALL Java_com_orcchg_arkanoid_surface_NativeResources_init
 JNIEXPORT jboolean JNICALL Java_com_orcchg_arkanoid_surface_NativeResources_readTexture
   (JNIEnv *, jobject, jlong descriptor, jstring filename) {
   game::Resources* ptr = reinterpret_cast<game::Resources*>(descriptor);
-  return ptr->readTexture(filename);
+  return (jboolean) ptr->readTexture(filename);
 }
 
 JNIEXPORT jboolean JNICALL Java_com_orcchg_arkanoid_surface_NativeResources_readSound
   (JNIEnv *, jobject, jlong descriptor, jstring filename) {
   game::Resources* ptr = reinterpret_cast<game::Resources*>(descriptor);
-  return ptr->readSound(filename);
+  return (jboolean) ptr->readSound(filename);
 }
 
 JNIEXPORT void JNICALL Java_com_orcchg_arkanoid_surface_NativeResources_release

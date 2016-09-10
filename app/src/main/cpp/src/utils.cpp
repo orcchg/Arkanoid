@@ -20,10 +20,10 @@ void setRectangleVertices(
     size_t cols,
     size_t rows) {
 
-  int cols16 = cols * 16;
+  size_t cols16 = cols * 16;
   for (size_t r = 0; r < rows; ++r) {
     for (size_t c = 0; c < cols; ++c) {
-      int index = (c * 16) + (r * cols16);
+      size_t index = (c * 16) + (r * cols16);
       // upper left corner
       array[index + 0] = x_offset + width * c;
       array[index + 1] = y_offset - height * r;
@@ -57,14 +57,14 @@ void setOctagonVertices(
     size_t cols,
     size_t rows) {
 
-  int cols36 = cols * 36;
+  size_t cols36 = cols * 36;
   GLfloat w2 = width * 0.5f;
   GLfloat h2 = height * 0.5f;
   GLfloat w4 = width * 0.25f;
   GLfloat h4 = height * 0.25f;
   for (size_t r = 0; r < rows; ++r) {
     for (size_t c = 0; c < cols; ++c) {
-      int index = (c * 36) + (r * cols36);
+      size_t index = (c * 36) + (r * cols36);
       // center
       array[index + 0] = x_offset + w2;
       array[index + 1] = y_offset - h2;
@@ -113,12 +113,12 @@ void setOctagonVertices(
 void rectangleIndices(GLushort* const indices, size_t size) {
   size_t j = 0;
   for (size_t i = 0; i < size; i += 6, ++j) {
-    indices[i + 0] = 0 + 4 * j;
-    indices[i + 1] = 3 + 4 * j;
-    indices[i + 2] = 2 + 4 * j;
-    indices[i + 3] = 0 + 4 * j;
-    indices[i + 4] = 1 + 4 * j;
-    indices[i + 5] = 3 + 4 * j;
+    indices[i + 0] = (GLushort) (0 + 4 * j);
+    indices[i + 1] = (GLushort) (3 + 4 * j);
+    indices[i + 2] = (GLushort) (2 + 4 * j);
+    indices[i + 3] = (GLushort) (0 + 4 * j);
+    indices[i + 4] = (GLushort) (1 + 4 * j);
+    indices[i + 5] = (GLushort) (3 + 4 * j);
   }
 }
 
