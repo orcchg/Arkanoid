@@ -39,7 +39,7 @@ AsyncContext::AsyncContext(JavaVM* jvm, jint fdn)
   , m_particle_spiral_buffer(nullptr)
   , m_rectangle_index_buffer(new GLushort[6]{0, 3, 2, 0, 1, 3})
   , m_octagon_index_buffer(new GLushort[24]{0, 1, 2, 0, 2, 3, 0, 3, 4, 0, 4, 5, 0, 5, 6, 0, 6, 7, 0, 7, 8, 0, 8, 1})
-  , m_rectangle_texCoord_buffer(new GLfloat[8]{1.f, 1.f, 0.f, 1.f, 1.f, 0.f, 0.f, 0.f})
+  , m_rectangle_texCoord_buffer(new GLfloat[8]{1.f, 1.f, 1.f, 0.f, 0.f, 1.f, 0.f, 0.f})
   , m_level(nullptr)
   , m_level_vertex_buffer(nullptr)
   , m_level_color_buffer(nullptr)
@@ -131,89 +131,101 @@ AsyncContext::~AsyncContext() noexcept {
 /* Callbacks group */
 // ----------------------------------------------------------------------------
 void AsyncContext::callback_setWindow(ANativeWindow* window) {
-  std::unique_lock<std::mutex> lock(m_surface_mutex);
-  m_surface_received.store(true);
+  std::lock_guard<std::mutex> lock(m_surface_mutex);
+  DBG("EVENT CALLBACK: callback_setWindow(%p)", window);
   m_window = window;
+  m_surface_received.store(true);
   interrupt();
 }
 
 void AsyncContext::callback_loadResources(bool /* dummy */) {
-  std::unique_lock<std::mutex> lock(m_load_resources_mutex);
+  std::lock_guard<std::mutex> lock(m_load_resources_mutex);
+  DBG("EVENT CALLBACK: callback_loadResources");
   m_load_resources_received.store(true);
   interrupt();
 }
 
 void AsyncContext::callback_shiftGamepad(float position) {
-  std::unique_lock<std::mutex> lock(m_shift_gamepad_mutex);
-  m_shift_gamepad_received.store(true);
+  std::lock_guard<std::mutex> lock(m_shift_gamepad_mutex);
+  DBG("EVENT CALLBACK: callback_shiftGamepad(%f)", position);
   m_position = position;
+  m_shift_gamepad_received.store(true);
   interrupt();
 }
 
 void AsyncContext::callback_throwBall(float angle /* dummy */) {
-  std::unique_lock<std::mutex> lock(m_throw_ball_mutex);
+  std::lock_guard<std::mutex> lock(m_throw_ball_mutex);
+  DBG("EVENT CALLBACK: callback_throwBall(%f)", angle);
   m_throw_ball_received.store(true);
   interrupt();
 }
 
 void AsyncContext::callback_loadLevel(Level::Ptr level) {
-  std::unique_lock<std::mutex> lock(m_load_level_mutex);
-  m_load_level_received.store(true);
+  std::lock_guard<std::mutex> lock(m_load_level_mutex);
+  DBG("EVENT CALLBACK: callback_loadLevel");
   m_level = level;
+  m_load_level_received.store(true);
   interrupt();
 }
 
 void AsyncContext::callback_moveBall(Ball moved_ball) {
-  std::unique_lock<std::mutex> lock(m_move_ball_mutex);
-  m_move_ball_received.store(true);
+  std::lock_guard<std::mutex> lock(m_move_ball_mutex);
+  DBG("EVENT CALLBACK: callback_moveBall(%f, %f)", moved_ball.getPose().getX(), moved_ball.getPose().getY());
   m_ball = moved_ball;
+  m_move_ball_received.store(true);
   interrupt();
 }
 
 void AsyncContext::callback_lostBall(float is_lost) {
-  std::unique_lock<std::mutex> lock(m_lost_ball_mutex);
+  std::lock_guard<std::mutex> lock(m_lost_ball_mutex);
+  DBG("EVENT CALLBACK: callback_lostBall(%i)", (is_lost ? 1 : 0));
   m_lost_ball_received.store(true);
   interrupt();
 }
 
 void AsyncContext::callback_stopBall(bool /* dummy */) {
-  std::unique_lock<std::mutex> lock(m_stop_ball_mutex);
+  std::lock_guard<std::mutex> lock(m_stop_ball_mutex);
+  DBG("EVENT CALLBACK: callback_stopBall");
   m_stop_ball_received.store(true);
   interrupt();
 }
 
 void AsyncContext::callback_blockImpact(RowCol block) {
-  std::unique_lock<std::mutex> lock(m_block_impact_mutex);
-  m_block_impact_received.store(true);
+  std::lock_guard<std::mutex> lock(m_block_impact_mutex);
+  DBG("EVENT CALLBACK: callback_blockImpact(%i, %i, %i)", block.row, block.col, static_cast<int>(block.block));
   m_impact_queue.push(block);
+  m_block_impact_received.store(true);
   interrupt();
 }
 
 void AsyncContext::callback_levelFinished(bool is_finished) {
-  std::unique_lock<std::mutex> lock(m_level_finished_mutex);
+  std::lock_guard<std::mutex> lock(m_level_finished_mutex);
+  DBG("EVENT CALLBACK: callback_levelFinished(%i)", (is_finished ? 1 : 0));
   m_level_finished_received.store(true);
   interrupt();
 }
 
 void AsyncContext::callback_explosion(ExplosionPackage package) {
-  std::unique_lock<std::mutex> lock(m_explosion_mutex);
-  m_explosion_received.store(true);
+  std::lock_guard<std::mutex> lock(m_explosion_mutex);
+  DBG("EVENT CALLBACK: callback_explosion");
   m_explosion_packages.push_back(package);
+  m_explosion_received.store(true);
   interrupt();
 }
 
 void AsyncContext::callback_prizeReceived(PrizePackage package) {
-  std::unique_lock<std::mutex> lock(m_prize_mutex);
-  m_prize_received.store(true);
+  std::lock_guard<std::mutex> lock(m_prize_mutex);
+  DBG("EVENT CALLBACK: callback_prizeReceived");
   m_prize_packages[package.getID()] = package;
   m_prize_last_timers[package.getID()] = 0;
   m_prize_timers[package.getID()] = 0.0f;
+  m_prize_received.store(true);
   interrupt();
 }
 
 void AsyncContext::callback_prizeCaught(PrizePackage package) {
-  std::unique_lock<std::mutex> lock(m_prize_caught_mutex);
-  m_prize_caught_received.store(true);
+  std::lock_guard<std::mutex> lock(m_prize_caught_mutex);
+  DBG("EVENT CALLBACK: callback_prizeCaught");
   auto prize_id = package.getID();
   m_caught_prizes_x_coords.push_back(m_prize_packages.at(prize_id).getX());
   m_prize_packages.at(prize_id).setCaught(true);
@@ -252,41 +264,46 @@ void AsyncContext::callback_prizeCaught(PrizePackage package) {
     default:
       break;
   }
+  m_prize_caught_received.store(true);
   interrupt();
 }
 
 void AsyncContext::callback_dropBallAppearance(bool /* dummy */) {
-  std::unique_lock<std::mutex> lock(m_drop_ball_appearance_mutex);
+  std::lock_guard<std::mutex> lock(m_drop_ball_appearance_mutex);
+  DBG("EVENT CALLBACK: callback_dropBallAppearance");
   m_drop_ball_appearance_received.store(true);
   interrupt();
 }
 
 void AsyncContext::callback_biteWidthChanged(BiteEffect effect) {
-  std::unique_lock<std::mutex> lock(m_bite_width_changed_mutex);
-  m_bite_width_changed_received.store(true);
+  std::lock_guard<std::mutex> lock(m_bite_width_changed_mutex);
+  DBG("EVENT CALLBACK: callback_biteWidthChanged");
   m_bite_effect = effect;
+  m_bite_width_changed_received.store(true);
   interrupt();
 }
 
 void AsyncContext::callback_laserBeamVisibility(bool is_visible) {
-  std::unique_lock<std::mutex> lock(m_laser_beam_visibility_mutex);
-  m_laser_beam_visibility_received.store(true);
+  std::lock_guard<std::mutex> lock(m_laser_beam_visibility_mutex);
+  DBG("EVENT CALLBACK: callback_laserBeamVisibility(%i)", (is_visible ? 1 : 0));
   m_render_laser = is_visible;
   if (is_visible) {
     laser_pulse_event.notifyListeners(true);  // first laser pulse
   }
+  m_laser_beam_visibility_received.store(true);
   interrupt();
 }
 
 void AsyncContext::callback_laserBlockImpact(bool /* dummy */) {
-  std::unique_lock<std::mutex> lock(m_laser_block_impact_mutex);
+  std::lock_guard<std::mutex> lock(m_laser_block_impact_mutex);
+  DBG("EVENT CALLBACK: callback_laserBlockImpact");
   m_laser_block_impact_received.store(true);
   interrupt();
 }
 
 // ----------------------------------------------
 Level::Ptr AsyncContext::getCurrentLevelState() {
-  std::unique_lock<std::mutex> lock(m_load_level_mutex);
+  std::lock_guard<std::mutex> lock(m_load_level_mutex);
   return m_level;
 }
 
@@ -298,7 +315,7 @@ void AsyncContext::setResourcesPtr(Resources* resources) {
 /* JNIEnvironment group */
 // ----------------------------------------------------------------------------
 void AsyncContext::attachToJVM() {
-  std::unique_lock<std::mutex> lock(m_jnienvironment_mutex);
+  std::lock_guard<std::mutex> lock(m_jnienvironment_mutex);
   auto result = m_jvm->AttachCurrentThread(&m_jenv, nullptr /* thread args */);
   if (result != JNI_OK) {
     ERR("AsyncContext thread was not attached to JVM !");
@@ -307,7 +324,7 @@ void AsyncContext::attachToJVM() {
 }
 
 void AsyncContext::detachFromJVM() {
-  std::unique_lock<std::mutex> lock(m_jnienvironment_mutex);
+  std::lock_guard<std::mutex> lock(m_jnienvironment_mutex);
   m_jvm->DetachCurrentThread();
 }
 
@@ -424,7 +441,7 @@ void AsyncContext::eventHandler() {
 /* Processors group */
 // ----------------------------------------------------------------------------
 void AsyncContext::process_setWindow() {
-  std::unique_lock<std::mutex> lock(m_surface_mutex);
+  std::lock_guard<std::mutex> lock(m_surface_mutex);
   DBG("enter AsyncContext::process_setWindow()");
   if (m_window == nullptr) {
     m_window_set = false;
@@ -442,7 +459,8 @@ void AsyncContext::process_setWindow() {
 }
 
 void AsyncContext::process_loadResources() {
-  std::unique_lock<std::mutex> lock(m_load_resources_mutex);
+  std::lock_guard<std::mutex> lock(m_load_resources_mutex);
+  DBG("EVENT PROCESS: process_loadResources");
   if (m_resources != nullptr) {
     for (auto it = m_resources->beginTexture(); it != m_resources->endTexture(); ++it) {
       DBG("Loading texture resources: %s %p", it->first.c_str(), it->second);
@@ -458,18 +476,20 @@ void AsyncContext::process_loadResources() {
 }
 
 void AsyncContext::process_shiftGamepad() {
-  std::unique_lock<std::mutex> lock(m_shift_gamepad_mutex);
+  std::lock_guard<std::mutex> lock(m_shift_gamepad_mutex);
+  DBG("EVENT PROCESS: process_shiftGamepad(%f)", m_position);
   moveBite(m_position);
 }
 
 void AsyncContext::process_throwBall() {
-  std::unique_lock<std::mutex> lock(m_throw_ball_mutex);
+  std::lock_guard<std::mutex> lock(m_throw_ball_mutex);
+  DBG("EVENT PROCESS: process_throwBall");
   INF("Ball has been thrown");
-  // no-op
 }
 
 void AsyncContext::process_loadLevel() {
-  std::unique_lock<std::mutex> lock(m_load_level_mutex);
+  std::lock_guard<std::mutex> lock(m_load_level_mutex);
+  DBG("EVENT PROCESS: process_loadLevel");
   initGame();
   {
     std::queue<RowCol> empty_queue;
@@ -500,12 +520,14 @@ void AsyncContext::process_loadLevel() {
 }
 
 void AsyncContext::process_moveBall() {
-  std::unique_lock<std::mutex> lock(m_move_ball_mutex);
+  std::lock_guard<std::mutex> lock(m_move_ball_mutex);
+  DBG("EVENT PROCESS: process_moveBall(%f, %f)", m_ball.getPose().getX(), m_ball.getPose().getY());
   moveBall(m_ball.getPose().getX(), m_ball.getPose().getY());
 }
 
 void AsyncContext::process_lostBall() {
-  std::unique_lock<std::mutex> lock(m_lost_ball_mutex);
+  std::lock_guard<std::mutex> lock(m_lost_ball_mutex);
+  DBG("EVENT PROCESS: process_lostBall");
   clearPrizeStructures();
   if (m_render_explosion) {
     moveBall(0.0f, 1000.f);
@@ -515,12 +537,14 @@ void AsyncContext::process_lostBall() {
 }
 
 void AsyncContext::process_stopBall() {
-  std::unique_lock<std::mutex> lock(m_stop_ball_mutex);
+  std::lock_guard<std::mutex> lock(m_stop_ball_mutex);
+  DBG("EVENT PROCESS: process_stopBall");
   m_render_laser = false;
 }
 
 void AsyncContext::process_blockImpact() {
-  std::unique_lock<std::mutex> lock(m_block_impact_mutex);
+  std::lock_guard<std::mutex> lock(m_block_impact_mutex);
+  DBG("EVENT PROCESS: process_blockImpact");
   while (!m_impact_queue.empty()) {
     auto impact = m_impact_queue.front();
     if (!checkBlockPresense(impact.row, impact.col)) {
@@ -535,7 +559,8 @@ void AsyncContext::process_blockImpact() {
 }
 
 void AsyncContext::process_levelFinished() {
-  std::unique_lock<std::mutex> lock(m_level_finished_mutex);
+  std::lock_guard<std::mutex> lock(m_level_finished_mutex);
+  DBG("EVENT PROCESS: process_levelFinished");
   clearPrizeStructures();
   m_bg_texture = m_resources->getRandomTexture("bg");
   if (m_render_explosion) {
@@ -546,28 +571,33 @@ void AsyncContext::process_levelFinished() {
 }
 
 void AsyncContext::process_explosion() {
-  std::unique_lock<std::mutex> lock(m_explosion_mutex);
+  std::lock_guard<std::mutex> lock(m_explosion_mutex);
+  DBG("EVENT PROCESS: process_explosion");
   m_last_time = 0;
   m_render_explosion = true;
 }
 
 void AsyncContext::process_prizeReceived() {
-  std::unique_lock<std::mutex> lock(m_prize_mutex);
+  std::lock_guard<std::mutex> lock(m_prize_mutex);
+  DBG("EVENT PROCESS: process_prizeReceived");
 }
 
 void AsyncContext::process_prizeCaught() {
-  std::unique_lock<std::mutex> lock(m_prize_caught_mutex);
+  std::lock_guard<std::mutex> lock(m_prize_caught_mutex);
+  DBG("EVENT PROCESS: process_prizeCaught");
   m_prize_catch_last_time = 0;
   m_render_prize_catch = true;
 }
 
 void AsyncContext::process_dropBallAppearance() {
-  std::unique_lock<std::mutex> lock(m_drop_ball_appearance_mutex);
+  std::lock_guard<std::mutex> lock(m_drop_ball_appearance_mutex);
+  DBG("EVENT PROCESS: process_dropBallAppearance");
   setBiteBallAppearance(BallEffect::NONE);
 }
 
 void AsyncContext::process_biteWidthChanged() {
-  std::unique_lock<std::mutex> lock(m_bite_width_changed_mutex);
+  std::lock_guard<std::mutex> lock(m_bite_width_changed_mutex);
+  DBG("EVENT PROCESS: process_biteWidthChanged");
   switch (m_bite_effect) {
     default:
     case BiteEffect::NONE:
@@ -588,12 +618,13 @@ void AsyncContext::process_biteWidthChanged() {
 }
 
 void AsyncContext::process_laserBeamVisibility() {
-  std::unique_lock<std::mutex> lock(m_laser_beam_visibility_mutex);
-  // no-op
+  std::lock_guard<std::mutex> lock(m_laser_beam_visibility_mutex);
+  DBG("EVENT PROCESS: process_laserBeamVisibility");
 }
 
 void AsyncContext::process_laserBlockImpact() {
-  std::unique_lock<std::mutex> lock(m_laser_block_impact_mutex);
+  std::lock_guard<std::mutex> lock(m_laser_block_impact_mutex);
+  DBG("EVENT PROCESS: process_laserBlockImpact");
   m_laser_interruption = true;
 }
 

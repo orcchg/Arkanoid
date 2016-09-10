@@ -54,77 +54,89 @@ SoundProcessor::~SoundProcessor() noexcept {
 /* Callbacks group */
 // ----------------------------------------------------------------------------
 void SoundProcessor::callback_loadResources(bool /* dummy */) {
-  std::unique_lock<std::mutex> lock(m_load_resources_mutex);
+  std::lock_guard<std::mutex> lock(m_load_resources_mutex);
+  DBG("EVENT CALLBACK: callback_loadResources");
   m_load_resources_received.store(true);
   interrupt();
 }
 
 void SoundProcessor::callback_lostBall(float is_lost) {
-  std::unique_lock<std::mutex> lock(m_lost_ball_mutex);
+  std::lock_guard<std::mutex> lock(m_lost_ball_mutex);
+  DBG("EVENT CALLBACK: callback_lostBall(%i)", (is_lost ? 1 : 0));
   m_lost_ball_received.store(true);
   interrupt();
 }
 
 void SoundProcessor::callback_biteImpact(bool /* dummy */) {
-  std::unique_lock<std::mutex> lock(m_bite_impact_mutex);
+  std::lock_guard<std::mutex> lock(m_bite_impact_mutex);
+  DBG("EVENT CALLBACK: callback_biteImpact");
   m_bite_impact_received.store(true);
   interrupt();
 }
 
 void SoundProcessor::callback_blockImpact(game::RowCol block) {
-  std::unique_lock<std::mutex> lock(m_block_impact_mutex);
-  m_block_impact_received.store(true);
+  std::lock_guard<std::mutex> lock(m_block_impact_mutex);
+  DBG("EVENT CALLBACK: callback_blockImpact(%i, %i, %i)", block.row, block.col, static_cast<int>(block.block));
   m_impacted_block = block.block;
+  m_block_impact_received.store(true);
   interrupt();
 }
 
 void SoundProcessor::callback_wallImpact(bool /* dummy */) {
-  std::unique_lock<std::mutex> lock(m_wall_impact_mutex);
+  std::lock_guard<std::mutex> lock(m_wall_impact_mutex);
+  DBG("EVENT CALLBACK: callback_wallImpact");
   m_wall_impact_received.store(true);
   interrupt();
 }
 
 void SoundProcessor::callback_levelFinished(bool is_finished) {
-  std::unique_lock<std::mutex> lock(m_level_finished_mutex);
+  std::lock_guard<std::mutex> lock(m_level_finished_mutex);
+  DBG("EVENT CALLBACK: callback_levelFinished(%i)", (is_finished ? 1 : 0));
   m_level_finished_received.store(true);
   interrupt();
 }
 
 void SoundProcessor::callback_explosion(game::ExplosionPackage package) {
-  std::unique_lock<std::mutex> lock(m_explosion_mutex);
+  std::lock_guard<std::mutex> lock(m_explosion_mutex);
+  DBG("EVENT CALLBACK: callback_explosion");
   m_explosion_received.store(true);
   interrupt();
 }
 
 void SoundProcessor::callback_prizeCaught(game::PrizePackage package) {
-  std::unique_lock<std::mutex> lock(m_prize_caught_mutex);
-  m_prize_caught_received.store(true);
+  std::lock_guard<std::mutex> lock(m_prize_caught_mutex);
+  DBG("EVENT CALLBACK: callback_prizeCaught");
   m_prize = package.getPrize();
+  m_prize_caught_received.store(true);
   interrupt();
 }
 
 void SoundProcessor::callback_laserBeamVisibility(bool is_visible) {
-  std::unique_lock<std::mutex> lock(m_laser_beam_visibility_mutex);
+  std::lock_guard<std::mutex> lock(m_laser_beam_visibility_mutex);
+  DBG("EVENT CALLBACK: callback_laserBeamVisibility(%i)", (is_visible ? 1 : 0));
   m_laser_beam_visibility_received.store(true);
   interrupt();
 }
 
 void SoundProcessor::callback_laserBlockImpact(bool /* dummy */) {
-  std::unique_lock<std::mutex> lock(m_laser_block_impact_mutex);
+  std::lock_guard<std::mutex> lock(m_laser_block_impact_mutex);
+  DBG("EVENT CALLBACK: callback_laserBlockImpact");
   m_laser_block_impact_received.store(true);
   interrupt();
 }
 
 void SoundProcessor::callback_laserPulse(bool /* dummy */) {
-  std::unique_lock<std::mutex> lock(m_laser_pulse_mutex);
+  std::lock_guard<std::mutex> lock(m_laser_pulse_mutex);
+  DBG("EVENT CALLBACK: callback_laserPulse");
   m_laser_pulse_received.store(true);
   interrupt();
 }
 
 void SoundProcessor::callback_ballEffect(game::BallEffect effect) {
-  std::unique_lock<std::mutex> lock(m_ball_effect_mutex);
-  m_ball_effect_received.store(true);
+  std::lock_guard<std::mutex> lock(m_ball_effect_mutex);
+  DBG("EVENT CALLBACK: callback_ballEffect");
   m_ball_effect = effect;
+  m_ball_effect_received.store(true);
   interrupt();
 }
 
@@ -137,7 +149,7 @@ void SoundProcessor::setResourcesPtr(game::Resources* resources) {
 /* JNIEnvironment group */
 // ----------------------------------------------------------------------------
 void SoundProcessor::attachToJVM() {
-  std::unique_lock<std::mutex> lock(m_jnienvironment_mutex);
+  std::lock_guard<std::mutex> lock(m_jnienvironment_mutex);
   auto result = m_jvm->AttachCurrentThread(&m_jenv, nullptr /* thread args */);
   if (result != JNI_OK) {
     ERR("SoundProcessor thread was not attached to JVM !");
@@ -146,7 +158,7 @@ void SoundProcessor::attachToJVM() {
 }
 
 void SoundProcessor::detachFromJVM() {
-  std::unique_lock<std::mutex> lock(m_jnienvironment_mutex);
+  std::lock_guard<std::mutex> lock(m_jnienvironment_mutex);
   m_jvm->DetachCurrentThread();
 }
 
@@ -229,7 +241,7 @@ void SoundProcessor::eventHandler() {
 /* Processors group */
 // ----------------------------------------------------------------------------
 void SoundProcessor::process_loadResources() {
-  std::unique_lock<std::mutex> lock(m_load_resources_mutex);
+  std::lock_guard<std::mutex> lock(m_load_resources_mutex);
   if (m_resources != nullptr) {
     for (auto it = m_resources->beginSound(); it != m_resources->endSound(); ++it) {
       DBG("Loading sound resources: %s %p", it->first.c_str(), it->second);
@@ -244,19 +256,19 @@ void SoundProcessor::process_loadResources() {
 }
 
 void SoundProcessor::process_lostBall() {
-  std::unique_lock<std::mutex> lock(m_lost_ball_mutex);
+  std::lock_guard<std::mutex> lock(m_lost_ball_mutex);
   auto sound = m_resources->getRandomSound("lose_");
   playSound(sound);
 }
 
 void SoundProcessor::process_biteImpact() {
-  std::unique_lock<std::mutex> lock(m_bite_impact_mutex);
+  std::lock_guard<std::mutex> lock(m_bite_impact_mutex);
   auto sound = m_resources->getRandomSound("bite_");
   playSound(sound);
 }
 
 void SoundProcessor::process_blockImpact() {
-  std::unique_lock<std::mutex> lock(m_block_impact_mutex);
+  std::lock_guard<std::mutex> lock(m_block_impact_mutex);
   std::string sound_prefix = "";
 
   switch (m_impacted_block) {
@@ -343,23 +355,23 @@ void SoundProcessor::process_blockImpact() {
 }
 
 void SoundProcessor::process_wallImpact() {
-//  std::unique_lock<std::mutex> lock(m_wall_impact_mutex);
+//  std::lock_guard<std::mutex> lock(m_wall_impact_mutex);
   // no-op
 }
 
 void SoundProcessor::process_levelFinished() {
-  std::unique_lock<std::mutex> lock(m_level_finished_mutex);
+  std::lock_guard<std::mutex> lock(m_level_finished_mutex);
   auto sound = m_resources->getRandomSound("win_");
   playSound(sound);
 }
 
 void SoundProcessor::process_explosion() {
-//  std::unique_lock<std::mutex> lock(m_explosion_mutex);
+//  std::lock_guard<std::mutex> lock(m_explosion_mutex);
   // no-op
 }
 
 void SoundProcessor::process_prizeCaught() {
-  std::unique_lock<std::mutex> lock(m_prize_caught_mutex);
+  std::lock_guard<std::mutex> lock(m_prize_caught_mutex);
   std::string sound_prefix = "";
 
   switch (m_prize) {
@@ -396,23 +408,23 @@ void SoundProcessor::process_prizeCaught() {
 }
 
 void SoundProcessor::process_laserBeamVisibility() {
-//  std::unique_lock<std::mutex> lock(m_laser_beam_visibility_mutex);
+//  std::lock_guard<std::mutex> lock(m_laser_beam_visibility_mutex);
   // no-op
 }
 
 void SoundProcessor::process_laserBlockImpact() {
-  std::unique_lock<std::mutex> lock(m_laser_block_impact_mutex);
+  std::lock_guard<std::mutex> lock(m_laser_block_impact_mutex);
   // no-op
 }
 
 void SoundProcessor::process_laserPulse() {
-  std::unique_lock<std::mutex> lock(m_laser_pulse_mutex);
+  std::lock_guard<std::mutex> lock(m_laser_pulse_mutex);
   auto sound = m_resources->getRandomSound("laser_");
   playSound(sound);
 }
 
 void SoundProcessor::process_ballEffect() {
-  std::unique_lock<std::mutex> lock(m_ball_effect_mutex);
+  std::lock_guard<std::mutex> lock(m_ball_effect_mutex);
   std::string sound_prefix = "";
 
   switch (m_ball_effect) {

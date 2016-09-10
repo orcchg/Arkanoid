@@ -35,45 +35,51 @@ PrizeProcessor::~PrizeProcessor() noexcept {
 /* Callbacks group */
 // ----------------------------------------------------------------------------
 void PrizeProcessor::callback_aspectMeasured(float aspect) {
-  std::unique_lock<std::mutex> lock(m_aspect_ratio_mutex);
-  m_aspect_ratio_received.store(true);
+  std::lock_guard<std::mutex> lock(m_aspect_ratio_mutex);
+  DBG("EVENT CALLBACK: callback_aspectMeasured(%f)", aspect);
   m_aspect = aspect;
+  m_aspect_ratio_received.store(true);
   interrupt();
 }
 
 void PrizeProcessor::callback_initBite(Bite bite) {
-  std::unique_lock<std::mutex> lock(m_init_bite_mutex);
-  m_init_bite_received.store(true);
+  std::lock_guard<std::mutex> lock(m_init_bite_mutex);
+  DBG("EVENT CALLBACK: callback_initBite");
   m_bite = bite;
+  m_init_bite_received.store(true);
   interrupt();
 }
 
 void PrizeProcessor::callback_biteMoved(Bite moved_bite) {
-  std::unique_lock<std::mutex> lock(m_bite_location_mutex);
-  m_bite_location_received.store(true);
+  std::lock_guard<std::mutex> lock(m_bite_location_mutex);
+  DBG("EVENT CALLBACK: callback_biteMoved");
   m_bite = moved_bite;
+  m_bite_location_received.store(true);
   interrupt();
 }
 
 void PrizeProcessor::callback_prizeReceived(PrizePackage package) {
-  std::unique_lock<std::mutex> lock(m_prize_mutex);
-  m_prize_received.store(true);
+  std::lock_guard<std::mutex> lock(m_prize_mutex);
+  DBG("EVENT CALLBACK: callback_prizeReceived");
   m_prize_packages[package.getID()] = package;
+  m_prize_received.store(true);
   interrupt();
 }
 
 void PrizeProcessor::callback_prizeLocated(PrizePackage package) {
-  std::unique_lock<std::mutex> lock(m_prize_location_mutex);
-  m_prize_location_received.store(true);
+  std::lock_guard<std::mutex> lock(m_prize_location_mutex);
+  DBG("EVENT CALLBACK: callback_prizeLocated");
   m_prize_packages[package.getID()] = package;
+  m_prize_location_received.store(true);
   interrupt();
 }
 
 void PrizeProcessor::callback_prizeHasGone(int prize_id) {
-  std::unique_lock<std::mutex> lock(m_prize_gone_mutex);
-  m_prize_gone_received.store(true);
+  std::lock_guard<std::mutex> lock(m_prize_gone_mutex);
+  DBG("EVENT CALLBACK: callback_prizeHasGone(%i)", prize_id);
   m_prize_packages[prize_id].setGone(true);
   addPrizeToRemoved(prize_id);
+  m_prize_gone_received.store(true);
   interrupt();
 }
 
@@ -81,7 +87,7 @@ void PrizeProcessor::callback_prizeHasGone(int prize_id) {
 /* JNIEnvironment group */
 // ----------------------------------------------------------------------------
 void PrizeProcessor::attachToJVM() {
-  std::unique_lock<std::mutex> lock(m_jnienvironment_mutex);
+  std::lock_guard<std::mutex> lock(m_jnienvironment_mutex);
   auto result = m_jvm->AttachCurrentThread(&m_jenv, nullptr /* thread args */);
   if (result != JNI_OK) {
     ERR("PrizeProcessor thread was not attached to JVM !");
@@ -90,7 +96,7 @@ void PrizeProcessor::attachToJVM() {
 }
 
 void PrizeProcessor::detachFromJVM() {
-  std::unique_lock<std::mutex> lock(m_jnienvironment_mutex);
+  std::lock_guard<std::mutex> lock(m_jnienvironment_mutex);
   m_jvm->DetachCurrentThread();
 }
 
@@ -141,27 +147,27 @@ void PrizeProcessor::eventHandler() {
 /* Processors group */
 // ----------------------------------------------------------------------------
 void PrizeProcessor::process_aspectMeasured() {
-  std::unique_lock<std::mutex> lock(m_aspect_ratio_mutex);
+  std::lock_guard<std::mutex> lock(m_aspect_ratio_mutex);
   // no-op
 }
 
 void PrizeProcessor::process_initBite() {
-  std::unique_lock<std::mutex> lock(m_init_bite_mutex);
+  std::lock_guard<std::mutex> lock(m_init_bite_mutex);
   m_bite_upper_border = -BiteParams::neg_biteElevation;
 }
 
 void PrizeProcessor::process_biteMoved() {
-  std::unique_lock<std::mutex> lock(m_bite_location_mutex);
+  std::lock_guard<std::mutex> lock(m_bite_location_mutex);
   // no-op
 }
 
 void PrizeProcessor::process_prizeReceived() {
-  std::unique_lock<std::mutex> lock(m_prize_mutex);
+  std::lock_guard<std::mutex> lock(m_prize_mutex);
   // no-op
 }
 
 void PrizeProcessor::process_prizeLocated() {
-  std::unique_lock<std::mutex> lock(m_prize_location_mutex);
+  std::lock_guard<std::mutex> lock(m_prize_location_mutex);
   clearRemovedPrizes();
   for (auto& item : m_prize_packages) {
     if (!item.second.hasGone() &&
@@ -178,7 +184,7 @@ void PrizeProcessor::process_prizeLocated() {
 }
 
 void PrizeProcessor::process_prizeHasGone() {
-  std::unique_lock<std::mutex> lock(m_prize_gone_mutex);
+  std::lock_guard<std::mutex> lock(m_prize_gone_mutex);
   for (auto& item : m_removed_prizes) {
     m_prize_packages.erase(item);
   }

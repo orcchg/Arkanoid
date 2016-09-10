@@ -69,66 +69,76 @@ GameProcessor::~GameProcessor() noexcept {
 /* Callbacks group */
 // ----------------------------------------------------------------------------
 void GameProcessor::callback_aspectMeasured(float aspect) {
-  std::unique_lock<std::mutex> lock(m_aspect_ratio_mutex);
-  m_aspect_ratio_received.store(true);
+  std::lock_guard<std::mutex> lock(m_aspect_ratio_mutex);
+  DBG("EVENT CALLBACK: callback_aspectMeasured(%f)", aspect);
   m_aspect = aspect;
+  m_aspect_ratio_received.store(true);
   interrupt();
 }
 
 void GameProcessor::callback_loadLevel(Level::Ptr level) {
-  std::unique_lock<std::mutex> lock(m_load_level_mutex);
-  m_load_level_received.store(true);
+  std::lock_guard<std::mutex> lock(m_load_level_mutex);
+  DBG("EVENT CALLBACK: callback_loadLevel");
   m_level = level;
   INF("New level loaded, initial cardinality: %i", m_level->getCardinality());
+  m_load_level_received.store(true);
   interrupt();
 }
 
 void GameProcessor::callback_throwBall(float angle) {
-  std::unique_lock<std::mutex> lock(m_throw_ball_mutex);
-  m_throw_ball_received.store(true);
+  std::lock_guard<std::mutex> lock(m_throw_ball_mutex);
+  DBG("EVENT CALLBACK: callback_throwBall(%f)", angle);
   m_throw_angle = angle;
+  m_throw_ball_received.store(true);
   interrupt();
 }
 
 void GameProcessor::callback_initBall(Ball init_ball) {
-  std::unique_lock<std::mutex> lock(m_init_ball_position_mutex);
-  m_init_ball_position_received.store(true);
+  std::lock_guard<std::mutex> lock(m_init_ball_position_mutex);
+  DBG("EVENT CALLBACK: callback_initBall(%f, %f)", init_ball.getPose().getX(), init_ball.getPose().getY());
+  m_ball_is_flying = false;
   m_ball = init_ball;
+  m_init_ball_position_received.store(true);
   interrupt();
 }
 
 void GameProcessor::callback_initBite(Bite bite) {
-  std::unique_lock<std::mutex> lock(m_init_bite_mutex);
-  m_init_bite_received.store(true);
+  std::lock_guard<std::mutex> lock(m_init_bite_mutex);
+  DBG("EVENT CALLBACK: callback_initBite");
   m_bite = bite;
+  m_init_bite_received.store(true);
   interrupt();
 }
 
 void GameProcessor::callback_levelDimens(LevelDimens level_dimens) {
-  std::unique_lock<std::mutex> lock(m_level_dimens_mutex);
-  m_level_dimens_received.store(true);
+  std::lock_guard<std::mutex> lock(m_level_dimens_mutex);
+  DBG("EVENT CALLBACK: callback_levelDimens");
   m_level_dimens = level_dimens;
+  m_level_dimens_received.store(true);
   interrupt();
 }
 
 void GameProcessor::callback_biteMoved(Bite moved_bite) {
-  std::unique_lock<std::mutex> lock(m_bite_location_mutex);
-  m_bite_location_received.store(true);
+  std::lock_guard<std::mutex> lock(m_bite_location_mutex);
+  DBG("EVENT CALLBACK: callback_biteMoved");
   m_bite = moved_bite;
+  m_bite_location_received.store(true);
   interrupt();
 }
 
 void GameProcessor::callback_prizeCaught(PrizePackage package) {
-  std::unique_lock<std::mutex> lock(m_prize_caught_mutex);
-  m_prize_caught_received.store(true);
+  std::lock_guard<std::mutex> lock(m_prize_caught_mutex);
+  DBG("EVENT CALLBACK: callback_prizeCaught");
   m_prize_caught = package.getPrize();
+  m_prize_caught_received.store(true);
   interrupt();
 }
 
 void GameProcessor::callback_laserBeam(LaserPackage laser) {
-  std::unique_lock<std::mutex> lock(m_laser_beam_mutex);
-  m_laser_beam_received.store(true);
+  std::lock_guard<std::mutex> lock(m_laser_beam_mutex);
+  DBG("EVENT CALLBACK: callback_laserBeam");
   m_laser_beam = laser;
+  m_laser_beam_received.store(true);
   interrupt();
 }
 
@@ -136,7 +146,7 @@ void GameProcessor::callback_laserBeam(LaserPackage laser) {
 /* JNIEnvironment group */
 // ----------------------------------------------------------------------------
 void GameProcessor::attachToJVM() {
-  std::unique_lock<std::mutex> lock(m_jnienvironment_mutex);
+  std::lock_guard<std::mutex> lock(m_jnienvironment_mutex);
   auto result = m_jvm->AttachCurrentThread(&m_jenv, nullptr /* thread args */);
   if (result != JNI_OK) {
     ERR("GameProcessor thread was not attached to JVM !");
@@ -145,7 +155,7 @@ void GameProcessor::attachToJVM() {
 }
 
 void GameProcessor::detachFromJVM() {
-  std::unique_lock<std::mutex> lock(m_jnienvironment_mutex);
+  std::lock_guard<std::mutex> lock(m_jnienvironment_mutex);
   m_jvm->DetachCurrentThread();
 }
 
@@ -241,17 +251,19 @@ void GameProcessor::eventHandler() {
 /* Processors group */
 // ----------------------------------------------------------------------------
 void GameProcessor::process_aspectMeasured() {
-  std::unique_lock<std::mutex> lock(m_aspect_ratio_mutex);
-  // no-op
+  std::lock_guard<std::mutex> lock(m_aspect_ratio_mutex);
+  DBG("EVENT PROCESS: process_aspectMeasured");
 }
 
 void GameProcessor::process_loadLevel() {
-  std::unique_lock<std::mutex> lock(m_load_level_mutex);
+  std::lock_guard<std::mutex> lock(m_load_level_mutex);
+  DBG("EVENT PROCESS: process_loadLevel");
   onCardinalityChanged(m_level->getCardinality());
 }
 
 void GameProcessor::process_throwBall() {
-  std::unique_lock<std::mutex> lock(m_throw_ball_mutex);
+  std::lock_guard<std::mutex> lock(m_throw_ball_mutex);
+  DBG("EVENT PROCESS: process_throwBall");
   if (!m_ball_is_flying) {
     m_ball.setAngle(m_throw_angle);
     m_level_finished = false;
@@ -265,29 +277,33 @@ void GameProcessor::process_throwBall() {
 }
 
 void GameProcessor::process_initBall() {
-  std::unique_lock<std::mutex> lock(m_init_ball_position_mutex);
+  std::lock_guard<std::mutex> lock(m_init_ball_position_mutex);
+  DBG("EVENT PROCESS: process_initBall(%f, %f)", m_ball.getPose().getX(), m_ball.getPose().getY());
   stopBall();
 }
 
 void GameProcessor::process_initBite() {
-  std::unique_lock<std::mutex> lock(m_init_bite_mutex);
+  std::lock_guard<std::mutex> lock(m_init_bite_mutex);
+  DBG("EVENT PROCESS: process_initBite");
   m_bite_upper_border = -BiteParams::neg_biteElevation;
 }
 
 void GameProcessor::process_levelDimens() {
-  std::unique_lock<std::mutex> lock(m_level_dimens_mutex);
-  // no-op
+  std::lock_guard<std::mutex> lock(m_level_dimens_mutex);
+  DBG("EVENT PROCESS: process_levelDimens");
 }
 
 void GameProcessor::process_biteMoved() {
-  std::unique_lock<std::mutex> lock(m_bite_location_mutex);
+  std::lock_guard<std::mutex> lock(m_bite_location_mutex);
+  DBG("EVENT PROCESS: process_biteMoved");
   if (!m_ball_is_flying) {  // move ball following the bite
     shiftBall(m_bite.getXPose(), m_ball.getPose().getY() /* unchanged */);
   }
 }
 
 void GameProcessor::process_prizeCaught() {
-  std::unique_lock<std::mutex> lock(m_prize_caught_mutex);
+  std::lock_guard<std::mutex> lock(m_prize_caught_mutex);
+  DBG("EVENT PROCESS: process_prizeCaught");
   switch (m_prize_caught) {
     case Prize::BLOCK:
       {
@@ -385,7 +401,8 @@ void GameProcessor::process_prizeCaught() {
 }
 
 void GameProcessor::process_laserBeam() {
-  std::unique_lock<std::mutex> lock(m_laser_beam_mutex);
+  std::lock_guard<std::mutex> lock(m_laser_beam_mutex);
+  DBG("EVENT PROCESS: process_laserBeam");
   int row = 0, col = 0;
   if (!getImpactedBlock(m_laser_beam.getX(), m_laser_beam.getY() - LaserParams::laserHalfHeight, &row, &col)) {
     return;  // laser beam has left level boundaries
@@ -418,12 +435,14 @@ void GameProcessor::setBonusPrizes(Prize prize_type) {
 }
 
 void GameProcessor::moveBall() {
+  DBG("enter GameProcessor::moveBall(%f, %f)", m_ball.getPose().getX(), m_ball.getPose().getY());
   m_ball_pose_corrected = false;
 
   if (m_level_finished) {
     stopBall();  // stop flying before notify to avoid bugs
     level_finished_event.notifyListeners(true);
     onLevelFinished(true);
+    DBG("in GameProcessor::moveBall(): level finished");
     return;
   }
 
@@ -438,6 +457,7 @@ void GameProcessor::moveBall() {
     lost_ball_event.notifyListeners(true);
     onLostBall(true);
     onCardinalityChanged(m_level->getCardinality());
+    DBG("in GameProcessor::moveBall(): lost ball");
     return;
   }
 
@@ -468,6 +488,7 @@ void GameProcessor::moveBall() {
   }
   uint64_t delay = ProcessorParams::nanoDelay;
   std::this_thread::sleep_for (std::chrono::nanoseconds(delay));
+  DBG("exit GameProcessor::moveBall(%f, %f)", m_ball.getPose().getX(), m_ball.getPose().getY());
 }
 
 void GameProcessor::shiftBall(GLfloat new_x, GLfloat new_y) {
@@ -1251,8 +1272,8 @@ void GameProcessor::getCollisionDirection(
 }
 
 void GameProcessor::correctBallPosition(GLfloat new_x, GLfloat new_y) {
-  shiftBall(new_x, new_y);
   m_ball_pose_corrected = true;
+  shiftBall(new_x, new_y);
 }
 
 void GameProcessor::smallAngleAvoid() {
