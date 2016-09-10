@@ -17,9 +17,53 @@
     <string name="action_dropStat">Drop stat</string>
 
     <string name="about_title">About application</string>
-    <string name="about_message">Author: Maxim Alov alovmax@yandex.ru\nVersion: 1.0.0, 31.05.2015\nSee: orcchg.blogspot.ru\nSounds from diforb.com, freesound.org</string>
+    <string name="about_message">Author: Maxim Alov alovmax@yandex.ru</string>
 
     <string name="internal_error">Internal error !</string>
     <string name="internal_error_message">It is recommended to restart application.</string>
     <string name="close_button">Close</string>
+
+    <string name="attribution_sounds">Sounds</string>
+    <string name="attribution_icons">Icons</string>
+    <string name="attribution_images">Graphics</string>
+
+    <string name="attribution_sounds_desc">This application uses sounds from freesound.org.\nLicense notes are available here:\nhttps://www.freesound.org\nSounds were renamed for more convenient implementation of this application.Here is the list of attribution for all sounds:
+        \n\nboom_1.wav      :: bad explosion by nthompson &#8212; https://www.freesound.org/people/nthompson/sounds/47252/ &#8212; License: Creative Commons 0
+        \n\nboom_2.wav      :: carbidexplosion.wav by escortmarius &#8212; https://www.freesound.org/people/escortmarius/sounds/172870/ &#8212; License: Attribution
+        \n\nchange_1.wav    :: Spacey 1up/Power up by GameAudio &#8212; https://www.freesound.org/people/GameAudio/sounds/220173/ &#8212; License: Creative Commons 0
+        \n\ndestroy_1.wav   :: sudden appearance by supersnd &#8212; https://www.freesound.org/people/supersnd/sounds/207802/ &#8212; License: Creative Commons 0
+        \n\ndestroy_2.wav   :: teleport by fins &#8212; https://www.freesound.org/people/fins/sounds/172206/ &#8212; License: Creative Commons 0
+        \n\nexplode_1.wav   :: Firework Explosion by TB0Y298 &#8212; https://www.freesound.org/people/TB0Y298/sounds/254071/ &#8212; License: Attribution
+        \n\nfog_1.wav       :: air.wav by Sergenious &#8212; https://www.freesound.org/people/Sergenious/sounds/55815/ &#8212; License: Attribution
+        \n\nhyper_1.wav     :: teleport by fins &#8212; https://www.freesound.org/people/fins/sounds/172207/ &#8212; License: Creative Commons 0
+        \n\ninit_1.wav      :: tape_slow8.wav by zerolagtime &#8212; https://www.freesound.org/people/zerolagtime/sounds/49245/ &#8212; License: Attribution
+        \n\ninvul_1.wav     :: metal 9.wav by D DJ Chronos &#8212; https://www.freesound.org/people/D DJ Chronos/sounds/123587/ &#8212; License: Attribution
+        \n\ninvul_2.wav     :: metal_clang_02.wav by Department64 &#8212; https://www.freesound.org/people/Department64/sounds/95270/ &#8212; License: Creative Commons 0
+        \n\ninvul_3.wav     :: tonk3.WAV by eliasheuninck &#8212; https://www.freesound.org/people/eliasheuninck/sounds/3543/ &#8212; License: Creative Commons 0
+        \n\niron_1.wav      :: concrete block 3.wav by FreqMan &#8212; https://www.freesound.org/people/FreqMan/sounds/25843/ &#8212; License: Attribution
+        \n\niron_2.wav      :: concrete block 1.wav by FreqMan &#8212; https://www.freesound.org/people/FreqMan/sounds/25841/ &#8212; License: Attribution
+        \n\nlaser_1.wav     :: Laser8.wav by jobro &#8212; https://www.freesound.org/people/jobro/sounds/35685/ &#8212; License: Attribution
+        \n\nlaser_2.wav     :: ClassicLaser.WAV by Snipperbes &#8212; https://www.freesound.org/people/Snipperbes/sounds/73537/ &#8212; License: Creative Commons 0
+        \n\nlong_1.wav      :: Womp.wav by StonedB &#8212; https://www.freesound.org/people/StonedB/sounds/178687/ &#8212; License: Attribution
+        \n\nlose_1.wav      :: Comedic Whistle, A.wav by InspectorJ &#8212; https://www.freesound.org/people/InspectorJ/sounds/345688/ &#8212; License: Attribution
+        \n\nmidas_1.wav     :: 06564 fairy magic wand.wav by Robinhood76 &#8212; https://www.freesound.org/people/Robinhood76/sounds/342432/ &#8212; License: Attribution Noncommercial
+        \n\nprequick_1.wav  :: iceSpell.wav by Relenzo2 &#8212; https://www.freesound.org/people/Relenzo2/sounds/160420/ &#8212; License: Creative Commons 0
+        \n\nprotect_1.wav   :: FX_26_Laser.wav by AlienXXX &#8212; https://www.freesound.org/people/AlienXXX/sounds/211588/ &#8212; License: Attribution
+        \n\nquick_1.wav     :: Glass Break - Medium Jar by RoganDerrick &#8212; https://www.freesound.org/people/RoganDerrick/sounds/260434/ &#8212; License: Attribution
+        \n\nshort_1.wav     :: Zip.wav by jackjames_tomknevitt &#8212; https://www.freesound.org/people/jackjames_tomknevitt/sounds/209489/ &#8212; License: Attribution
+        \n\nskull_1.wav     :: dead_bird.wav by markb258 &#8212; https://www.freesound.org/people/markb258/sounds/245807/ &#8212; License: Attribution
+        \n\nvital_1.wav     :: Action 02 by rhodesmas &#8212; https://www.freesound.org/people/rhodesmas/sounds/320776/ &#8212; License: Attribution
+        \n\nvital_2.wav     :: SFX Magic by renatalmar &#8212; https://www.freesound.org/people/renatalmar/sounds/264981/ &#8212; License: Creative Commons 0
+        \n\nwin_1.wav       :: Good! by syseQ &#8212; https://www.freesound.org/people/syseQ/sounds/267528/ &#8212; License: Creative Commons 0
+        \n
+        \n
+        This application also uses sounds from diforb.com\nLicense notes are available here:\nhttp://diforb.com\nList of sounds:\n
+        \nbite_1.wav, bite_2.wav, \nblock_1.wav, block_2.wav, \nblock_3.wav, block_4.wav,
+        \nglass_1.wav, magic_1.wav, \nmagic_2.wav, prize_1.wav, \nprize_2.wav, prize_3.wav,
+        \nultra_1.wav, ultra_2.wav, \nultra_3.wav, ultra_4.wav, \nwater_1.wav, water_2.wav,
+        \nwater_3.wav, zygote_1.wav, \nzygote_2.wav, zygote_3.wav\n</string>
+
+    <string name="attribution_icons_desc">All PNG icons are from findicons.com\n\nef_laser.png, pr_arrow.png, \npr_ball.png, pr_brick.png, \npr_butterfly.png, pr_candy.png,\npr_clock.png, pr_coin.png, \npr_diamond.png, pr_dice.png, \npr_down.png, pr_earth.png,\npr_egg.png, pr_explode.png, \npr_extend.png, pr_fire.png, \npr_fire_t.png, pr_fog.png,\npr_frozen_clock.png, pr_glue.png, \npr_hyper.png, pr_jump.png, \npr_laser.png, pr_mirror.png,\npr_newyear.png, pr_pierce.png, \npr_protect.png, pr_radar.png, \npr_short.png, pr_skull.png,\npr_star.png, pr_waterdrop.png, \npr_zygote.png, smoke.png, spark.png</string>
+    <string name="attribution_images_desc">All other images are self&#46;made and belong to the author Maxim Alov.\nThese images (and any parts of them) are part of this application and could not be used by any 3rd&#46;parties or distributed in any way outside from this application.\n\nImages and resources:\n
+        \nbg_blueov.png, bg_greenov.png, bg_yellowov.png</string>
 </resources>

@@ -19,7 +19,7 @@
     <string name="action_dropStat">Aggiorna</string>
     
     <string name="about_title">Circa l\'applicazione</string>
-    <string name="about_message">Autore: Maxim Alov alovmax@yandex.ru\nVersione: 1.0.0, 31.05.2015\nVedere: orcchg.blogspot.ru\nSuoni da diforb.com, freesound.org</string>
+    <string name="about_message">Autore: Maxim Alov alovmax@yandex.ru</string>
     
     <string name="internal_error">Errore !</string>
     <string name="internal_error_message">Si consiglia di riavviare l\'applicazione.</string>

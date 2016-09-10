@@ -21,4 +21,7 @@
     <dimen name="dialog1_button_width">180dp</dimen>
     <dimen name="dialog2_button_width">120dp</dimen>
     <dimen name="dialog_button_height">60dp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
 </resources>

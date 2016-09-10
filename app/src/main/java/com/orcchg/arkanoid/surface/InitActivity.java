@@ -161,37 +161,40 @@ public class InitActivity extends FragmentActivity {
 //            // no-op
 //          }
 //        }).show();
-    new AboutDialog(this).show();
+
+//    new AboutDialog(this).show();
+    Intent intent = new Intent(this, AboutActivity.class);
+    startActivity(intent);
   }
   
   /* Dialogs */
   // --------------------------------------------------------------------------
-  private static class AboutDialog extends Dialog implements View.OnClickListener {
-    private WeakReference<InitActivity> activityRef;
-    
-    AboutDialog(InitActivity activity) {
-      super(activity);
-      activityRef = new WeakReference<>(activity);
-    }
-    
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-      super.onCreate(savedInstanceState);
-      requestWindowFeature(Window.FEATURE_NO_TITLE);
-      setContentView(R.layout.dialog_one_button);
-      Button close_button = (Button) findViewById(R.id.dialog_one_button_button);
-      close_button.setOnClickListener(this);
-    }
-
-    @Override
-    public void onClick(View v) {
-      InitActivity activity = activityRef.get();
-      if (activity != null) {
-        activity.mMediaPlayer.start();
-      }
-      dismiss();
-    }
-  }
+//  private static class AboutDialog extends Dialog implements View.OnClickListener {
+//    private WeakReference<InitActivity> activityRef;
+//
+//    AboutDialog(InitActivity activity) {
+//      super(activity);
+//      activityRef = new WeakReference<>(activity);
+//    }
+//
+//    @Override
+//    protected void onCreate(Bundle savedInstanceState) {
+//      super.onCreate(savedInstanceState);
+//      requestWindowFeature(Window.FEATURE_NO_TITLE);
+//      setContentView(R.layout.dialog_one_button);
+//      Button close_button = (Button) findViewById(R.id.dialog_one_button_button);
+//      close_button.setOnClickListener(this);
+//    }
+//
+//    @Override
+//    public void onClick(View v) {
+//      InitActivity activity = activityRef.get();
+//      if (activity != null) {
+//        activity.mMediaPlayer.start();
+//      }
+//      dismiss();
+//    }
+//  }
   
   private static class WarningDialog extends Dialog implements View.OnClickListener {
     private WeakReference<InitActivity> activityRef;

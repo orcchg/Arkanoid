@@ -12,7 +12,7 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         externalNativeBuild {
             cmake {
-                cppFlags "-std=c++11 -frtti -fexceptions -pthread -O3 -mfpu=neon"
+                cppFlags "-std=c++11 -frtti -fexceptions -pthread -O0 -ggdb3 -mfpu=neon"
             }
         }
     }

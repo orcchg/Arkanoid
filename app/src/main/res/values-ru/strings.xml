@@ -19,7 +19,7 @@
     <string name="action_dropStat">Сброс</string>
     
     <string name="about_title">О программе</string>
-    <string name="about_message">Автор: Maxim Alov alovmax@yandex.ru\nВерсия: 1.0.0, 31.05.2015\nСайт: orcchg.blogspot.ru\nЗвуки от diforb.com, freesound.org</string>
+    <string name="about_message">Автор: Maxim Alov alovmax@yandex.ru</string>
 
     <string name="internal_error">Произошла ошибка !</string>
     <string name="internal_error_message">Рекомендуется перезапустить приложение.</string>
