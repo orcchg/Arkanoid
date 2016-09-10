@@ -108,10 +108,10 @@ JNIEXPORT jobjectArray JNICALL Java_com_orcchg_arkanoid_surface_AsyncContext_sav
 /*
  * Class:     com_orcchg_arkanoid_surface_AsyncContext
  * Method:    setBonusBlocks
- * Signature: (JZ)V
+ * Signature: (JI)V
  */
-JNIEXPORT void JNICALL Java_com_orcchg_arkanoid_surface_AsyncContext_setBonusBlocks
-  (JNIEnv *, jobject, jlong, jboolean);
+JNIEXPORT void JNICALL Java_com_orcchg_arkanoid_surface_AsyncContext_setBonusPrizes
+  (JNIEnv *, jobject, jlong, jint);
 
 /*
  * Class:     com_orcchg_arkanoid_surface_AsyncContext

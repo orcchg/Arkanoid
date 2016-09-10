@@ -186,10 +186,10 @@ JNIEXPORT jobjectArray JNICALL Java_com_orcchg_arkanoid_surface_AsyncContext_sav
   return out_level_Java;
 }
 
-JNIEXPORT void JNICALL Java_com_orcchg_arkanoid_surface_AsyncContext_setBonusBlocks
-  (JNIEnv *, jobject, jlong descriptor, jboolean flag) {
+JNIEXPORT void JNICALL Java_com_orcchg_arkanoid_surface_AsyncContext_setBonusPrizes
+  (JNIEnv *, jobject, jlong descriptor, jint prize_type) {
   AsyncContextHelper* ptr = (AsyncContextHelper*) descriptor;
-  ptr->processor->setBonusBlocks(flag);
+  ptr->processor->setBonusPrizes(static_cast<game::Prize>(prize_type));
 }
 
 JNIEXPORT void JNICALL Java_com_orcchg_arkanoid_surface_AsyncContext_drop

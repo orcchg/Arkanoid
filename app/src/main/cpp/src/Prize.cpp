@@ -4,7 +4,7 @@
 namespace game {
 
 PrizeGenerator::PrizeGenerator()
-  : m_bonus_blocks(false)
+  : m_bonus_prize(Prize::NONE)
   , m_generator(std::chrono::system_clock::now().time_since_epoch().count())
   , m_distribution(0, PrizeUtils::totalPrizes - 1)
   , m_success_distribution(PrizeUtils::prizeProbability)
@@ -12,8 +12,8 @@ PrizeGenerator::PrizeGenerator()
 }
 
 Prize PrizeGenerator::generatePrize() {
-  if (m_bonus_blocks) {
-    return Prize::BLOCK;
+  if (m_bonus_prize != Prize::NONE) {
+    return m_bonus_prize;
   }
   int value = m_success_distribution(m_generator) ? m_distribution(m_generator) : 0;
   if (m_win_distribution(m_generator)) {

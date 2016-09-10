@@ -88,8 +88,8 @@ public:
   /** @addtogroup LogicFunc
    * @{
    */
-  /// @brief Forces prize generator to generate BLOCK prizes in case of TRUE passed.
-  void setBonusBlocks(bool flag);
+  /// @brief Forces prize generator to generate specific prizes in case not Prize::NONE is passed.
+  void setBonusPrizes(Prize type);
   /** @} */  // end of LogicFunc group
 
 // ----------------------------------------------

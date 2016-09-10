@@ -411,12 +411,12 @@ void GameProcessor::process_laserBeam() {
 
 /* LogicFunc group */
 // ----------------------------------------------------------------------------
-void GameProcessor::setBonusBlocks(bool flag) {
+void GameProcessor::setBonusPrizes(Prize prize_type) {
   if (m_level != nullptr) {
-    m_level->getPrizeGenerator().setBonusBlocks(flag);
-    DBG("Bonus blocks set to %s", flag ? "true" : "false");
+    m_level->getPrizeGenerator().setBonusPrizes(prize_type);
+    DBG("Bonus prize set to %i", static_cast<int>(prize_type));
   } else {
-    ERR("Unable to set bonus blocks: level has not been loaded before!");
+    ERR("Unable to set bonus prizes: level has not been loaded before!");
   }
 }
 

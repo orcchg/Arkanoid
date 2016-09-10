@@ -15,7 +15,7 @@ class AsyncContext {
     void onScoreUpdated(int score);
     void onAngleChanged(int angle);
     void onCardinalityChanged(int new_cardinality);
-    void onPrizeCatch(Prize prize);
+    void onPrizeCatch(@Prize.Type int prize);
     void onErrorTextureLoad();
     void onErrorSoundLoad();
     void onDebugMessage(String message);
@@ -42,7 +42,7 @@ class AsyncContext {
 
   /* Tools */
   void loadLevel(final String[] level) { loadLevel(descriptor, level); }
-  void setBonusBlocks(boolean flag) { setBonusBlocks(descriptor, flag); }
+  void setBonusPrizes(int prizeType) { setBonusPrizes(descriptor, prizeType); }
   
   String saveLevel() {
     String[] tokens = saveLevel(descriptor);
@@ -117,7 +117,7 @@ class AsyncContext {
   
   void fireJavaEvent_prizeCatch(int prize) {
     if (mListener != null) {
-      mListener.onPrizeCatch(Prize.fromInt(prize));
+      mListener.onPrizeCatch(prize);
     }
   }
   
@@ -156,7 +156,7 @@ class AsyncContext {
   /* Tools */
   private native void loadLevel(long descriptor, String[] in_level);
   private native String[] saveLevel(long descriptor);
-  private native void setBonusBlocks(long descriptor, boolean flag);
+  private native void setBonusPrizes(long descriptor, int prizeType);
   private native void drop(long descriptor);
   private native int getScore(long descriptor);
 }

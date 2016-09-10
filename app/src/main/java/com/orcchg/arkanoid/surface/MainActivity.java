@@ -21,10 +21,12 @@ import java.lang.ref.WeakReference;
 
 import timber.log.Timber;
 
+import static com.orcchg.arkanoid.surface.Prize.VITALITY;
+
 public class MainActivity extends FragmentActivity {
   private static final int PLAYER_ID = 1;
   private static final int INITIAL_LIVES = 3;
-  private static final int INITIAL_LEVEL = 0;
+  private static final int INITIAL_LEVEL = 54;
   private static final int INITIAL_SCORE = 0;
   private int currentLives = INITIAL_LIVES;
   private int currentLevel = INITIAL_LEVEL;
@@ -129,7 +131,7 @@ public class MainActivity extends FragmentActivity {
       mAsyncContext.fireJavaEvent_refreshScore();
     }
     mAsyncContext.loadLevel(Levels.get(currentLevel, level_state));
-    setBonusBlocks();
+    setBonusPrizes();
     super.onResume();
   }
   
@@ -189,7 +191,7 @@ public class MainActivity extends FragmentActivity {
         mAsyncContext.fireJavaEvent_refreshLevel();
         mAsyncContext.fireJavaEvent_refreshScore();
         mAsyncContext.loadLevel(Levels.get(currentLevel));
-        setBonusBlocks();
+        setBonusPrizes();
         break;
     }
     return true;
@@ -202,7 +204,7 @@ public class MainActivity extends FragmentActivity {
     setLives(INITIAL_LIVES);
     mAsyncContext.fireJavaEvent_refreshLives();
     mAsyncContext.loadLevel(Levels.get(currentLevel, ""));
-    setBonusBlocks();
+    setBonusPrizes();
   }
   
   /* Support methods */
@@ -276,16 +278,21 @@ public class MainActivity extends FragmentActivity {
     mCardinalityTextView.setText(Integer.toString(new_cardinality));
   }
   
-  void setBonusBlocks() {
-    if (currentLevel == 3 ||
-        currentLevel == 16 ||
-        currentLevel == 25 ||
-        currentLevel == 39 ||
-        currentLevel == 51) {
-      mAsyncContext.setBonusBlocks(true);
-    } else {
-      mAsyncContext.setBonusBlocks(false);
+  void setBonusPrizes() {
+    @Prize.Type int prizeType = Prize.NONE;
+    switch (currentLevel) {
+      case 3:
+      case 16:
+      case 25:
+      case 39:
+      case 51:
+        prizeType = Prize.BLOCK;
+        break;
+      case 54:
+        prizeType = VITALITY;
+        break;
     }
+    mAsyncContext.setBonusPrizes(prizeType);
   }
   
   void levelFinishedAdditional() {
@@ -388,7 +395,7 @@ public class MainActivity extends FragmentActivity {
         }
         activity.setLevel(currentLevel);
         activity.mAsyncContext.loadLevel(Levels.get(currentLevel));
-        activity.setBonusBlocks();
+        activity.setBonusPrizes();
         activity.levelFinishedAdditional();
       }
     }
@@ -435,70 +442,70 @@ public class MainActivity extends FragmentActivity {
     }
     
     @Override
-    public void onPrizeCatch(final Prize prize) {
+    public void onPrizeCatch(final @Prize.Type int prize) {
       int score = 0;
       switch (prize) {
-        case BLOCK:
-        case CLIMB:  // effect not implemented
+        case Prize.BLOCK:
+        case Prize.CLIMB:  // effect not implemented
           score += 35;
           break;
-        case DESTROY:
+        case Prize.DESTROY:
           --currentLives;
           updateLives();
           break;
-        case DRAGON:  // effect not implemented
+        case Prize.DRAGON:  // effect not implemented
           score += 90;
           break;
-        case EASY:
-        case EASY_T:
-        case EVAPORATE:  // effect not implemented
-        case EXPLODE:
-        case EXTEND:
-        case FAST:
-        case FOG:  // effect not implemented
-        case GOO:
-        case HYPER:
+        case Prize.EASY:
+        case Prize.EASY_T:
+        case Prize.EVAPORATE:  // effect not implemented
+        case Prize.EXPLODE:
+        case Prize.EXTEND:
+        case Prize.FAST:
+        case Prize.FOG:  // effect not implemented
+        case Prize.GOO:
+        case Prize.HYPER:
           score += 35;
           break;
-        case INIT:
+        case Prize.INIT:
           final MainActivity activity = activityRef.get();
           if (activity != null) {
             activity.mAsyncContext.loadLevel(Levels.get(currentLevel, ""));
-            activity.setBonusBlocks();
+            activity.setBonusPrizes();
           }
           break;
-        case JUMP:
-        case LASER:
-        case MIRROR:
-        case PIERCE:
-        case PROTECT:
-        case RANDOM:
-        case SHORT:
-        case SLOW:
-        case UPGRADE:
-        case DEGRADE:
+        case Prize.JUMP:
+        case Prize.LASER:
+        case Prize.MIRROR:
+        case Prize.PIERCE:
+        case Prize.PROTECT:
+        case Prize.RANDOM:
+        case Prize.SHORT:
+        case Prize.SLOW:
+        case Prize.UPGRADE:
+        case Prize.DEGRADE:
           score += 35;
           break;
-        case VITALITY:
+        case Prize.VITALITY:
           ++currentLives;
           score += 45;
           updateLives();
           break;
-        case WIN:
+        case Prize.WIN:
           score += 400;
           break;
-        case ZYGOTE:  // effect not implemented
+        case Prize.ZYGOTE:  // effect not implemented
           score += 15;
           break;
-        case SCORE_5:
+        case Prize.SCORE_5:
           score += 95;
-        case SCORE_4:
+        case Prize.SCORE_4:
           score += 75;
-        case SCORE_3:
+        case Prize.SCORE_3:
           score += 50;
-        case SCORE_2:
+        case Prize.SCORE_2:
           score += 35;
-        case SCORE_1:
+        case Prize.SCORE_1:
           score += 20;
         default:
           break;
