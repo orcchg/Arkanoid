@@ -378,9 +378,6 @@ void SoundProcessor::process_prizeCaught() {
     case game::Prize::DESTROY:
       sound_prefix = "skull_";
       break;
-    case game::Prize::EXTEND:
-      sound_prefix = "long_";
-      break;
     case game::Prize::HYPER:
       sound_prefix = "hyper_";
       break;
@@ -390,6 +387,7 @@ void SoundProcessor::process_prizeCaught() {
     case game::Prize::PROTECT:
       sound_prefix = "protect_";
       break;
+    case game::Prize::EXTEND:
     case game::Prize::SHORT:
       sound_prefix = "short_";
       break;

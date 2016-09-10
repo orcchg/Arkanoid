@@ -1,14 +1,21 @@
 package com.orcchg.arkanoid.surface;
 
+import android.animation.Animator;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.support.annotation.ColorInt;
 import android.support.v4.app.FragmentActivity;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -45,6 +52,9 @@ public class MainActivity extends FragmentActivity {
   private TextView mInfoTextView, mAddInfoTextView;
   private TextView mLifeMultiplierTextView, mCardinalityTextView;
   private ImageView[] mLifeViews;
+  private View[] mEdgeViews;
+
+  private EdgeColor mEdgeColor;
   
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +63,7 @@ public class MainActivity extends FragmentActivity {
     setContentView(R.layout.activity_main);
     
     Resources res = getResources();
+    mEdgeColor = new EdgeColor(res);
     final int FRAME_DELAY_NANOS = res.getInteger(R.integer.frame_delay_nanos);
 //    mAlertDialogTitle = res.getString(R.string.internal_error);
 //    mCloseButtonLabel = res.getString(R.string.close_button);
@@ -75,6 +86,10 @@ public class MainActivity extends FragmentActivity {
       (ImageView) findViewById(R.id.life3_imageview),
       (ImageView) findViewById(R.id.life4_imageview),
       (ImageView) findViewById(R.id.life5_imageview)};
+    mEdgeViews = new View[] {
+            findViewById(R.id.top_edge), findViewById(R.id.bottom_edge),
+            findViewById(R.id.left_edge), findViewById(R.id.right_edge)
+    };
     
     // ------------------------------------------
     mNativeResources = new NativeResources(getAssets(), getFilesDir().getAbsolutePath());
@@ -292,6 +307,9 @@ public class MainActivity extends FragmentActivity {
       case 55:
         prizeType = Prize.DESTROY;
         break;
+      case 56:
+        prizeType = Prize.PIERCE;
+        break;
     }
     mAsyncContext.setBonusPrizes(prizeType);
   }
@@ -379,6 +397,7 @@ public class MainActivity extends FragmentActivity {
     
     @Override
     public void onLostBall() {
+      edgeEffect(Prize.DESTROY);
       --currentLives;
       Timber.i("Ball has been lost! Lives rest: %s", currentLives);
       updateLives();
@@ -390,6 +409,7 @@ public class MainActivity extends FragmentActivity {
       Timber.i("Level finished!");
       final MainActivity activity = activityRef.get();
       if (activity != null) {
+        edgeEffect(Prize.WIN);
         ++currentLevel;
         if (currentLevel >= Levels.TOTAL_LEVELS) {
           currentLevel = INITIAL_LEVEL;
@@ -445,6 +465,7 @@ public class MainActivity extends FragmentActivity {
     @Override
     public void onPrizeCatch(final @Prize.Type int prize) {
       int score = 0;
+      edgeEffect(prize);
       switch (prize) {
         case Prize.BLOCK:
         case Prize.CLIMB:  // effect not implemented
@@ -508,10 +529,41 @@ public class MainActivity extends FragmentActivity {
           score += 35;
         case Prize.SCORE_1:
           score += 20;
+        case Prize.NONE:
         default:
           break;
       }
       onScoreUpdated(score);
+    }
+
+    private void edgeEffect(@Prize.Type int prize) {
+      MainActivity activity = activityRef.get();
+      if (activity != null) {
+        @ColorInt int color = 0;
+        switch (prize) {
+          case Prize.DESTROY:
+            color = activity.mEdgeColor.DESTROY;
+            break;
+          case Prize.HYPER:
+            color = activity.mEdgeColor.HYPER;
+            break;
+          case Prize.INIT:
+            color = activity.mEdgeColor.INIT;
+            break;
+          case Prize.VITALITY:
+            color = activity.mEdgeColor.VITALITY;
+            break;
+          case Prize.WIN:
+            color = activity.mEdgeColor.WIN;
+            break;
+          default:
+            color = 0;  // no edge effect
+            break;
+        }
+        if (color != 0) {
+          activity.edgeEffect(color);
+        }
+      }
     }
     
     @Override
@@ -566,4 +618,66 @@ public class MainActivity extends FragmentActivity {
       }
     }
   }  // end of inner class
+
+  // --------------------------------------------------------------------------
+  private void edgeEffect(final @ColorInt int color) {
+    Timber.v("Edge effect %s", color);
+    runOnUiThread(new Runnable() {
+      @Override
+      public void run() {
+        int[] colors = {Color.TRANSPARENT, color};
+        GradientDrawable top = new GradientDrawable(GradientDrawable.Orientation.BOTTOM_TOP, colors);
+        GradientDrawable bottom = new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, colors);
+        GradientDrawable left = new GradientDrawable(GradientDrawable.Orientation.RIGHT_LEFT, colors);
+        GradientDrawable right = new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, colors);
+
+        animateEdgeView(0, top);
+        animateEdgeView(1, bottom);
+        animateEdgeView(2, left);
+        animateEdgeView(3, right);
+      }
+    });
+  }
+
+  private void animateEdgeView(int index, Drawable drawable) {
+    mEdgeViews[index].setBackgroundDrawable(drawable);
+    ObjectAnimator fadeOut = ObjectAnimator.ofFloat(mEdgeViews[index], "alpha", 1.0f, 0.0f);
+    fadeOut.addUpdateListener(createAnimatorUpdateListener(mEdgeViews[index]));
+    fadeOut.addListener(createAnimatorListener(mEdgeViews[index]));
+    fadeOut.setInterpolator(new DecelerateInterpolator());
+    fadeOut.setDuration(1000);
+    fadeOut.start();
+  }
+
+  private Animator.AnimatorListener createAnimatorListener(final View view) {
+    return new Animator.AnimatorListener() {
+      @Override
+      public void onAnimationStart(Animator animator) {
+        view.setVisibility(View.VISIBLE);
+      }
+
+      @Override
+      public void onAnimationEnd(Animator animator) {
+        view.setVisibility(View.INVISIBLE);
+      }
+
+      @Override
+      public void onAnimationCancel(Animator animator) {
+        view.setVisibility(View.INVISIBLE);
+      }
+
+      @Override
+      public void onAnimationRepeat(Animator animator) {
+      }
+    };
+  }
+
+  private ValueAnimator.AnimatorUpdateListener createAnimatorUpdateListener(final View view) {
+    return new ValueAnimator.AnimatorUpdateListener() {
+      @Override
+      public void onAnimationUpdate(ValueAnimator valueAnimator) {
+        view.setAlpha((float) valueAnimator.getAnimatedValue());
+      }
+    };
+  }
 }

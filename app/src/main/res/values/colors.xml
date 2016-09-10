@@ -4,4 +4,11 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="grey">#ffd3d3d3</color>
+    <color name="error_color">#88ee0000</color>
+
+    <color name="edge_color_destroy">#88ee0000</color>
+    <color name="edge_color_hyper">#8800796b</color>
+    <color name="edge_color_init">#88ffffff</color>
+    <color name="edge_color_vitality">#88FFB300</color>
+    <color name="edge_color_win">#88512da8</color>
 </resources>
