@@ -31,7 +31,7 @@ import timber.log.Timber;
 public class MainActivity extends FragmentActivity {
   private static final int PLAYER_ID = 1;
   private static final int INITIAL_LIVES = 3;
-  private static final int INITIAL_LEVEL = 54;
+  private static final int INITIAL_LEVEL = 0;
   private static final int INITIAL_SCORE = 0;
   private int currentLives = INITIAL_LIVES;
   private int currentLevel = INITIAL_LEVEL;
