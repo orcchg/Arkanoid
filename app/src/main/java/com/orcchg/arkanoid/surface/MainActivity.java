@@ -21,8 +21,6 @@ import java.lang.ref.WeakReference;
 
 import timber.log.Timber;
 
-import static com.orcchg.arkanoid.surface.Prize.VITALITY;
-
 public class MainActivity extends FragmentActivity {
   private static final int PLAYER_ID = 1;
   private static final int INITIAL_LIVES = 3;
@@ -289,7 +287,7 @@ public class MainActivity extends FragmentActivity {
         prizeType = Prize.BLOCK;
         break;
       case 54:
-        prizeType = VITALITY;
+        prizeType = Prize.GOO;
         break;
     }
     mAsyncContext.setBonusPrizes(prizeType);

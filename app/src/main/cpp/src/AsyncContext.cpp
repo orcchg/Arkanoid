@@ -635,7 +635,7 @@ void AsyncContext::initGame() {
 
   // ensure correct initial location
   m_bite = Bite(BiteParams::biteWidth, BiteParams::biteHeight * m_aspect);
-  moveBite(0.0f);
+  moveBite(0.0f, true /* silent */);
 
   m_ball = Ball(BallParams::ballSize, BallParams::ballSize * m_aspect);
   m_ball.setXPose(m_bite.getXPose());
@@ -647,7 +647,7 @@ void AsyncContext::initGame() {
   init_bite_event.notifyListeners(m_bite);
 }
 
-void AsyncContext::moveBite(float position) {
+void AsyncContext::moveBite(float position, bool silent) {
   if (std::fabs(position - m_bite.getXPose()) >= BiteParams::biteTouchArea) {
     // finger position is out of bite's borders
     return;
@@ -667,7 +667,9 @@ void AsyncContext::moveBite(float position) {
       -BiteParams::neg_biteElevation,
       1, 1);
 
-  bite_location_event.notifyListeners(m_bite);
+  if (!silent) {
+    bite_location_event.notifyListeners(m_bite);
+  }
 }
 
 void AsyncContext::moveBall(float x_position, float y_position) {

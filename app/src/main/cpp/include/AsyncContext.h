@@ -405,8 +405,9 @@ private:
   void initGame();
   /// @brief Sets the bite into shifted state.
   /// @param position Normalized position the bite should move at.
+  /// @param silent If set to TRUE, bite will be moved w/o notification event.
   /// @note Position should be within [-1, 1] segment.
-  void moveBite(float position);
+  void moveBite(float position, bool silent = false);
   /// @brief Sets the ball into shifted state.
   /// @param x_position Normalized position along X axis the ball should move at.
   /// @param y_position Normalized position along Y axis the ball should move at.
