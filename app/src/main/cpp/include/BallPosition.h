@@ -7,7 +7,7 @@ namespace game {
 
 class BallPosition {
 public:
-  BallPosition(GLfloat x = 0.0f, GLfloat y = 0.0f)
+  BallPosition(GLfloat x = 0.0f, GLfloat y = -1.0f)
     : m_x(x)
     , m_y(y) {
   }
