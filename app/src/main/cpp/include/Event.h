@@ -107,5 +107,5 @@ protected:
   };
 
   std::list<EventGlue> listeners;
-	int eventListenerId;
+  int eventListenerId;
 };
