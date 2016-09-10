@@ -1,0 +1,28 @@
+boom_1.wav      :: bad explosion by nthompson -- https://www.freesound.org/people/nthompson/sounds/47252/ -- License: Creative Commons 0
+boom_2.wav      :: carbidexplosion.wav by escortmarius -- https://www.freesound.org/people/escortmarius/sounds/172870/ -- License: Attribution
+change_1.wav    :: Spacey 1up/Power up by GameAudio -- https://www.freesound.org/people/GameAudio/sounds/220173/ -- License: Creative Commons 0
+destroy_1.wav   :: sudden appearance by supersnd -- https://www.freesound.org/people/supersnd/sounds/207802/ -- License: Creative Commons 0
+destroy_2.wav   :: teleport by fins -- https://www.freesound.org/people/fins/sounds/172206/ -- License: Creative Commons 0
+explode_1.wav   :: Firework Explosion by TB0Y298 -- https://www.freesound.org/people/TB0Y298/sounds/254071/ -- License: Attribution
+fog_1.wav       :: air.wav by Sergenious -- https://www.freesound.org/people/Sergenious/sounds/55815/ -- License: Attribution
+hyper_1.wav     :: teleport by fins -- https://www.freesound.org/people/fins/sounds/172207/ -- License: Creative Commons 0
+init_1.wav      :: tape_slow8.wav by zerolagtime -- https://www.freesound.org/people/zerolagtime/sounds/49245/ -- License: Attribution
+invul_1.wav     :: metal 9.wav by D DJ Chronos -- https://www.freesound.org/people/D%20DJ%20Chronos/sounds/123587/ -- License: Attribution
+invul_2.wav     :: metal_clang_02.wav by Department64 -- https://www.freesound.org/people/Department64/sounds/95270/ -- License: Creative Commons 0
+invul_3.wav     :: tonk3.WAV by eliasheuninck -- https://www.freesound.org/people/eliasheuninck/sounds/3543/ -- License: Creative Commons 0
+iron_1.wav      :: concrete block 3.wav by FreqMan -- https://www.freesound.org/people/FreqMan/sounds/25843/ -- License: Attribution
+iron_2.wav      :: concrete block 1.wav by FreqMan -- https://www.freesound.org/people/FreqMan/sounds/25841/ -- License: Attribution
+laser_1.wav     :: Laser8.wav by jobro -- https://www.freesound.org/people/jobro/sounds/35685/ -- License: Attribution
+laser_2.wav     :: ClassicLaser.WAV by Snipperbes -- https://www.freesound.org/people/Snipperbes/sounds/73537/ -- License: Creative Commons 0
+long_1.wav      :: Womp.wav by StonedB -- https://www.freesound.org/people/StonedB/sounds/178687/ -- License: Attribution
+lose_1.wav      :: Comedic Whistle, A.wav by InspectorJ -- https://www.freesound.org/people/InspectorJ/sounds/345688/ -- License: Attribution
+midas_1.wav     :: 06564 fairy magic wand.wav by Robinhood76 -- https://www.freesound.org/people/Robinhood76/sounds/342432/ -- License: Attribution Noncommercial
+prequick_1.wav  :: iceSpell.wav by Relenzo2 -- https://www.freesound.org/people/Relenzo2/sounds/160420/ -- License: Creative Commons 0
+protect_1.wav   :: FX_26_Laser.wav by AlienXXX -- https://www.freesound.org/people/AlienXXX/sounds/211588/ -- License: Attribution
+quick_1.wav     :: Glass Break - Medium Jar by RoganDerrick -- https://www.freesound.org/people/RoganDerrick/sounds/260434/ -- License: Attribution
+short_1.wav     :: Zip.wav by jackjames_tomknevitt -- https://www.freesound.org/people/jackjames_tomknevitt/sounds/209489/ -- License: Attribution
+skull_1.wav     :: dead_bird.wav by markb258 -- https://www.freesound.org/people/markb258/sounds/245807/ -- License: Attribution
+vital_1.wav     :: Action 02 by rhodesmas -- https://www.freesound.org/people/rhodesmas/sounds/320776/ -- License: Attribution
+vital_2.wav     :: SFX Magic by renatalmar -- https://www.freesound.org/people/renatalmar/sounds/264981/ -- License: Creative Commons 0
+win_1.wav       :: Good! by syseQ -- https://www.freesound.org/people/syseQ/sounds/267528/ -- License: Creative Commons 0
+
