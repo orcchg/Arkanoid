@@ -287,7 +287,10 @@ public class MainActivity extends FragmentActivity {
         prizeType = Prize.BLOCK;
         break;
       case 54:
-        prizeType = Prize.GOO;
+        prizeType = Prize.VITALITY;
+        break;
+      case 55:
+        prizeType = Prize.DESTROY;
         break;
     }
     mAsyncContext.setBonusPrizes(prizeType);
