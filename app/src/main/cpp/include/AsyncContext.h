@@ -231,6 +231,7 @@ private:
   Bite m_bite;  //!< Physical bite's representation.
   BiteEffect m_bite_effect;  //!< Changed width of bite due to prize.
   Ball m_ball;  //!< Physical ball's representation.
+  bool m_ball_inited;  //!< Indicated that ball init measurement has finished.
   std::queue<RowCol> m_impact_queue;  //!< Queue of impacted blocks' indices.
 
   GLfloat* m_bite_vertex_buffer;  //!< Re-usable buffer for vertices of bite.

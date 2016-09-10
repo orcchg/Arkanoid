@@ -28,6 +28,7 @@ AsyncContext::AsyncContext(JavaVM* jvm, jint fdn)
   , m_bite()
   , m_bite_effect(BiteEffect::NONE)
   , m_ball()
+  , m_ball_inited(false)
   , m_impact_queue()
   , m_bite_vertex_buffer(new GLfloat[16])
   , m_bite_color_buffer(new GLfloat[16])
@@ -171,9 +172,18 @@ void AsyncContext::callback_loadLevel(Level::Ptr level) {
 void AsyncContext::callback_moveBall(Ball moved_ball) {
   std::lock_guard<std::mutex> lock(m_move_ball_mutex);
   DBG("EVENT CALLBACK: callback_moveBall(%f, %f)", moved_ball.getPose().getX(), moved_ball.getPose().getY());
-  m_ball = moved_ball;
-  m_move_ball_received.store(true);
-  interrupt();
+  /**
+   * Skip pending 'move_ball_event' sent by GameProcessor and arrived here to AsyncContext
+   * during init ball measurement in order to avoid init ball position corruption after measurement
+   * will have finished (and lock will have been freed).
+   */
+  if (!m_ball_inited) {
+    m_ball = moved_ball;
+    m_move_ball_received.store(true);
+    interrupt();
+  } else {
+    m_ball_inited = false;  // allow further 'move_ball_event' to come and be processed
+  }
 }
 
 void AsyncContext::callback_lostBall(float is_lost) {
@@ -637,13 +647,23 @@ void AsyncContext::initGame() {
   m_bite = Bite(BiteParams::biteWidth, BiteParams::biteHeight * m_aspect);
   moveBite(0.0f, true /* silent */);
 
-  m_ball = Ball(BallParams::ballSize, BallParams::ballSize * m_aspect);
-  m_ball.setXPose(m_bite.getXPose());
-  m_ball.setYPose(-BiteParams::neg_biteElevation + m_ball.getDimens().halfHeight());
-  moveBall(m_ball.getPose().getX(), m_ball.getPose().getY());
-  setBiteBallAppearance(BallEffect::NONE);
+  {  /**
+      * Avoid contention between init ball in AsyncContext and move ball in GameProcessor:
+      * the latter can fire 'move_ball_event' just after init ball position has been measured
+      * corrupting ball position both here in AsyncContext and there in GameProcessor
+      * as soon as 'init_ball_position_event' will fire.
+      */
+    std::lock_guard<std::mutex> lock(m_move_ball_mutex);
 
-  init_ball_position_event.notifyListeners(m_ball);
+    m_ball = Ball(BallParams::ballSize, BallParams::ballSize * m_aspect);
+    m_ball.setXPose(m_bite.getXPose());
+    m_ball.setYPose(-BiteParams::neg_biteElevation + m_ball.getDimens().halfHeight());
+    moveBall(m_ball.getPose().getX(), m_ball.getPose().getY());
+    setBiteBallAppearance(BallEffect::NONE);
+
+    init_ball_position_event.notifyListeners(m_ball);
+    m_ball_inited = true;
+  }
   init_bite_event.notifyListeners(m_bite);
 }
 

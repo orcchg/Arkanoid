@@ -203,7 +203,7 @@ void GameProcessor::eventHandler() {
   }
   if (m_level_dimens_received.load()) {
     m_level_dimens_received.store(false);
-    process_loadLevel();
+    process_levelDimens();
   }
   if (m_bite_location_received.load()) {
     m_bite_location_received.store(false);
@@ -463,18 +463,18 @@ void GameProcessor::moveBall() {
 
   if (new_x >= 1.0f - m_ball.getDimens().halfWidth()) {  // right border
     collideRightBorder();
-    correctBallPosition(1.0f - m_ball.getDimens().halfWidth(), new_y);
+    if (m_ball_is_flying) correctBallPosition(1.0f - m_ball.getDimens().halfWidth(), new_y);
     wall_impact_event.notifyListeners(true);
   } else if (new_x <= -1.0f + m_ball.getDimens().halfWidth()) {  // left border
     collideLeftBorder();
-    correctBallPosition(-1.0f + m_ball.getDimens().halfWidth(), new_y);
+    if (m_ball_is_flying) correctBallPosition(-1.0f + m_ball.getDimens().halfWidth(), new_y);
     wall_impact_event.notifyListeners(true);
   }
 
   if (new_y <= m_bite_upper_border + m_ball.getDimens().halfHeight()) {
     if (!m_is_ball_lost) {
       m_is_ball_lost = !collideBite(new_x);
-      correctBallPosition(new_x, m_bite_upper_border + m_ball.getDimens().halfHeight());
+      if (m_ball_is_flying) correctBallPosition(new_x, m_bite_upper_border + m_ball.getDimens().halfHeight());
     }
   } else if (collideBlock(new_x, new_y)) {
     m_level_finished = (m_level->blockImpact() == 0);
@@ -484,7 +484,7 @@ void GameProcessor::moveBall() {
   if (!m_ball_pose_corrected) {
     new_x = old_x + m_ball.getVelocity() * cosf(m_ball.getAngle());
     new_y = old_y + m_ball.getVelocity() * sinf(m_ball.getAngle());
-    shiftBall(new_x, new_y);
+    if (m_ball_is_flying) shiftBall(new_x, new_y);
   }
   uint64_t delay = ProcessorParams::nanoDelay;
   std::this_thread::sleep_for (std::chrono::nanoseconds(delay));
