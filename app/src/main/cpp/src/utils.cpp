@@ -2,6 +2,14 @@
 
 namespace util {
 
+int mul(int def, float ratio) {
+  return static_cast<int>(def * ratio);
+}
+
+int div(int def, float ratio) {
+  return static_cast<int>(def / ratio);
+}
+
 void setColor(const GLfloat* const bgra, GLfloat* const color_buffer, size_t size) {
   for (size_t i = 0; i < size; i += 4) {
     color_buffer[i + 0] = bgra[0];

@@ -239,10 +239,11 @@ private:
 // ----------------------------------------------
 /* Private member-functions */
 private:
-  /// @brief Calculates timed-effects threshold based on frame delay nanos.
-  /// @param fdn Frame delay nanos.
+  /// @brief Adjusts some duration based on frame delay nanos.
+  /// @param fdn Frame delay nanos
   /// @param def Default value if frame delay nanos was not set.
-  int calculateTimerThreshold(jint fdn, int def);
+  int adjustValue(jint fdn, int def, util::ADJUST_FUNC func);
+  float adjustSpeed(jint fdn, float def_speed);
 
   /** @defgroup ActiveObject Basic thread lifecycle and operation functions.
    * @{

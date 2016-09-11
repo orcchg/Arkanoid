@@ -25,6 +25,12 @@ constexpr float PI30 = 0.10471975f;
 
 constexpr float epsilon = 1e-4;
 
+/// @brief Takes integer value and float ratio to perform adjustment.
+typedef int (*ADJUST_FUNC)(int, float);
+
+int mul(int def, float ratio);
+int div(int def, float ratio);
+
 template <typename T>
 void setColor(const BGRA<T>& bgra, T* const color_buffer, size_t size) {
   for (size_t i = 0; i < size; i += 4) {

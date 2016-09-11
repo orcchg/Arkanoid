@@ -19,10 +19,10 @@ GameProcessor::GameProcessor(JavaVM* jvm, jint fdn)
   , fireJavaEvent_cardinalityChanged_id(nullptr)
   , fireJavaEvent_debugMessage_id(nullptr)
   , m_fdn(fdn > 0 ? fdn : ProcessorParams::moveDelay)
-  , m_internalTimerThreshold        (calculateTimerThreshold(fdn, GameProcessor::internalTimerThreshold))
-  , m_internalTimerForSpeedThreshold(calculateTimerThreshold(fdn, GameProcessor::internalTimerForSpeedThreshold))
-  , m_internalTimerForWidthThreshold(calculateTimerThreshold(fdn, GameProcessor::internalTimerForWidthThreshold))
-  , m_internalTimerForLaserThreshold(calculateTimerThreshold(fdn, GameProcessor::internalTimerForLaserThreshold))
+  , m_internalTimerThreshold        (adjustValue(fdn, GameProcessor::internalTimerThreshold,         util::div))
+  , m_internalTimerForSpeedThreshold(adjustValue(fdn, GameProcessor::internalTimerForSpeedThreshold, util::div))
+  , m_internalTimerForWidthThreshold(adjustValue(fdn, GameProcessor::internalTimerForWidthThreshold, util::div))
+  , m_internalTimerForLaserThreshold(adjustValue(fdn, GameProcessor::internalTimerForLaserThreshold, util::div))
   , m_level(nullptr)
   , m_throw_angle(60.0f)
   , m_aspect(1.0f)
@@ -165,12 +165,20 @@ void GameProcessor::detachFromJVM() {
 
 /* ActiveObject group */
 // ----------------------------------------------------------------------------
-int GameProcessor::calculateTimerThreshold(jint fdn, int def) {
+int GameProcessor::adjustValue(jint fdn, int def, util::ADJUST_FUNC func) {
   if (fdn > ProcessorParams::moveDelay) {
     float ratio = static_cast<float>(fdn) / ProcessorParams::moveDelay;
-    return static_cast<int>(def / ratio);
+    return static_cast<int>(func(def, ratio));
   }
   return def;
+}
+
+float GameProcessor::adjustSpeed(jint fdn, float def_speed) {
+  if (fdn > ProcessorParams::moveDelay) {
+    float ratio = static_cast<float>(fdn) / ProcessorParams::moveDelay;
+    return def_speed * ratio * 0.667f;
+  }
+  return def_speed;
 }
 
 void GameProcessor::onStart() {
@@ -461,8 +469,8 @@ void GameProcessor::moveBall() {
   // ball's position in the next frame
   GLfloat old_x = m_ball.getPose().getX();
   GLfloat old_y = m_ball.getPose().getY();
-  GLfloat new_x = m_ball.getPose().getX() + m_ball.getVelocity() * cosf(m_ball.getAngle());
-  GLfloat new_y = m_ball.getPose().getY() + m_ball.getVelocity() * sinf(m_ball.getAngle());
+  GLfloat new_x = m_ball.getPose().getX() + adjustSpeed(m_fdn, m_ball.getVelocity()) * cosf(m_ball.getAngle());
+  GLfloat new_y = m_ball.getPose().getY() + adjustSpeed(m_fdn, m_ball.getVelocity()) * sinf(m_ball.getAngle());
 
   if ((m_is_ball_lost && new_y <= -1.0f) || m_is_ball_death) {
     stopBall();  // stop flying before notify to avoid bugs
@@ -494,8 +502,8 @@ void GameProcessor::moveBall() {
   }
 
   if (!m_ball_pose_corrected) {
-    new_x = old_x + m_ball.getVelocity() * cosf(m_ball.getAngle());
-    new_y = old_y + m_ball.getVelocity() * sinf(m_ball.getAngle());
+    new_x = old_x + adjustSpeed(m_fdn, m_ball.getVelocity()) * cosf(m_ball.getAngle());
+    new_y = old_y + adjustSpeed(m_fdn, m_ball.getVelocity()) * sinf(m_ball.getAngle());
     if (m_ball_is_flying) shiftBall(new_x, new_y);
   }
   uint64_t delay = m_fdn;
