@@ -1,0 +1,35 @@
+"pr_skull.png");  ::  https://www.iconfinder.com/icons/205613/account_avatar_care_doctor_face_halloween_head_health_healthcare_hospital_human_life_medical_medicine_people_poison_scull_skeleton_skull_smile_smiley_icon#size=256
+"pr_explode.png");  :: http://findicons.com/icon/54743/magic_ball?id=54751
+"pr_clock.png");  "pr_frozen_clock.png"); ::  https://www.iconfinder.com/icons/34216/clock_history_time_icon#size=256
+"pr_dice.png");  ::  https://www.iconfinder.com/icons/50830/dice_icon#size=256
+"pr_ball.png"); :: https://www.iconfinder.com/icons/62721/ball_orange_sphere_icon#size=256
+"pr_diamond.png");  :: http://findicons.com/icon/553549/diamond_by_artdesigner_lv?id=553572
+"pr_zygote.png");  :: https://www.iconfinder.com/icons/63292/leaf_icon#size=256   ++ http://ibrandstudio.com/
+"pr_candy.png");  ::  https://www.iconfinder.com/icons/205618/birthday_blow_blow_job_cake_candy_child_children_cock_dessert_dinner_eating_favorite_favourite_food_kids_like_lollipop_lover_minet_party_prize_reward_snack_suck_sugar_sweet_tasty_trophy_vanilla_win_winner_icon#size=256
+"pr_coin.png");  ::  https://www.iconfinder.com/icons/73440/base_cash_coin_finance_gold_money_napoleon_icon#size=256
+"pr_newyear.png");  ::  https://www.iconfinder.com/icons/40233/ball_christmas_icon#size=256
+
+
+"pr_extend.png");   "pr_short.png");  :: 
+"pr_arrow.png");  "pr_down.png");  ::
+"pr_fire.png");  "pr_fire_t.png");
+"pr_waterdrop.png");
+"pr_butterfly.png");
+"pr_egg.png");
+"pr_star.png");
+"pr_fog.png");
+"pr_glue.png");
+"pr_hyper.png");
+"pr_radar.png");
+"pr_jump.png");
+"pr_laser.png");
+"pr_mirror.png");
+"pr_pierce.png");
+"pr_protect.png");
+"pr_brick.png");
+"pr_earth.png");
+
+ic_launcher.png  :: http://findicons.com/icon/466884/basketball?id=467187
+butterfly :: https://www.iconfinder.com/icons/19221/animal_butterfly_insect_icon#size=256
+
+

@@ -60,7 +60,7 @@
         \nbite_1.wav, bite_2.wav, \nblock_1.wav, block_2.wav, \nblock_3.wav, block_4.wav,
         \nglass_1.wav, magic_1.wav, \nmagic_2.wav, prize_1.wav, \nprize_2.wav, prize_3.wav,
         \nultra_1.wav, ultra_2.wav, \nultra_3.wav, ultra_4.wav, \nwater_1.wav, water_2.wav,
-        \nwater_3.wav, zygote_1.wav, \nzygote_2.wav, zygote_3.wav\n</string>
+        \nwater_3.wav, zygote_1.wav, \nzygote_2.wav, zygote_3.wav\nbutton_click.wav</string>
 
     <string name="attribution_icons_desc">All PNG icons are from findicons.com\n\nef_laser.png, pr_arrow.png, \npr_ball.png, pr_brick.png, \npr_butterfly.png, pr_candy.png,\npr_clock.png, pr_coin.png, \npr_diamond.png, pr_dice.png, \npr_down.png, pr_earth.png,\npr_egg.png, pr_explode.png, \npr_extend.png, pr_fire.png, \npr_fire_t.png, pr_fog.png,\npr_frozen_clock.png, pr_glue.png, \npr_hyper.png, pr_jump.png, \npr_laser.png, pr_mirror.png,\npr_newyear.png, pr_pierce.png, \npr_protect.png, pr_radar.png, \npr_short.png, pr_skull.png,\npr_star.png, pr_waterdrop.png, \npr_zygote.png, smoke.png, spark.png</string>
     <string name="attribution_images_desc">All other images are self&#46;made and belong to the author Maxim Alov.\nThese images (and any parts of them) are part of this application and could not be used by any 3rd&#46;parties or distributed in any way outside from this application.\n\nImages and resources:\n
