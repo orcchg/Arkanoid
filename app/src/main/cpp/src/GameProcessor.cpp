@@ -430,15 +430,15 @@ void GameProcessor::process_laserBeam() {
   Block block = m_level->getBlock(row, col);
   if (block != Block::NONE) {
     if (BlockUtils::cardinalityAffectingBlock(block)) {
-      m_level->setBlockImpacted(row, col);
       int score = BlockUtils::getBlockScore(block);
       m_level_finished = (m_level->blockImpact() == 0);
       Prize spawned_prize = m_level->getPrizeGenerator().generatePrize();
       spawnPrizeAtBlock(row, col, spawned_prize);
-      block_impact_event.notifyListeners(RowCol(row, col, block));
       onCardinalityChanged(m_level->getCardinality());
       onScoreUpdated(score);
     }
+    m_level->setBlockImpacted(row, col);
+    block_impact_event.notifyListeners(RowCol(row, col, block));
     laser_block_impact_event.notifyListeners(true);
   }
 }
