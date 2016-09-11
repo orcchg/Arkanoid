@@ -169,10 +169,15 @@ private:
   /** @defgroup LogicData Game logic related data members.
    * @{
    */
-  constexpr static int internalTimerThreshold = 1900;
-  constexpr static int internalTimerForSpeedThreshold = 2718;
-  constexpr static int internalTimerForWidthThreshold = 2718;
-  constexpr static int internalTimerForLaserThreshold = 3600;
+  constexpr static int internalTimerThreshold         = 1900;  // ms
+  constexpr static int internalTimerForSpeedThreshold = 2718;  // ms
+  constexpr static int internalTimerForWidthThreshold = 2718;  // ms
+  constexpr static int internalTimerForLaserThreshold = 3600;  // ms
+
+  int m_internalTimerThreshold;
+  int m_internalTimerForSpeedThreshold;
+  int m_internalTimerForWidthThreshold;
+  int m_internalTimerForLaserThreshold;
 
   Level::Ptr m_level;  //!< Game level at it's current state.
   GLfloat m_throw_angle;  //!< Initial throw level between ball's trajectory and X axis.
@@ -234,6 +239,11 @@ private:
 // ----------------------------------------------
 /* Private member-functions */
 private:
+  /// @brief Calculates timed-effects threshold based on frame delay nanos.
+  /// @param fdn Frame delay nanos.
+  /// @param def Default value if frame delay nanos was not set.
+  int calculateTimerThreshold(jint fdn, int def);
+
   /** @defgroup ActiveObject Basic thread lifecycle and operation functions.
    * @{
    */

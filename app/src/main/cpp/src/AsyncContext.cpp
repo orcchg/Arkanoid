@@ -17,6 +17,7 @@ AsyncContext::AsyncContext(JavaVM* jvm, jint fdn)
   , master_object(nullptr)
   , fireJavaEvent_errorTextureLoad_id(nullptr)
   , m_fdn(fdn)
+  , m_move_events(0)
   , m_window(nullptr)
   , m_egl_display(EGL_NO_DISPLAY)
   , m_egl_surface(EGL_NO_SURFACE)
@@ -171,7 +172,8 @@ void AsyncContext::callback_loadLevel(Level::Ptr level) {
 
 void AsyncContext::callback_moveBall(Ball moved_ball) {
   std::lock_guard<std::mutex> lock(m_move_ball_mutex);
-  DBG("EVENT CALLBACK: callback_moveBall(%f, %f)", moved_ball.getPose().getX(), moved_ball.getPose().getY());
+  ++m_move_events;
+  DBG("EVENT CALLBACK: callback_moveBall(%f, %f): %i", moved_ball.getPose().getX(), moved_ball.getPose().getY(), m_move_events);
   /**
    * Skip pending 'move_ball_event' sent by GameProcessor and arrived here to AsyncContext
    * during init ball measurement in order to avoid init ball position corruption after measurement
@@ -531,6 +533,7 @@ void AsyncContext::process_loadLevel() {
 
 void AsyncContext::process_moveBall() {
   std::lock_guard<std::mutex> lock(m_move_ball_mutex);
+  m_move_events = 0;  // process last pending move event and drop counter
   DBG("EVENT PROCESS: process_moveBall(%f, %f)", m_ball.getPose().getX(), m_ball.getPose().getY());
   moveBall(m_ball.getPose().getX(), m_ball.getPose().getY());
 }

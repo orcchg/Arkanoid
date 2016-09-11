@@ -18,7 +18,11 @@ GameProcessor::GameProcessor(JavaVM* jvm, jint fdn)
   , fireJavaEvent_angleChanged_id(nullptr)
   , fireJavaEvent_cardinalityChanged_id(nullptr)
   , fireJavaEvent_debugMessage_id(nullptr)
-  , m_fdn(fdn)
+  , m_fdn(fdn > 0 ? fdn : ProcessorParams::moveDelay)
+  , m_internalTimerThreshold        (calculateTimerThreshold(fdn, GameProcessor::internalTimerThreshold))
+  , m_internalTimerForSpeedThreshold(calculateTimerThreshold(fdn, GameProcessor::internalTimerForSpeedThreshold))
+  , m_internalTimerForWidthThreshold(calculateTimerThreshold(fdn, GameProcessor::internalTimerForWidthThreshold))
+  , m_internalTimerForLaserThreshold(calculateTimerThreshold(fdn, GameProcessor::internalTimerForLaserThreshold))
   , m_level(nullptr)
   , m_throw_angle(60.0f)
   , m_aspect(1.0f)
@@ -161,6 +165,14 @@ void GameProcessor::detachFromJVM() {
 
 /* ActiveObject group */
 // ----------------------------------------------------------------------------
+int GameProcessor::calculateTimerThreshold(jint fdn, int def) {
+  if (fdn > ProcessorParams::moveDelay) {
+    float ratio = static_cast<float>(fdn) / ProcessorParams::moveDelay;
+    return static_cast<int>(def / ratio);
+  }
+  return def;
+}
+
 void GameProcessor::onStart() {
   DBG("GameProcessor onStart");
   attachToJVM();
@@ -230,19 +242,19 @@ void GameProcessor::eventHandler() {
     incrementInternalTimerForWidth();
     incrementInternalTimerForLaser();
   }
-  if (checkInternalTimer(GameProcessor::internalTimerThreshold)) {
+  if (checkInternalTimer(m_internalTimerThreshold)) {
     dropTimedEffectForBall();
     dropInternalTimer();
   }
-  if (checkInternalTimerForSpeed(GameProcessor::internalTimerForSpeedThreshold)) {
+  if (checkInternalTimerForSpeed(m_internalTimerForSpeedThreshold)) {
     m_ball.normalSpeed();
     dropInternalTimerForSpeed();
   }
-  if (checkInternalTimerForWidth(GameProcessor::internalTimerForWidthThreshold)) {
+  if (checkInternalTimerForWidth(m_internalTimerForWidthThreshold)) {
     bite_width_changed_event.notifyListeners(BiteEffect::NONE);
     dropInternalTimerForWidth();
   }
-  if (checkInternalTimerForLaser(GameProcessor::internalTimerForLaserThreshold)) {
+  if (checkInternalTimerForLaser(m_internalTimerForLaserThreshold)) {
     laser_beam_visibility_event.notifyListeners(false);
     dropInternalTimerForLaser();
   }
@@ -486,7 +498,7 @@ void GameProcessor::moveBall() {
     new_y = old_y + m_ball.getVelocity() * sinf(m_ball.getAngle());
     if (m_ball_is_flying) shiftBall(new_x, new_y);
   }
-  uint64_t delay = m_fdn > 0 ? m_fdn : ProcessorParams::moveDelay;
+  uint64_t delay = m_fdn;
   std::this_thread::sleep_for (std::chrono::nanoseconds(delay));
   DBG("exit GameProcessor::moveBall(%f, %f)", m_ball.getPose().getX(), m_ball.getPose().getY());
 }

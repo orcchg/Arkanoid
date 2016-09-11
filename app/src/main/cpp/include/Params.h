@@ -20,7 +20,7 @@ struct BallParams {
   constexpr static float ballSize = 0.05f;  //!< Size of any of 4 sides of ball.
   constexpr static float ballHalfSize = ballSize * 0.5f;
   constexpr static float ballFastSpeed = 0.003f;
-  constexpr static float ballSpeed = 0.002f;   //!< Initial speed at game start
+  constexpr static float ballSpeed = 0.002f;   //!< Initial speed at game start.
   constexpr static float ballSlowSpeed = 0.001f;
 };
 
@@ -41,8 +41,8 @@ struct PrizeParams {
 };
 
 struct ProcessorParams {
-  constexpr static uint64_t renderDelay = 1000000;  //!< Delay between sequential frames when AsyncContext::delay() is called
-  constexpr static uint64_t moveDelay   = 1500000;
+  constexpr static uint64_t renderDelay = 1000000;  //!< Delay between sequential frames when AsyncContext::delay() is called.
+  constexpr static uint64_t moveDelay   = 1000000;  //!< Delay between sequential move events produces by GameProcessor.
 };
 
 }

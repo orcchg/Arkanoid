@@ -199,6 +199,7 @@ private:
   /** @} */  // end of JNIEnvironment group
 
   jint m_fdn;  //!< delay between sequential frames (in nanos)
+  int m_move_events;  //!< total count of pending move events before the last one is processed
 
   /** @defgroup WindowSurface Rendering surface stuff.
    * @see https://www.khronos.org/registry/egl/sdk/docs/man/html/eglIntro.xhtml
