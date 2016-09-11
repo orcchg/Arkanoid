@@ -1000,7 +1000,7 @@ bool GameProcessor::collideBlock(GLfloat new_x, GLfloat new_y) {
       case Block::QUICK:
       case Block::QUICK_2:
         external_collision = blockCollision(top_border, bottom_border, left_border, right_border, 100 /* elastic */);
-        explodeBlock(row, col, BlockUtils::getBlockColor(Block::QUICK), Kind::DIVERGE);
+        explodeBlock(row, col, BlockUtils::getBlockColor(Block::QUICK), Kind::CONVERGE);
         break;
       case Block::QUICK_1:
         external_collision = blockCollision(top_border, bottom_border, left_border, right_border, 100 /* elastic */);

@@ -305,6 +305,7 @@ public class MainActivity extends FragmentActivity {
         prizeType = Prize.VITALITY;
         break;
       case 55:
+      case 61:
         prizeType = Prize.DESTROY;
         break;
       case 56:
