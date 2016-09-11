@@ -486,7 +486,7 @@ void GameProcessor::moveBall() {
     new_y = old_y + m_ball.getVelocity() * sinf(m_ball.getAngle());
     if (m_ball_is_flying) shiftBall(new_x, new_y);
   }
-  uint64_t delay = ProcessorParams::nanoDelay;
+  uint64_t delay = m_fdn > 0 ? m_fdn : ProcessorParams::moveDelay;
   std::this_thread::sleep_for (std::chrono::nanoseconds(delay));
   DBG("exit GameProcessor::moveBall(%f, %f)", m_ball.getPose().getX(), m_ball.getPose().getY());
 }

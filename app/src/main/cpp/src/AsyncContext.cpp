@@ -1009,7 +1009,7 @@ void AsyncContext::render() {
 void AsyncContext::delay(int ms) {
   for (int i = 0; i < ms; ++i) {
     render();
-    uint64_t delay = ProcessorParams::nanoDelay;
+    uint64_t delay = ProcessorParams::renderDelay;
     std::this_thread::sleep_for (std::chrono::nanoseconds(delay));
   }
 }

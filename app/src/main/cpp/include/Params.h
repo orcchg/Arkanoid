@@ -41,7 +41,8 @@ struct PrizeParams {
 };
 
 struct ProcessorParams {
-  constexpr static uint64_t nanoDelay = 1500000;  //!< Delay between sequential frames.
+  constexpr static uint64_t renderDelay = 1000000;  //!< Delay between sequential frames when AsyncContext::delay() is called
+  constexpr static uint64_t moveDelay   = 1500000;
 };
 
 }
