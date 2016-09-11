@@ -494,7 +494,14 @@ void GameProcessor::moveBall() {
   if (new_y <= m_bite_upper_border + m_ball.getDimens().halfHeight()) {
     if (!m_is_ball_lost) {
       m_is_ball_lost = !collideBite(new_x);
-      if (m_ball_is_flying) correctBallPosition(new_x, m_bite_upper_border + m_ball.getDimens().halfHeight());
+      if (m_ball_is_flying ||
+          /**
+           * GOO-effect stops the ball, but it's position on the bite should be corrected
+           * in order to avoid artifical gap between stopped ball and bite's upper border.
+           */
+          m_ball.getEffect() == BallEffect::GOO) {
+        correctBallPosition(new_x, m_bite_upper_border + m_ball.getDimens().halfHeight());
+      }
     }
   } else if (collideBlock(new_x, new_y)) {
     m_level_finished = (m_level->blockImpact() == 0);
