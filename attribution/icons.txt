@@ -8,10 +8,12 @@
 "pr_candy.png");  ::  https://www.iconfinder.com/icons/205618/birthday_blow_blow_job_cake_candy_child_children_cock_dessert_dinner_eating_favorite_favourite_food_kids_like_lollipop_lover_minet_party_prize_reward_snack_suck_sugar_sweet_tasty_trophy_vanilla_win_winner_icon#size=256
 "pr_coin.png");  ::  https://www.iconfinder.com/icons/73440/base_cash_coin_finance_gold_money_napoleon_icon#size=256
 "pr_newyear.png");  ::  https://www.iconfinder.com/icons/40233/ball_christmas_icon#size=256
+"pr_extend.png"); ::  http://findicons.com/icon/44237/green_leaf                http://fasticon.com/
+"pr_short.png");  ::  http://findicons.com/icon/44236/drought_leaf?id=44236     http://fasticon.com/
+"pr_arrow.png");  "pr_down.png");  ::  http://findicons.com/icon/86702/arrow_up?id=86799  http://gakuseisean.deviantart.com/
 
 
-"pr_extend.png");   "pr_short.png");  :: 
-"pr_arrow.png");  "pr_down.png");  ::
+
 "pr_fire.png");  "pr_fire_t.png");
 "pr_waterdrop.png");
 "pr_butterfly.png");
