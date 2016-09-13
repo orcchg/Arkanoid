@@ -28,32 +28,32 @@ import java.lang.ref.WeakReference;
 import timber.log.Timber;
 
 public class MainActivity extends FragmentActivity {
-  private static final int PLAYER_ID = 1;
-  private static final int INITIAL_LIVES = 3;
-  private static final int INITIAL_LEVEL = 0;
-  private static final int INITIAL_SCORE = 0;
-  private int currentLives = INITIAL_LIVES;
-  private int currentLevel = INITIAL_LEVEL;
-  private int currentScore = INITIAL_SCORE;
+  static final int PLAYER_ID = 1;
+  static final int INITIAL_LIVES = 3;
+  static final int INITIAL_LEVEL = 0;
+  static final int INITIAL_SCORE = 0;
+  int currentLives = INITIAL_LIVES;
+  int currentLevel = INITIAL_LEVEL;
+  int currentScore = INITIAL_SCORE;
   
-//  private static String mAlertDialogTitle;
-//  private static String mCloseButtonLabel;
-//  private static String mWarningMessage;
-  private boolean dropStatFlag = false;
+//  static String mAlertDialogTitle;
+//  static String mCloseButtonLabel;
+//  static String mWarningMessage;
+  boolean dropStatFlag = false;
   
   static {
     System.loadLibrary("Arkanoid");
   }
   
-  private AsyncContext mAsyncContext;
-  private GameSurface mSurface;
-  private NativeResources mNativeResources;
-  private TextView mInfoTextView, mAddInfoTextView;
-  private TextView mLifeMultiplierTextView, mCardinalityTextView;
-  private ImageView[] mLifeViews;
-  private View[] mEdgeViews;
+  AsyncContext mAsyncContext;
+  GameSurface mSurface;
+  NativeResources mNativeResources;
+  TextView mInfoTextView, mAddInfoTextView;
+  TextView mLifeMultiplierTextView, mCardinalityTextView;
+  ImageView[] mLifeViews;
+  View[] mEdgeViews;
 
-  private EdgeColor mEdgeColor;
+  EdgeColor mEdgeColor;
   
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -318,7 +318,7 @@ public class MainActivity extends FragmentActivity {
     setStat(PLAYER_ID, currentLives, currentLevel, currentScore);
   }
   
-  private void warningDialog() {
+  void warningDialog() {
 //    new AlertDialog.Builder(this)
 //        .setTitle(mAlertDialogTitle)
 //        .setMessage(mWarningMessage)
@@ -331,7 +331,7 @@ public class MainActivity extends FragmentActivity {
     finish();
   }
   
-  private void debugDialog(String message) {
+  void debugDialog(String message) {
     if (currentLevel != 0) {
       return;
     }
@@ -346,7 +346,7 @@ public class MainActivity extends FragmentActivity {
         }).show();
   }
   
-  private void releaseAllViews() {
+  void releaseAllViews() {
     mSurface = null;
     mInfoTextView = null;
     mAddInfoTextView = null;
@@ -359,11 +359,11 @@ public class MainActivity extends FragmentActivity {
   
   /* Core event listeners */
   // --------------------------------------------------------------------------
-  private static class CoreEventHandler implements AsyncContext.CoreEventListener {
-    private WeakReference<MainActivity> activityRef;
-    private int currentLives = INITIAL_LIVES;
-    private int currentLevel = INITIAL_LEVEL;
-    private int currentScore = INITIAL_SCORE;
+  static class CoreEventHandler implements AsyncContext.CoreEventListener {
+    WeakReference<MainActivity> activityRef;
+    int currentLives = INITIAL_LIVES;
+    int currentLevel = INITIAL_LEVEL;
+    int currentScore = INITIAL_SCORE;
     
     CoreEventHandler(final MainActivity activity) {
       activityRef = new WeakReference<>(activity);
@@ -538,7 +538,7 @@ public class MainActivity extends FragmentActivity {
       onScoreUpdated(score);
     }
 
-    private void edgeEffect(@Prize.Type int prize) {
+    void edgeEffect(@Prize.Type int prize) {
       MainActivity activity = activityRef.get();
       if (activity != null) {
         GradientDrawable[] drawables = null;
@@ -584,7 +584,7 @@ public class MainActivity extends FragmentActivity {
     }
     
     // ------------------------------------------
-    private void updateLives() {
+    void updateLives() {
       final MainActivity activity = activityRef.get();
       if (activity != null) {
         activity.runOnUiThread(new Runnable() {
@@ -596,7 +596,7 @@ public class MainActivity extends FragmentActivity {
       }
     }
     
-    private void warningDialog() {
+    void warningDialog() {
       final MainActivity activity = activityRef.get();
       if (activity != null) {
         activity.runOnUiThread(new Runnable() {
@@ -608,7 +608,7 @@ public class MainActivity extends FragmentActivity {
       }
     }
     
-    private void debugDialog(final String message) {
+    void debugDialog(final String message) {
       final MainActivity activity = activityRef.get();
       if (activity != null) {
         activity.runOnUiThread(new Runnable() {
@@ -622,7 +622,7 @@ public class MainActivity extends FragmentActivity {
   }  // end of inner class
 
   // --------------------------------------------------------------------------
-  private void edgeEffect(final GradientDrawable[] drawables) {
+  void edgeEffect(final GradientDrawable[] drawables) {
     runOnUiThread(new Runnable() {
       @Override
       public void run() {
@@ -634,7 +634,7 @@ public class MainActivity extends FragmentActivity {
     });
   }
 
-  private void animateEdgeView(int index, Drawable drawable) {
+  void animateEdgeView(int index, Drawable drawable) {
     mEdgeViews[index].setBackgroundDrawable(drawable);
     ObjectAnimator fadeOut = ObjectAnimator.ofFloat(mEdgeViews[index], "alpha", 1.0f, 0.0f);
     fadeOut.addUpdateListener(createAnimatorUpdateListener(mEdgeViews[index]));
@@ -644,7 +644,7 @@ public class MainActivity extends FragmentActivity {
     fadeOut.start();
   }
 
-  private Animator.AnimatorListener createAnimatorListener(final View view) {
+  Animator.AnimatorListener createAnimatorListener(final View view) {
     return new Animator.AnimatorListener() {
       @Override
       public void onAnimationStart(Animator animator) {
@@ -667,7 +667,7 @@ public class MainActivity extends FragmentActivity {
     };
   }
 
-  private ValueAnimator.AnimatorUpdateListener createAnimatorUpdateListener(final View view) {
+  ValueAnimator.AnimatorUpdateListener createAnimatorUpdateListener(final View view) {
     return new ValueAnimator.AnimatorUpdateListener() {
       @Override
       public void onAnimationUpdate(ValueAnimator valueAnimator) {

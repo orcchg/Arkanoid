@@ -12,10 +12,10 @@ public class Utility {
     return (int) (dip * density + 0.5f);
   }
 
-  public static final int BALL_LOST_NONE = 0;
-  public static final int BALL_LOST_MISSING = 1;
-  public static final int BALL_LOST_DESTROY = 2;
+  static final int BALL_LOST_NONE = 0;
+  static final int BALL_LOST_MISSING = 1;
+  static final int BALL_LOST_DESTROY = 2;
   @IntDef({BALL_LOST_NONE, BALL_LOST_MISSING, BALL_LOST_DESTROY})
   @Retention(RetentionPolicy.SOURCE)
-  public @interface BallLost {}
+  @interface BallLost {}
 }

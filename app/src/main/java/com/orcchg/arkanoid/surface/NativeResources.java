@@ -2,7 +2,7 @@ package com.orcchg.arkanoid.surface;
 
 import android.content.res.AssetManager;
 
-public class NativeResources {
+class NativeResources {
   
   private final long descriptor;
   

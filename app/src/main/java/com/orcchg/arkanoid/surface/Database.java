@@ -191,14 +191,14 @@ class Database {
   // --------------------------------------------------------------------------
   @SuppressWarnings("serial")
   private static class NoPlaceholdersException extends Exception {
-    private NoPlaceholdersException(String message) {
+    NoPlaceholdersException(String message) {
       super(message);
     }
   }
   
   @SuppressWarnings("serial")
   static class DatabaseException extends Exception {
-    private DatabaseException(String message) {
+    DatabaseException(String message) {
       super(message);
     }
   }

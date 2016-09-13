@@ -12,18 +12,18 @@ import java.lang.ref.WeakReference;
 import timber.log.Timber;
 
 public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
-  private static final int VERTICAL_SWIPE_THRESHOLD_DP = 80;  // in dp
+  static final int VERTICAL_SWIPE_THRESHOLD_DP = 80;  // in dp
   
-  private static int mDesiredWidth = 512;   // in dp
-  private static int mDesiredHeight = 512;  // in dp
-  private int mWidth;
-  private int mHeight;
-  private float mHalfWidth;
-  private float touchCurrentX = 0.0f;
-  private float touchCurrentY = 0.0f;
-  private float VERTICAL_SWIPE_THRESHOLD;
+  static int mDesiredWidth = 512;   // in dp
+  static int mDesiredHeight = 512;  // in dp
+  int mWidth;
+  int mHeight;
+  float mHalfWidth;
+  float touchCurrentX = 0.0f;
+  float touchCurrentY = 0.0f;
+  float VERTICAL_SWIPE_THRESHOLD;
   
-  private WeakReference<AsyncContext> mAsyncContextRef;
+  WeakReference<AsyncContext> mAsyncContextRef;
   
   public GameSurface(Context context) {
     this(context, null);

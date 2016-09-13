@@ -19,17 +19,17 @@ import timber.log.Timber;
 public class InitActivity extends FragmentActivity {
   static final String bundleKey_dropStat = "bundleKey_dropStat";
   
-//  private static String mAlertDialogTitle, mAboutDialogTitle;
-//  private static String mOKButtonLabel, mCancelButtonLabel, mCloseButtonLabel;
-//  private static String mWarningMessage, mAboutMessage;
-  private boolean databaseExists = false;
+//   static String mAlertDialogTitle, mAboutDialogTitle;
+//   static String mOKButtonLabel, mCancelButtonLabel, mCloseButtonLabel;
+//   static String mWarningMessage, mAboutMessage;
+   boolean databaseExists = false;
   
-  private Button mContinueGameButton;
-//  private Button mNewGameButton;
-//  private Button mAboutGameButton;
-//  private Button mQuitGameButton;
+   Button mContinueGameButton;
+//   Button mNewGameButton;
+//   Button mAboutGameButton;
+//   Button mQuitGameButton;
   
-  private MediaPlayer mMediaPlayer;
+   MediaPlayer mMediaPlayer;
   
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -112,9 +112,9 @@ public class InitActivity extends FragmentActivity {
     super.onDestroy();
   }
   
-  /* Private methods */
+  /*  methods */
   // --------------------------------------------------------------------------
-  private boolean checkDatabase() {
+   boolean checkDatabase() {
 //    SQLiteDatabase checkDB = null;
 //    try {
 //      String path = getDatabasePath(Database.databaseName).getAbsolutePath();
@@ -129,7 +129,7 @@ public class InitActivity extends FragmentActivity {
     return (app.DATABASE.totalPlayers() + app.DATABASE.totalStatRecords()) != 0;
   }
   
-  private void warningDialog() {
+   void warningDialog() {
 //    final FragmentActivity activity = this;
 //    new AlertDialog.Builder(activity)
 //        .setTitle(mAlertDialogTitle)
@@ -151,7 +151,7 @@ public class InitActivity extends FragmentActivity {
     new WarningDialog(this).show();
   }
   
-  private void aboutDialog() {
+   void aboutDialog() {
 //    new AlertDialog.Builder(this)
 //        .setTitle(mAboutDialogTitle)
 //        .setMessage(mAboutMessage)
@@ -169,8 +169,8 @@ public class InitActivity extends FragmentActivity {
   
   /* Dialogs */
   // --------------------------------------------------------------------------
-//  private static class AboutDialog extends Dialog implements View.OnClickListener {
-//    private WeakReference<InitActivity> activityRef;
+//   static class AboutDialog extends Dialog implements View.OnClickListener {
+//     WeakReference<InitActivity> activityRef;
 //
 //    AboutDialog(InitActivity activity) {
 //      super(activity);
@@ -196,8 +196,8 @@ public class InitActivity extends FragmentActivity {
 //    }
 //  }
   
-  private static class WarningDialog extends Dialog implements View.OnClickListener {
-    private WeakReference<InitActivity> activityRef;
+   static class WarningDialog extends Dialog implements View.OnClickListener {
+     WeakReference<InitActivity> activityRef;
     
     WarningDialog(InitActivity activity) {
       super(activity);
