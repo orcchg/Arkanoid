@@ -10,7 +10,6 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
-import android.support.annotation.ColorInt;
 import android.support.v4.app.FragmentActivity;
 import android.view.KeyEvent;
 import android.view.MenuItem;
@@ -542,29 +541,29 @@ public class MainActivity extends FragmentActivity {
     private void edgeEffect(@Prize.Type int prize) {
       MainActivity activity = activityRef.get();
       if (activity != null) {
-        @ColorInt int color = 0;
+        GradientDrawable[] drawables = null;
         switch (prize) {
           case Prize.DESTROY:
-            color = activity.mEdgeColor.DESTROY;
+            drawables = activity.mEdgeColor.destroy;
             break;
           case Prize.HYPER:
-            color = activity.mEdgeColor.HYPER;
+            drawables = activity.mEdgeColor.hyper;
             break;
           case Prize.INIT:
-            color = activity.mEdgeColor.INIT;
+            drawables = activity.mEdgeColor.init;
             break;
           case Prize.VITALITY:
-            color = activity.mEdgeColor.VITALITY;
+            drawables = activity.mEdgeColor.vitality;
             break;
           case Prize.WIN:
-            color = activity.mEdgeColor.WIN;
+            drawables = activity.mEdgeColor.win;
             break;
           default:
-            color = 0;  // no edge effect
+            // no edge effect
             break;
         }
-        if (color != 0) {
-          activity.edgeEffect(color);
+        if (drawables != null) {
+          activity.edgeEffect(drawables);
         }
       }
     }
@@ -623,21 +622,14 @@ public class MainActivity extends FragmentActivity {
   }  // end of inner class
 
   // --------------------------------------------------------------------------
-  private void edgeEffect(final @ColorInt int color) {
-    Timber.v("Edge effect %s", color);
+  private void edgeEffect(final GradientDrawable[] drawables) {
     runOnUiThread(new Runnable() {
       @Override
       public void run() {
-        int[] colors = {Color.TRANSPARENT, color};
-        GradientDrawable top = new GradientDrawable(GradientDrawable.Orientation.BOTTOM_TOP, colors);
-        GradientDrawable bottom = new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, colors);
-        GradientDrawable left = new GradientDrawable(GradientDrawable.Orientation.RIGHT_LEFT, colors);
-        GradientDrawable right = new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, colors);
-
-        animateEdgeView(0, top);
-        animateEdgeView(1, bottom);
-        animateEdgeView(2, left);
-        animateEdgeView(3, right);
+        animateEdgeView(0, drawables[0]);
+        animateEdgeView(1, drawables[1]);
+        animateEdgeView(2, drawables[2]);
+        animateEdgeView(3, drawables[3]);
       }
     });
   }
