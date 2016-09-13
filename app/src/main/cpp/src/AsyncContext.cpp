@@ -313,6 +313,13 @@ void AsyncContext::callback_laserBlockImpact(bool /* dummy */) {
   interrupt();
 }
 
+void AsyncContext::callback_delayRequested(bool /* dummy */) {
+  std::lock_guard<std::mutex> lock(m_delay_request_mutex);
+  DBG("EVENT CALLBACK: callback_delayRequested");
+  m_delay_request_received.store(true);
+  interrupt();
+}
+
 // ----------------------------------------------
 Level::Ptr AsyncContext::getCurrentLevelState() {
   std::lock_guard<std::mutex> lock(m_load_level_mutex);
@@ -369,7 +376,8 @@ bool AsyncContext::checkForWakeUp() {
       m_drop_ball_appearance_received.load() ||
       m_bite_width_changed_received.load() ||
       m_laser_beam_visibility_received.load() ||
-      m_laser_block_impact_received.load();
+      m_laser_block_impact_received.load() ||
+      m_delay_request_received.load();
 }
 
 void AsyncContext::eventHandler() {
@@ -443,6 +451,10 @@ void AsyncContext::eventHandler() {
     if (m_laser_beam_visibility_received.load()) {
       m_laser_beam_visibility_received.store(false);
       process_laserBeamVisibility();
+    }
+    if (m_delay_request_received.load()) {
+      m_delay_request_received.store(false);
+      process_delayRequested();
     }
     render();  // render frame to reflect changes occurred
   } else {
@@ -639,6 +651,12 @@ void AsyncContext::process_laserBlockImpact() {
   std::lock_guard<std::mutex> lock(m_laser_block_impact_mutex);
   DBG("EVENT PROCESS: process_laserBlockImpact");
   m_laser_interruption = true;
+}
+
+void AsyncContext::process_delayRequested() {
+  std::lock_guard<std::mutex> lock(m_delay_request_mutex);
+  DBG("EVENT PROCESS: process_delayRequested");
+  delay(65);
 }
 
 /* LogicFunc group */

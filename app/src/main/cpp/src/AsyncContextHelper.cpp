@@ -36,6 +36,7 @@ JNIEXPORT jlong JNICALL Java_com_orcchg_arkanoid_surface_AsyncContext_init
   ptr->acontext->bite_width_changed_listener = ptr->processor->bite_width_changed_event.createListener(&game::AsyncContext::callback_biteWidthChanged, ptr->acontext);
   ptr->acontext->laser_beam_visibility_listener = ptr->processor->laser_beam_visibility_event.createListener(&game::AsyncContext::callback_laserBeamVisibility, ptr->acontext);
   ptr->acontext->laser_block_impact_listener = ptr->processor->laser_block_impact_event.createListener(&game::AsyncContext::callback_laserBlockImpact, ptr->acontext);
+  ptr->acontext->delay_request_listener = ptr->processor->delay_request_event.createListener(&game::AsyncContext::callback_delayRequested, ptr->acontext);
 
   ptr->processor->aspect_ratio_listener = ptr->acontext->aspect_ratio_event.createListener(&game::GameProcessor::callback_aspectMeasured, ptr->processor);
   ptr->processor->load_level_listener = ptr->load_level_event.createListener(&game::GameProcessor::callback_loadLevel, ptr->processor);

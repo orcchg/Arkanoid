@@ -145,6 +145,8 @@ public:
   Event<bool> laser_block_impact_event;
   /// @brief Notifies ball effect occurred.
   Event<BallEffect> ball_effect_event;
+  /// @brief Notifies delay has been requested.
+  Event<bool> delay_request_event;
   /** @} */  // end of Event group
 
 // ----------------------------------------------

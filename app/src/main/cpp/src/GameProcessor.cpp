@@ -992,6 +992,7 @@ bool GameProcessor::collideBlock(GLfloat new_x, GLfloat new_y) {
         explodeBlock(row, col, BlockUtils::getBlockColor(Block::ORIGIN), Kind::CONVERGE);
         stopBall();
         correctBallPosition(m_bite.getXPose(), m_bite_upper_border + m_ball.getDimens().halfHeight());
+        delay_request_event.notifyListeners(true);
         break;
       // --------------------
       case Block::ROLLING:

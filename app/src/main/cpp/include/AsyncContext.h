@@ -88,6 +88,8 @@ public:
   void callback_laserBeamVisibility(bool is_visible);
   /// @brief Called when laser beam impacts block.
   void callback_laserBlockImpact(bool /* dummy */);
+  /// @brief Called when delay request has been issued.
+  void callback_delayRequested(bool /* dummy */);
   /** @} */  // end of Callbacks group
 
   /** @defgroup GameStat Get game statistics
@@ -165,6 +167,8 @@ public:
   EventListener<bool> laser_beam_visibility_listener;
   /// @brief Listens for laser block impact.
   EventListener<bool> laser_block_impact_listener;
+  /// @brief Listens for delay requests.
+  EventListener<bool> delay_request_listener;
 
   /// @brief Notifies for measured aspect ratio.
   Event<float> aspect_ratio_event;
@@ -309,6 +313,7 @@ private:
   std::mutex m_bite_width_changed_mutex;
   std::mutex m_laser_beam_visibility_mutex;
   std::mutex m_laser_block_impact_mutex;
+  std::mutex m_delay_request_mutex;
   std::atomic_bool m_surface_received;  //!< Window has been set.
   std::atomic_bool m_load_resources_received;  //!< Load resources requested.
   std::atomic_bool m_shift_gamepad_received;  //!< Shift gesture has occurred.
@@ -326,6 +331,7 @@ private:
   std::atomic_bool m_bite_width_changed_received;
   std::atomic_bool m_laser_beam_visibility_received;
   std::atomic_bool m_laser_block_impact_received;
+  std::atomic_bool m_delay_request_received;
   /** @} */  // end of Mutex group
 
   /** @defgroup SafetyFlag Logic-safety variables
@@ -397,6 +403,8 @@ private:
   void process_laserBeamVisibility();
   /// @brief Processing laser block impact.
   void process_laserBlockImpact();
+  /// @brief Performs delay to play visual effect without disturbance.
+  void process_delayRequested();
   /** @} */  // end of Processors group
 
 private:
