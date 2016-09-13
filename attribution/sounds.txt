@@ -25,4 +25,4 @@ skull_1.wav     :: dead_bird.wav by markb258 -- https://www.freesound.org/people
 vital_1.wav     :: Action 02 by rhodesmas -- https://www.freesound.org/people/rhodesmas/sounds/320776/ -- License: Attribution
 vital_2.wav     :: SFX Magic by renatalmar -- https://www.freesound.org/people/renatalmar/sounds/264981/ -- License: Creative Commons 0
 win_1.wav       :: Good! by syseQ -- https://www.freesound.org/people/syseQ/sounds/267528/ -- License: Creative Commons 0
-
+Decrase 01.wav by michael_kur95 -- https://www.freesound.org/people/michael_kur95/sounds/333077/ -- License: Attribution
