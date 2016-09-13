@@ -60,10 +60,18 @@ void SoundProcessor::callback_loadResources(bool /* dummy */) {
   interrupt();
 }
 
-void SoundProcessor::callback_lostBall(float is_lost) {
+void SoundProcessor::callback_lostBall(game::BallLost status) {
   std::lock_guard<std::mutex> lock(m_lost_ball_mutex);
-  DBG("EVENT CALLBACK: callback_lostBall(%i)", (is_lost ? 1 : 0));
-  m_lost_ball_received.store(true);
+  DBG("EVENT CALLBACK: callback_lostBall(%i)", static_cast<int>(status));
+  if (status == game::BallLost::MISSING) {
+    m_lost_ball_received.store(true);
+  } else {
+    /**
+     * don't play ball-miss sound in case ball was destroyed:
+     * there is another sound for that when deadly block is impacted.
+     */
+    m_lost_ball_received.store(false);
+  }
   interrupt();
 }
 

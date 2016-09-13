@@ -67,7 +67,7 @@ public:
   /// @brief Called when ball has moved to a new position.
   void callback_moveBall(Ball moved_ball);
   /// @brief Called when ball has been lost.
-  void callback_lostBall(float is_lost);
+  void callback_lostBall(game::BallLost status);
   /// @brief Called when ball has been stopped.
   void callback_stopBall(bool /* dummy */);
   /// @brief Called when block has been impacted.
@@ -144,7 +144,7 @@ public:
   /// @brief Listens for event which occurs when ball has moved to a new position.
   EventListener<Ball> move_ball_listener;
   /// @brief Listens for event which occurs when ball has been lost.
-  EventListener<bool> lost_ball_listener;
+  EventListener<BallLost> lost_ball_listener;
   /// @brief Listens for event which occurs when ball has been stopped.
   EventListener<bool> stop_ball_listener;
   /// @brief Listens for event which occurs when block has been impacted.

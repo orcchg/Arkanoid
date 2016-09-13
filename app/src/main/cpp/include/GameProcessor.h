@@ -119,8 +119,8 @@ public:
 
   /// @brief Notifies ball has moved to a new position.
   Event<Ball> move_ball_event;
-  /// @brief Notifies whether the ball has been lost.
-  Event<bool> lost_ball_event;
+  /// @brief Notifies whether the ball has been lost with status.
+  Event<BallLost> lost_ball_event;
   /// @brief Notifies whether the ball has been stopped.
   Event<bool> stop_ball_event;
   /// @brief Notifies bite has been impacted.

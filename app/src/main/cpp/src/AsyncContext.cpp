@@ -188,9 +188,9 @@ void AsyncContext::callback_moveBall(Ball moved_ball) {
   }
 }
 
-void AsyncContext::callback_lostBall(float is_lost) {
+void AsyncContext::callback_lostBall(game::BallLost status) {
   std::lock_guard<std::mutex> lock(m_lost_ball_mutex);
-  DBG("EVENT CALLBACK: callback_lostBall(%i)", (is_lost ? 1 : 0));
+  DBG("EVENT CALLBACK: callback_lostBall(%i)", static_cast<int>(status));
   m_lost_ball_received.store(true);
   interrupt();
 }

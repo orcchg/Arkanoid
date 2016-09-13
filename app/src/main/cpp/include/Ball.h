@@ -23,6 +23,12 @@ enum class BallEffect : int {
   ZYGOTE = 12
 };
 
+enum class BallLost : int {
+  NONE = 0,
+  MISSING = 1,
+  DESTROY = 2
+};
+
 class Ball {
 public:
   Ball(GLfloat width = 0.f, GLfloat height = 0.f)

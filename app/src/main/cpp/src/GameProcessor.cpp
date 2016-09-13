@@ -472,9 +472,11 @@ void GameProcessor::moveBall() {
   GLfloat new_x = m_ball.getPose().getX() + adjustSpeed(m_fdn, m_ball.getVelocity()) * cosf(m_ball.getAngle());
   GLfloat new_y = m_ball.getPose().getY() + adjustSpeed(m_fdn, m_ball.getVelocity()) * sinf(m_ball.getAngle());
 
-  if ((m_is_ball_lost && new_y <= -1.0f) || m_is_ball_death) {
+  bool is_ball_missing = (m_is_ball_lost && new_y <= -1.0f);
+  if (is_ball_missing || m_is_ball_death) {
     stopBall();  // stop flying before notify to avoid bugs
-    lost_ball_event.notifyListeners(true);
+    BallLost ball_lost = is_ball_missing ? BallLost::MISSING : BallLost::DESTROY;
+    lost_ball_event.notifyListeners(ball_lost);
     onLostBall(true);
     onCardinalityChanged(m_level->getCardinality());
     DBG("in GameProcessor::moveBall(): lost ball");

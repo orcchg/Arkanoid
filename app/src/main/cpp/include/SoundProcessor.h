@@ -40,7 +40,7 @@ public:
   /// @brief Called when load resources requested.
   void callback_loadResources(bool /* dummy */);
   /// @brief Called when ball has been lost.
-  void callback_lostBall(float is_lost);
+  void callback_lostBall(game::BallLost status);
   /// @brief Called when bite has been impacted.
   void callback_biteImpact(bool /* dummy */);
   /// @brief Called when block has been impacted.
@@ -100,7 +100,7 @@ public:
   /// @brief Listens for load resources request.
   EventListener<bool> load_resources_listener;
   /// @brief Listens for event which occurs when ball has been lost.
-  EventListener<bool> lost_ball_listener;
+  EventListener<game::BallLost> lost_ball_listener;
   /// @brief Listens for event which occurs when bite has been impacted.
   EventListener<bool> bite_impact_listener;
   /// @brief Listens for event which occurs when block has been impacted.
