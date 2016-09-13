@@ -279,6 +279,7 @@ void GameProcessor::process_loadLevel() {
   std::lock_guard<std::mutex> lock(m_load_level_mutex);
   DBG("EVENT PROCESS: process_loadLevel");
   onCardinalityChanged(m_level->getCardinality());
+  stopBall();
 }
 
 void GameProcessor::process_throwBall() {
