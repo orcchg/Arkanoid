@@ -307,7 +307,7 @@ private:
   /// @brief Stops ball flying, notify listeners.
   void stopBall();
   /// @brief Notifies Java layer the ball has been lost.
-  void onLostBall(bool /* dummy */);
+  void onLostBall(BallLost ball_lost);
   /// @brief Notifies Java layer level has been successfully finished.
   void onLevelFinished(bool /* dummy */);
   /// @brief Notifies Java layer level with additive score value.

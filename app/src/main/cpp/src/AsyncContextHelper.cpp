@@ -219,7 +219,7 @@ AsyncContextHelper::AsyncContextHelper(JNIEnv* jenv, jobject object, jint fdn)
   String_clazz = (jclass) jenv->NewGlobalRef(clazz);
   jenv->DeleteLocalRef(object);
   jclass class_id = jenv->FindClass("com/orcchg/arkanoid/surface/AsyncContext");
-  fireJavaEvent_lostBall_id = jenv->GetMethodID(class_id, "fireJavaEvent_lostBall", "()V");
+  fireJavaEvent_lostBall_id = jenv->GetMethodID(class_id, "fireJavaEvent_lostBall", "(I)V");
   fireJavaEvent_levelFinished_id = jenv->GetMethodID(class_id, "fireJavaEvent_levelFinished", "()V");
   fireJavaEvent_scoreUpdated_id = jenv->GetMethodID(class_id, "fireJavaEvent_onScoreUpdated", "(I)V");
   fireJavaEvent_angleChanged_id = jenv->GetMethodID(class_id, "fireJavaEvent_angleChanged", "(I)V");

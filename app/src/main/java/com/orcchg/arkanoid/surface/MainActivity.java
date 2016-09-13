@@ -397,8 +397,10 @@ public class MainActivity extends FragmentActivity {
     }
     
     @Override
-    public void onLostBall() {
-      edgeEffect(Prize.DESTROY);
+    public void onLostBall(@Utility.BallLost int ballLost) {
+      if (ballLost == Utility.BALL_LOST_MISSING) {
+        edgeEffect(Prize.DESTROY);
+      }
       --currentLives;
       Timber.i("Ball has been lost! Lives rest: %s", currentLives);
       updateLives();

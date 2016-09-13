@@ -478,7 +478,7 @@ void GameProcessor::moveBall() {
     stopBall();  // stop flying before notify to avoid bugs
     BallLost ball_lost = is_ball_missing ? BallLost::MISSING : BallLost::DESTROY;
     lost_ball_event.notifyListeners(ball_lost);
-    onLostBall(true);
+    onLostBall(ball_lost);
     onCardinalityChanged(m_level->getCardinality());
     DBG("in GameProcessor::moveBall(): lost ball");
     return;
@@ -548,10 +548,10 @@ void GameProcessor::stopBall() {
   stop_ball_event.notifyListeners(true);
 }
 
-void GameProcessor::onLostBall(bool /* dummy */) {
+void GameProcessor::onLostBall(BallLost ball_lost) {
   m_is_ball_lost = false;
   m_is_ball_death = false;
-  m_jenv->CallVoidMethod(master_object, fireJavaEvent_lostBall_id);
+  m_jenv->CallVoidMethod(master_object, fireJavaEvent_lostBall_id, static_cast<int>(ball_lost));
 }
 
 void GameProcessor::onLevelFinished(bool /* dummy */) {

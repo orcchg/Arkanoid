@@ -10,7 +10,7 @@ class AsyncContext {
     void onRefreshLevel();
     void onRefreshScore();
     void onThrowBall();
-    void onLostBall();
+    void onLostBall(@Utility.BallLost int ballLost);
     void onLevelFinished();
     void onScoreUpdated(int score);
     void onAngleChanged(int angle);
@@ -85,9 +85,9 @@ class AsyncContext {
     }
   }
   
-  void fireJavaEvent_lostBall() {
+  void fireJavaEvent_lostBall(int ballLost) {
     if (mListener != null) {
-      mListener.onLostBall();
+      mListener.onLostBall(ballLost);
     }
   }
   
