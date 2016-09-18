@@ -719,7 +719,9 @@ public class Levels {
                                                     "BBM",
                                                     ""};
   
-  private static final String[] L30 = new String[] {"  T    T",
+  private static final String[] L30 = new String[] {"",
+                                                    "",
+                                                    "  T    T",
                                                     "  TPPEPT",
                                                     "  TPPPPT",
                                                     "  TPPPPT",
@@ -736,9 +738,7 @@ public class Levels {
                                                     "BBBEBBEBBB",
                                                     "BBB    BBB",
                                                     "CCC    CCC",
-                                                    "CCCCCCCCCC",
-                                                    "",
-                                                    ""};
+                                                    "CCCCCCCCCC"};
   
   private static final String[] L31 = new String[] {"  U  U",
                                                     "  B  B",
