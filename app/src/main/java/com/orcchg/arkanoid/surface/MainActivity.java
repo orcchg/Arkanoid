@@ -310,6 +310,9 @@ public class MainActivity extends FragmentActivity {
       case 56:
         prizeType = Prize.PIERCE;
         break;
+      case 69:
+        prizeType = Prize.FAST;
+        break;
     }
     mAsyncContext.setBonusPrizes(prizeType);
   }
