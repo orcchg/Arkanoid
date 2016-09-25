@@ -1051,6 +1051,10 @@ bool GameProcessor::collideBlock(GLfloat new_x, GLfloat new_y) {
           block_impact_event.notifyListeners(item);
         }
         break;
+      case Block::ZYGOTE:
+        external_collision = blockCollision(top_border, bottom_border, left_border, right_border, 50);
+        explodeBlock(row, col, BlockUtils::getBlockColor(Block::ZYGOTE_SPAWN), Kind::CONVERGE);
+        break;
       case Block::ZYGOTE_1:
         external_collision = blockCollision(top_border, bottom_border, left_border, right_border, 100 /* elastic */);
         if (m_level->modifyBlockNear(row, col, Block::ZYGOTE_SPAWN, &single_affected)) {
