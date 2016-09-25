@@ -985,12 +985,12 @@ bool GameProcessor::collideBlock(GLfloat new_x, GLfloat new_y) {
       // --------------------
       case Block::HYPER:
         external_collision = blockCollision(top_border, bottom_border, left_border, right_border, 100 /* elastic */);
-        explodeBlock(row, col, BlockUtils::getBlockColor(Block::HYPER), Kind::CONVERGE);
+        explodeBlock(row, col, BlockUtils::getBlockColor(Block::HYPER), Kind::VACUUM);
         teleportBallIntoRandomBlock();
         break;
       case Block::ORIGIN:
         external_collision = blockCollision(top_border, bottom_border, left_border, right_border, 100 /* elastic */);
-        explodeBlock(row, col, BlockUtils::getBlockColor(Block::ORIGIN), Kind::CONVERGE);
+        explodeBlock(row, col, BlockUtils::getBlockColor(Block::ORIGIN), Kind::VACUUM);
         stopBall();
         correctBallPosition(m_bite.getXPose(), m_bite_upper_border + m_ball.getDimens().halfHeight());
         delay_request_event.notifyListeners(true);

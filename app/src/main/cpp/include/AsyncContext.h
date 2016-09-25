@@ -247,6 +247,7 @@ private:
   GLfloat* m_particle_diverge_buffer;    //!< Re-usable buffer for diverging particle system.
   GLfloat* m_particle_converge_buffer;   //!< Re-usable buffer for converging particle system.
   GLfloat* m_particle_spiral_buffer;     //!< Re-usable buffer for particle spiral system.
+  GLfloat* m_particle_vacuum_buffer;     //!< Re-usable buffer for particle vacuum system.
   GLushort* m_rectangle_index_buffer;    //!< Re-usable buffer for indices of rectangle.
   GLushort* m_octagon_index_buffer;      //!< Re-usable buffer for indices of octagon.
   GLfloat* m_rectangle_texCoord_buffer;  //!< Re-usable buffer for texture coords of rectangle.
@@ -258,6 +259,7 @@ private:
 
   std::default_random_engine m_generator;
   std::uniform_real_distribution<float> m_particle_distribution;
+  std::normal_distribution<float> m_particle_normal_distribution;
   clock_t m_last_time;
   float m_particle_time;
   bool m_render_explosion;

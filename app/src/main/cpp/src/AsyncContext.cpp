@@ -41,6 +41,7 @@ AsyncContext::AsyncContext(JavaVM* jvm, jint fdn)
   , m_particle_diverge_buffer(nullptr)
   , m_particle_converge_buffer(nullptr)
   , m_particle_spiral_buffer(nullptr)
+  , m_particle_vacuum_buffer(nullptr)
   , m_rectangle_index_buffer(new GLushort[6]{0, 3, 2, 0, 1, 3})
   , m_octagon_index_buffer(new GLushort[24]{0, 1, 2, 0, 2, 3, 0, 3, 4, 0, 4, 5, 0, 5, 6, 0, 6, 7, 0, 7, 8, 0, 8, 1})
   , m_rectangle_texCoord_buffer(new GLfloat[8]{1.f, 1.f, 0.f, 1.f, 1.f, 0.f, 0.f, 0.f})
@@ -50,6 +51,7 @@ AsyncContext::AsyncContext(JavaVM* jvm, jint fdn)
   , m_level_index_buffer(nullptr)
   , m_generator(std::chrono::system_clock::now().time_since_epoch().count())
   , m_particle_distribution(0.0f, 1.0f)
+  , m_particle_normal_distribution(0.0f, 1.0f)
   , m_last_time(0)
   , m_particle_time(0.0f)
   , m_render_explosion(false)
@@ -102,6 +104,7 @@ AsyncContext::AsyncContext(JavaVM* jvm, jint fdn)
   m_particle_diverge_buffer = new GLfloat[particleSize * particleSystemSize];
   m_particle_converge_buffer = new GLfloat[particleSize * particleSystemSize];
   m_particle_spiral_buffer = new GLfloat[particleSpiralSize * particleSpiralSystemSize];
+  m_particle_vacuum_buffer = new GLfloat[particleSize * particleSystemSize];
   DBG("exit AsyncContext ctor");
 }
 
@@ -119,6 +122,7 @@ AsyncContext::~AsyncContext() noexcept {
   delete [] m_particle_diverge_buffer; m_particle_diverge_buffer = nullptr;
   delete [] m_particle_converge_buffer; m_particle_converge_buffer = nullptr;
   delete [] m_particle_spiral_buffer; m_particle_spiral_buffer = nullptr;
+  delete [] m_particle_vacuum_buffer; m_particle_vacuum_buffer = nullptr;
   delete [] m_rectangle_index_buffer; m_rectangle_index_buffer = nullptr;
   delete [] m_octagon_index_buffer; m_octagon_index_buffer = nullptr;
   delete [] m_rectangle_texCoord_buffer; m_rectangle_texCoord_buffer = nullptr;
@@ -1041,18 +1045,23 @@ void AsyncContext::initParticleSystem() {
   for (int i = 0; i < particleSystemSize; ++i) {
     int index = i * particleSize;
     // Lifetime of particle
-    m_particle_diverge_buffer[index + 0] = m_particle_distribution(m_generator);
+    m_particle_diverge_buffer[index + 0]  = m_particle_distribution(m_generator);
     m_particle_converge_buffer[index + 0] = m_particle_distribution(m_generator);
+    m_particle_vacuum_buffer[index + 0]   = m_particle_normal_distribution(m_generator);
     // Start position of particle
-    m_particle_diverge_buffer[index + 3] = m_particle_distribution(m_generator) * 0.25f - 0.125f;
-    m_particle_diverge_buffer[index + 4] = (m_particle_distribution(m_generator) * 0.25f - 0.125f) * m_aspect;
+    m_particle_diverge_buffer[index + 3]  = m_particle_distribution(m_generator) * 0.25f - 0.125f;
+    m_particle_diverge_buffer[index + 4]  = (m_particle_distribution(m_generator) * 0.25f - 0.125f) * m_aspect;
     m_particle_converge_buffer[index + 3] = m_particle_distribution(m_generator) * 0.2f - 0.1f;
     m_particle_converge_buffer[index + 4] = (m_particle_distribution(m_generator) * 0.1f - 0.05f) * m_aspect;
+    m_particle_vacuum_buffer[index + 3]   = m_particle_normal_distribution(m_generator) * 0.15f - 0.075f;
+    m_particle_vacuum_buffer[index + 4]   = (m_particle_normal_distribution(m_generator) * 0.15f - 0.075f) * m_aspect;
     // End position of particle
-    m_particle_diverge_buffer[index + 1] = m_particle_distribution(m_generator) * 2.0f - 1.0f;
-    m_particle_diverge_buffer[index + 2] = (m_particle_distribution(m_generator) * 2.0f - 1.0f) * m_aspect;
+    m_particle_diverge_buffer[index + 1]  = m_particle_distribution(m_generator) * 2.0f - 1.0f;
+    m_particle_diverge_buffer[index + 2]  = (m_particle_distribution(m_generator) * 2.0f - 1.0f) * m_aspect;
     m_particle_converge_buffer[index + 1] = m_particle_distribution(m_generator) * 0.1f;
     m_particle_converge_buffer[index + 2] = m_particle_distribution(m_generator) * 0.05f * m_aspect;
+    m_particle_vacuum_buffer[index + 1]   = m_particle_normal_distribution(m_generator) * 0.025f - 0.0125f;
+    m_particle_vacuum_buffer[index + 2]   = (m_particle_normal_distribution(m_generator) * 0.025f - 0.0125f) * m_aspect;
   }
 
   // --------------------------------------------
@@ -1309,6 +1318,11 @@ void AsyncContext::drawExplosion(GLfloat x, GLfloat y, const util::BGRA<GLfloat>
         lifetime_buffer = &m_particle_converge_buffer[0];
         start_points_buffer = &m_particle_converge_buffer[3];
         end_points_buffer = &m_particle_converge_buffer[1];
+        break;
+      case Kind::VACUUM:
+        lifetime_buffer = &m_particle_vacuum_buffer[0];
+        start_points_buffer = &m_particle_vacuum_buffer[3];
+        end_points_buffer = &m_particle_vacuum_buffer[1];
         break;
     }
     glVertexAttribPointer(a_lifetime, 1, GL_FLOAT, GL_FALSE, particleSize * sizeof(GLfloat), lifetime_buffer);

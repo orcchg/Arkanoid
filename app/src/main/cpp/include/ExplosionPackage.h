@@ -8,7 +8,8 @@ namespace game {
 
 enum class Kind : int {
   DIVERGE = 0,
-  CONVERGE = 1
+  CONVERGE = 1,
+  VACUUM = 2
 };
 
 class ExplosionPackage {
