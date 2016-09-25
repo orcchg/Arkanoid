@@ -8,6 +8,8 @@
 #include "Macro.h"
 #include "utils.h"
 
+#define DELAY_INT 45
+
 namespace game {
 
 /* Public API */
@@ -556,7 +558,7 @@ void AsyncContext::process_lostBall() {
   clearPrizeStructures();
   if (m_render_explosion) {
     moveBall(0.0f, 1000.f);
-    delay(65);
+    delay(DELAY_INT);
   }
   initGame();
 }
@@ -590,7 +592,7 @@ void AsyncContext::process_levelFinished() {
   m_bg_texture = m_resources->getRandomTexture("bg");
   if (m_render_explosion) {
     moveBall(0.0f, 1000.f);
-    delay(65);
+    delay(DELAY_INT);
   }
   initGame();
 }
@@ -656,7 +658,7 @@ void AsyncContext::process_laserBlockImpact() {
 void AsyncContext::process_delayRequested() {
   std::lock_guard<std::mutex> lock(m_delay_request_mutex);
   DBG("EVENT PROCESS: process_delayRequested");
-  delay(65);
+  delay(DELAY_INT);
 }
 
 /* LogicFunc group */
