@@ -62,7 +62,42 @@
         \nultra_1.wav, ultra_2.wav, \nultra_3.wav, ultra_4.wav, \nwater_1.wav, water_2.wav,
         \nwater_3.wav, zygote_1.wav, \nzygote_2.wav, zygote_3.wav,\nbutton_click.wav</string>
 
-    <string name="attribution_icons_desc">All PNG icons are from findicons.com\n\nef_laser.png, pr_arrow.png, \npr_ball.png, pr_brick.png, \npr_butterfly.png, pr_candy.png,\npr_clock.png, pr_coin.png, \npr_diamond.png, pr_dice.png, \npr_down.png, pr_earth.png,\npr_egg.png, pr_explode.png, \npr_extend.png, pr_fire.png, \npr_fire_t.png, pr_fog.png,\npr_frozen_clock.png, pr_glue.png, \npr_hyper.png, pr_jump.png, \npr_laser.png, pr_mirror.png,\npr_newyear.png, pr_pierce.png, \npr_protect.png, pr_radar.png, \npr_short.png, pr_skull.png,\npr_star.png, pr_waterdrop.png, \npr_zygote.png, smoke.png, spark.png</string>
+    <string name="attribution_icons_desc">All PNG icons are from findicons.com:
+        \n\n<b>pr_arrow.png</b>        :: by Greg Barnes (modified) &#8212; http://all-free-download.com/free-icon/download/holy-water_102024.html &#59; http://biggitybarnes.com/ &#8212; License: Creative commons attribution license
+        \n\n<b>pr_ball.png</b>         :: by Graphicsfuel &#8212; https://www.iconfinder.com/icons/62721/ball_orange_sphere_icon &#59; http://www.graphicsfuel.com/ &#8212; License: Free for commercial use
+        \n\n<b>pr_brick.png</b>        :: by Arinn Dembo &#8212; http://arinndembo.com/just-one-little-brick/ &#8212; License: Unknown
+        \n\n<b>pr_butterfly.png</b>    :: by AtuX &#8212; http://findicons.com/icon/88239/butterfly?id=88358 &#59; http://atux.deviantart.com/ &#8212; License: Unknown
+        \n\n<b>pr_candy.png</b>        :: by Dimpoart &#8212; http://findicons.com/icon/54277/candy?id=54277 &#59; http://www.indeepop.com/ &#8212; License: Freeware
+        \n\n<b>pr_clock.png</b>        :: by Icons-Land &#8212; http://findicons.com/icon/69397/clock4?id=333891 &#59; http://www.icons-land.com/ &#8212; License: Freeware (Link required)
+        \n\n<b>pr_coin.png</b>         :: by Aha-Soft &#8212; https://www.iconfinder.com/icons/73440/base_cash_coin_finance_gold_money_napoleon_icon#size=256 &#59; https://www.iconfinder.com/aha-soft &#8212; License: Creative Commons (Attribution 3.0 Unported)
+        \n\n<b>pr_diamond.png</b>      :: by Tanya &#8212; http://findicons.com/icon/553549/diamond_by_artdesigner_lv?id=553572 &#59; http://artdesigncat.com/ &#8212; License: Freeware
+        \n\n<b>pr_dice.png</b>         :: by La Glanz Studio &#8212; https://www.iconfinder.com/icons/50830/dice_icon#size=256 &#59; http://3dlb.com/ &#8212; License: Free for commercial use
+        \n\n<b>pr_down.png</b>         :: by Greg Barnes &#8212; http://all-free-download.com/free-icon/download/holy-water_102024.html &#59; http://biggitybarnes.com/ &#8212; License: Creative commons attribution license
+        \n\n<b>pr_earth.png</b>        :: by Iconka.com (Denis) &#8212; http://findicons.com/icon/39172/pluto?id=283109 &#59; http://iconka.com/ &#8212; License: Freeware (Link Required)
+        \n\n<b>pr_egg.png</b>          :: by Earam &#8212; http://findicons.com/icon/225595/moon?id=381927 &#59; http://earam.deviantart.com/ &#8212; License: Freeware
+        \n\n<b>pr_explode.png</b>      :: by DaPino &#8212; http://findicons.com/icon/54743/magic_ball?id=54751 &#59; http://www.dapino-colada.nl/ &#8212; License: Unknown
+        \n\n<b>pr_extend.png</b>       :: by Fast Icon &#8212; http://all-free-download.com/free-icon/download/green-leaf_97299.html &#59;  &#8212; License: Creative commons attribution license
+        \n\n<b>pr_fire.png</b>         :: by Rhandros Dembicki &#8212; http://findicons.com/icon/208643/fire_eye_alien?id=208655 &#59; http://www.yellowicon.com/ &#8212; License: Unknown License
+        \n\n<b>pr_fire_t.png</b>       :: by Rhandros Dembicki (modified) &#8212; http://findicons.com/icon/208643/fire_eye_alien?id=208655 &#59; http://www.yellowicon.com/ &#8212; License: Unknown License
+        \n\n<b>pr_fog.png</b>          :: by Scott Copeland &#8212; http://findicons.com/icon/88062/1_fish?id=356239 &#59; http://www.nimbus-media.com/ &#8212; License: Creative Commons Attribution (by)
+        \n\n<b>pr_frozen_clock.png</b> :: by Icons-Land (modified) &#8212; http://findicons.com/icon/69397/clock4?id=333891 &#59; http://www.icons-land.com/ &#8212; License: Freeware (Link required)
+        \n\n<b>pr_glue.png</b>         :: by BSGStudio &#8212; http://all-free-download.com/free-icon/icons/glue_37676.html &#8212; License: Creative commons attribution license
+        \n\n<b>pr_hyper.png</b>        :: by Icojoy &#8212; http://findicons.com/icon/72984/bullfinch_1?id=398807 &#59; http://www.icojam.com/ &#8212; License: Freeware
+        \n\n<b>pr_jump.png</b>         :: by Photoshopedia &#8212; http://findicons.com/icon/69338/network?id=69350 &#59; http://photoshopedia.com/ &#8212; License: Freeware (Link Required)
+        \n\n<b>pr_laser.png</b>        :: by IconFinder &#8212; https://www.iconfinder.com/icons/51924/bulb_light_icon#size=128 &#59; https://www.iconfinder.com/ &#8212; License: Creative Commons (Attribution 3.0 Unported)
+        \n\n<b>pr_mirror.png</b>       :: by Clipart Kid &#8212; http://www.clipartkid.com/clip-art-mirror-cliparts-co-aFO4fy-clipart/ &#8212; License: Unknown
+        \n\n<b>pr_newyear.png</b>      :: by petercui (Bide Cui) &#8212; http://findicons.com/icon/30166/ball?id=30173 &#59; http://petercui.deviantart.com/ &#8212; License: Unknown
+        \n\n<b>pr_pierce.png</b>       :: by Dave Brasgalla &#8212; http://findicons.com/icon/137289/gas_bomb_crate?id=137318 &#8212; License: Unknown License
+        \n\n<b>pr_protect.png</b>      :: by Icons-Land &#8212; http://findicons.com/icon/69391/shield_yellow?id=392115 &#59; http://www.icons-land.com/ &#8212; License: Freeware (Link Required)
+        \n\n<b>pr_radar.png</b>        :: by Asher &#8212; http://findicons.com/icon/64935/bug?id=65130 &#59; http://kyo-tux.deviantart.com/ &#8212; License: Creative Commons Attribution (by)
+        \n\n<b>pr_short.png</b>        :: by Fast Icon &#8212; http://all-free-download.com/free-icon/download/drought-leaf_97297.html &#59; http://fasticon.com/ &#8212; License: Creative commons attribution license
+        \n\n<b>pr_skull.png</b>        :: by Aha-Soft &#8212; https://www.iconfinder.com/icons/205613/account_avatar_care_doctor_face_halloween_head_health_healthcare_hospital_human_life_medical_medicine_people_poison_scull_skeleton_skull_smile_smiley_icon#size=256 &#59; https://www.iconfinder.com/aha-soft &#8212; License: Creative Commons (Attribution 3.0 Unported)
+        \n\n<b>pr_star.png</b>         :: by VistaICO &#8212; http://findicons.com/icon/87979/star?id=88011 &#59; http://vistaico.com/ &#8212; License: Unknown
+        \n\n<b>pr_waterdrop.png</b>    :: by Ery Prihananto &#8212; https://www.iconfinder.com/icons/1320037/badge_go_pin_pokemon_water_icon#size=256 &#59; https://www.iconfinder.com/eryprihananto &#8212; License: Creative Commons (Attribution 2.5 Generic)
+        \n\n<b>pr_zygote.png</b>       :: by Aha-Soft &#8212; https://www.iconfinder.com/icons/127305/crown_gem_green_jewel_peridot_precious_stone_icon#size=256 &#59; https://www.iconfinder.com/aha-soft &#8212; License: Creative Commons (Attribution 3.0 Unported)
+    </string>
     <string name="attribution_images_desc">All other images are self&#46;made and belong to the author Maxim Alov.\nThese images (and any parts of them) are part of this application and could not be used by any 3rd&#46;parties or distributed in any way outside from this application.\n\nImages and resources:\n
-        \nbg_blueov.png, bg_greenov.png, bg_yellowov.png</string>
+        \nbg_blueov.png, bg_greenov.png, bg_yellowov.png
+    </string>
+    <string name="license_links">Links to licenses: https://creativecommons.org/licenses/</string>
 </resources>
