@@ -23,11 +23,11 @@
     <string name="internal_error_message">It is recommended to restart application.</string>
     <string name="close_button">Close</string>
 
-    <string name="attribution_sounds">Sounds</string>
-    <string name="attribution_icons">Icons</string>
-    <string name="attribution_images">Graphics</string>
+    <string name="attribution_sounds" translatable="false">Sounds</string>
+    <string name="attribution_icons" translatable="false">Icons</string>
+    <string name="attribution_images" translatable="false">Graphics</string>
 
-    <string name="attribution_sounds_desc">This application uses sounds from freesound.org.\nLicense notes are available here:\nhttps://www.freesound.org\nSounds were renamed for more convenient implementation of this application.Here is the list of attribution for all sounds:
+    <string name="attribution_sounds_desc" translatable="false">This application uses sounds from freesound.org.\nLicense notes are available here:\nhttps://www.freesound.org\nSounds were renamed for more convenient implementation of this application.Here is the list of attribution for all sounds:
         \n\n<b>boom_1.wav</b>    :: bad explosion by nthompson &#8212; https://www.freesound.org/people/nthompson/sounds/47252/ &#8212; License: Creative Commons 0
         \n\n<b>boom_2.wav</b>    :: carbidexplosion.wav by escortmarius &#8212; https://www.freesound.org/people/escortmarius/sounds/172870/ &#8212; License: Attribution
         \n\n<b>change_1.wav</b>  :: Spacey 1up/Power up by GameAudio &#8212; https://www.freesound.org/people/GameAudio/sounds/220173/ &#8212; License: Creative Commons 0
@@ -62,7 +62,7 @@
         \nultra_1.wav, ultra_2.wav, \nultra_3.wav, ultra_4.wav, \nwater_1.wav, water_2.wav,
         \nwater_3.wav, zygote_1.wav, \nzygote_2.wav, zygote_3.wav,\nbutton_click.wav</string>
 
-    <string name="attribution_icons_desc">All PNG icons are from findicons.com:
+    <string name="attribution_icons_desc" translatable="false">All PNG icons are from findicons.com:
         \n\n<b>pr_arrow.png</b>        :: by Greg Barnes (modified) &#8212; http://all-free-download.com/free-icon/download/holy-water_102024.html &#59; http://biggitybarnes.com/ &#8212; License: Creative commons attribution license
         \n\n<b>pr_ball.png</b>         :: by Graphicsfuel &#8212; https://www.iconfinder.com/icons/62721/ball_orange_sphere_icon &#59; http://www.graphicsfuel.com/ &#8212; License: Free for commercial use
         \n\n<b>pr_brick.png</b>        :: by Arinn Dembo &#8212; http://arinndembo.com/just-one-little-brick/ &#8212; License: Unknown
@@ -96,8 +96,8 @@
         \n\n<b>pr_waterdrop.png</b>    :: by Ery Prihananto &#8212; https://www.iconfinder.com/icons/1320037/badge_go_pin_pokemon_water_icon#size=256 &#59; https://www.iconfinder.com/eryprihananto &#8212; License: Creative Commons (Attribution 2.5 Generic)
         \n\n<b>pr_zygote.png</b>       :: by Aha-Soft &#8212; https://www.iconfinder.com/icons/127305/crown_gem_green_jewel_peridot_precious_stone_icon#size=256 &#59; https://www.iconfinder.com/aha-soft &#8212; License: Creative Commons (Attribution 3.0 Unported)
     </string>
-    <string name="attribution_images_desc">All other images are self&#46;made and belong to the author Maxim Alov.\nThese images (and any parts of them) are part of this application and could not be used by any 3rd&#46;parties or distributed in any way outside from this application.\n\nImages and resources:\n
+    <string name="attribution_images_desc" translatable="false">All other images are self&#46;made and belong to the author Maxim Alov.\nThese images (and any parts of them) are part of this application and could not be used by any 3rd&#46;parties or distributed in any way outside from this application.\n\nImages and resources:\n
         \nbg_blueov.png, bg_greenov.png, bg_yellowov.png
     </string>
-    <string name="license_links">Links to licenses: https://creativecommons.org/licenses/</string>
+    <string name="license_links" translatable="false">Links to licenses: https://creativecommons.org/licenses/</string>
 </resources>

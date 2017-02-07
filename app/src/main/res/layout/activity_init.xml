@@ -4,29 +4,29 @@
 	android:layout_height="match_parent"
 	android:background="@android:color/background_light" >
 	
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/title_margin_top"
-        android:textStyle="bold"
-        android:textSize="@dimen/text_title_size"
-        android:text="@string/app_name"
-        android:textColor="#3F51B5"
-        android:editable="false"
-        android:selectAllOnFocus="false" />
-	
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:layout_centerInParent="true"
         android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textSize="@dimen/text_title_size"
+            android:text="@string/app_name"
+            android:textColor="#3F51B5"
+            android:editable="false"
+            android:selectAllOnFocus="false" />
         
         <Button
             android:id="@+id/continue_game_button"
             android:layout_width="@dimen/button_width"
             android:layout_height="@dimen/button_height"
+            android:layout_marginTop="8dp"
             android:background="@drawable/button_selector"
             android:text="@string/continue_game_button"
             android:textStyle="bold"
@@ -73,5 +73,6 @@
         android:text="@string/author_text"
         android:textColor="#64DD17"
         android:textStyle="bold"
-        android:textSize="@dimen/text_size" />
+        android:textSize="@dimen/text_size"
+        android:visibility="gone"/>
 </RelativeLayout>
