@@ -7,8 +7,8 @@ android {
         applicationId "com.orcchg.dev.maxa.arkanoid_native"
         minSdkVersion 15
         targetSdkVersion 25
-        versionCode 1
-        versionName "1.0.1"
+        versionCode 2
+        versionName "1.0.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         externalNativeBuild {
             cmake {
@@ -26,6 +26,19 @@ android {
         cmake {
             path "CMakeLists.txt"
         }
+    }
+}
+
+android.applicationVariants.all { variant ->
+    def flavor = variant.mergedFlavor;
+    if (variant.buildType.name.equals("release")) {
+        variant.outputs.each { output ->
+            def flavorName = variant.name.replace("Release", "");
+            def name = flavorName + "-" + flavor.versionName + "-b" + flavor.versionCode + ".apk";
+            output.outputFile = new File(output.outputFile.parent, name);
+        }
+    } else if (variant.buildType.name.equals("debug")) {
+        flavor.versionName += "-" + variant.name + "-b" + flavor.versionCode;
     }
 }
 
