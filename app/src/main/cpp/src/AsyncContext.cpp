@@ -701,16 +701,17 @@ void AsyncContext::moveBite(float position, bool silent) {
   }
 
   m_bite.setXPose(position);
-  if (m_bite.getXPose() > 1.0f - m_bite.getDimens().halfWidth()) {
-    m_bite.setXPose(1.0f - m_bite.getDimens().halfWidth());
-  } else if (m_bite.getXPose() < m_bite.getDimens().halfWidth() - 1.0f) {
-    m_bite.setXPose(m_bite.getDimens().halfWidth() - 1.0f);
+  auto hw = m_bite.getDimens().halfWidth();
+  if (m_bite.getXPose() > 1.0f - hw) {
+    m_bite.setXPose(1.0f - hw);
+  } else if (m_bite.getXPose() < hw - 1.0f) {
+    m_bite.setXPose(hw - 1.0f);
   }
 
   util::setRectangleVertices(
       &m_bite_vertex_buffer[0],
       m_bite.getDimens().width(), m_bite.getDimens().height(),
-      -m_bite.getDimens().halfWidth() + m_bite.getXPose(),
+      -hw + m_bite.getXPose(),
       -BiteParams::neg_biteElevation,
       1, 1);
 
