@@ -1,18 +1,19 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "24.0.3"
+    compileSdkVersion 27
+    buildToolsVersion "27.0.3"
     defaultConfig {
         applicationId "com.orcchg.dev.maxa.arkanoid_native"
         minSdkVersion 15
-        targetSdkVersion 25
+        targetSdkVersion 27
         versionCode 2
         versionName "1.0.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         externalNativeBuild {
             cmake {
-                cppFlags "-std=c++11 -frtti -fexceptions -pthread -O0 -ggdb3 -mfpu=neon"
+                cppFlags "-std=c++11 -frtti -fexceptions -pthread -O0 -ggdb3"
+                abiFilters 'arm64-v8a', 'armeabi-v7a', 'x86', 'x86_64'
             }
         }
     }
@@ -30,24 +31,25 @@ android {
 }
 
 android.applicationVariants.all { variant ->
-    def flavor = variant.mergedFlavor;
-    if (variant.buildType.name.equals("release")) {
+    /**
+     * Makes apk-filename for release builds
+     */
+    def flavor = variant.mergedFlavor
+    if (variant.buildType.name == "release") {
         variant.outputs.each { output ->
-            def flavorName = variant.name.replace("Release", "");
-            def name = flavorName + "-" + flavor.versionName + "-b" + flavor.versionCode + ".apk";
-            output.outputFile = new File(output.outputFile.parent, name);
+            def flavorName = variant.name.replace("Release", "")
+            def name = flavorName + "-" + flavor.versionName + "-b" + flavor.versionCode + ".apk"
+            output.versionNameOverride = name
         }
-    } else if (variant.buildType.name.equals("debug")) {
-        flavor.versionName += "-" + variant.name + "-b" + flavor.versionCode;
     }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:25.1.1'
-    compile 'com.jakewharton.timber:timber:4.1.2'
-    testCompile 'junit:junit:4.12'
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.jakewharton.timber:timber:4.7.0'
+    testImplementation 'junit:junit:4.12'
 }

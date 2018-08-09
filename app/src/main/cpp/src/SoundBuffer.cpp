@@ -1,7 +1,9 @@
 #include <algorithm>
+#include <cctype>
 #include <cstdio>
 #include <cstring>
 #include <libgen.h>
+#include <string>
 
 #include "logger.h"
 #include "SoundBuffer.h"
