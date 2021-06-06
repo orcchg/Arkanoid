@@ -3,12 +3,14 @@ package com.orcchg.arkanoid.surface;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
-import android.support.annotation.ColorInt;
+
+import androidx.annotation.ColorInt;
 
 import com.orcchg.arkanoid.R;
 
 class EdgeColor {
-    final @ColorInt int DESTROY;
+    final @ColorInt
+    int DESTROY;
     final @ColorInt int HYPER;
     final @ColorInt int INIT;
     final @ColorInt int VITALITY;

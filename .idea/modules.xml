@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Arkanoid_Gradle.iml" filepath="$PROJECT_DIR$/Arkanoid_Gradle.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Arkanoid.iml" filepath="$PROJECT_DIR$/.idea/modules/Arkanoid.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Arkanoid.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Arkanoid.app.iml" />
     </modules>
   </component>
 </project>
