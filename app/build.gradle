@@ -5,9 +5,9 @@ android {
     defaultConfig {
         applicationId "com.orcchg.dev.maxa.arkanoid_native"
         minSdkVersion 15
-        targetSdkVersion 30
-        versionCode 4
-        versionName "1.0.4"
+        targetSdkVersion 33
+        versionCode 5
+        versionName "1.0.5"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         externalNativeBuild {
             cmake {
